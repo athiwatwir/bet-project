@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;700&display=swap');
+
+h1,h2,h3,h4{
+	font-family: 'Kanit', sans-serif !important;
+	font-weight: 700 !important;
+}
+
+.font-weight-300{
+	font-family: 'Kanit', sans-serif !important;
+	font-weight: 300 !important;
+}

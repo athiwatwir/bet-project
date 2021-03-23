@@ -1,0 +1,51 @@
+.bg-bet {
+    background-color: #000000 !important;
+}
+.bg-bet-05 {
+    background: rgba(0,0,0,0.8);
+}
+
+.bg-bet-red {
+    background-image: linear-gradient(to right, #e52d27 0%, #b31217 51%, #e52d27 100%)
+}
+/*! Gold BT */
+
+.btn-grad {
+    background-image: linear-gradient(to right, #EB3349 0%, #F45C43 51%, #EB3349 100%)
+}
+.btn-grad {
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+.btn-grad:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+.nav-item a:hover {
+    color: #D32F2F !important;
+    text-shadow: 0px 0px 10px #D32F2F !important;
+    -moz-transition: all 0.2s ease-in !important;
+    -o-transition: all 0.2s ease-in !important;
+    -webkit-transition: all 0.2s ease-in !important;
+    transition: all 0.2s ease-in !important;
+}
+.nav-item a:visited {
+    text-decoration: none;
+    color: #fff;
+}
+
+
+.fix-icon-left{
+	z-index: 9999;
+    position:fixed;
+    bottom:20%;
+    left:1%;
+}
