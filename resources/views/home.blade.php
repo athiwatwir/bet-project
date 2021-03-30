@@ -42,8 +42,6 @@
                                     <a class="navbar-brand" href="#">
                                         <img src="img/logo/logo-w.png" width="110" height="50" alt="...">
                                     </a>
-                                   
-
                                 </div>
                                 <div class="d-inline-block float-end pt--5">
                                     <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
@@ -77,7 +75,7 @@
                             </li>
 
                                     <li class="list-inline-item ml--6 mr--6 float-start d-lg-inline-block">
-                                        <a target="_blank" href="#" class="btn btn-sm btn-grad shadow-none m-0">
+                                        <a target="_blank" href="{{ url('/register') }}" class="btn btn-sm btn-grad shadow-none m-0">
                                         สมัครสมาชิก
                                         </a>
                                     </li>
