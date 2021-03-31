@@ -19,6 +19,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
 
+    public const API = 'http://127.0.0.1:8000/api/v1';
+
     /**
      * The controller namespace for the application.
      *
