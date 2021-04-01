@@ -42,6 +42,8 @@
 
         <section class="bg-bet pt--10">
             <div class="container z-index-1">
+                @include('flash-message')
+                
                 @yield('content')
             </div>
         </section>
