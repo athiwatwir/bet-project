@@ -21,7 +21,7 @@ class RegisterController extends Controller
     public function register(Request $request)
     {   
         $this->validate($request, [
-            'username' => ['required', 'alpha', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'password_confirmation' => ['required', 'min:6'],
             'name' => ['required', 'string', 'max:255'],
@@ -30,7 +30,7 @@ class RegisterController extends Controller
             'how_to_know' => ['required', 'string', 'max:255'],
         ],
         [
-            'username.alpha' => 'ชื่อผู้ใช้ต้องเป็นภาษาอังกฤษเท่านั้น',
+            'username.regex' => 'ชื่อผู้ใช้ต้องเป็นภาษาอังกฤษเท่านั้น',
             'password.confirmed' => 'รหัสผ่านไม่ตรงกัน...',
             'password.min' => 'รหัสผ่านจะต้องมีมากกว่า 6 ตัวอักษร'
         ]);
@@ -47,10 +47,11 @@ class RegisterController extends Controller
             'how_to_know_desc' => $how_to_know_desc,
         ]);
 
-        if($response->getStatusCode() == 200){
+        $res = json_decode($response->getBody()->getContents(),true);
+        if($res['status'] == 200){
             return redirect()->back()->with('success', 'ลงทะเบียนเรียบร้อยแล้ว');
         }else{
-            return redirect()->back()->with('danger', 'เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง');
+            return redirect()->back()->with('error', $res['message']);
         }
         // dd($response->getBody()->getContents());
     }
