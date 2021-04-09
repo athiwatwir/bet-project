@@ -30,6 +30,10 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::prefix('account')->group(function () {
     Route::get('/', [AccountController::class, 'index']);
     Route::get('/change-password', [AccountController::class, 'changePassword']);
+    Route::get('/banking', [AccountController::class, 'banking']);
+
     Route::post('/update', [AccountController::class, 'personalUpdate']);
     Route::post('/change-password', [AccountController::class, 'passwordUpdate']);
+    Route::post('/banking', [AccountController::class, 'bankingUpdate']);
+    Route::post('/banking-edit', [AccountController::class, 'bankingEdit']);
 });

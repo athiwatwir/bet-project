@@ -33,7 +33,7 @@
 
                             <div class="col-12">
                                 <div class="form-label-group mt-3">
-                                    <input required placeholder="รหัสผ่านใหม่" id="account_new_password" name="account_new_password" type="password" value="" class="form-control">
+                                    <input required placeholder="รหัสผ่านใหม่" id="account_new_password" name="account_new_password" type="password" value="" class="form-control @error('account_new_password') is-invalid @enderror">
                                     <label for="account_new_password">รหัสผ่านใหม่</label>
                                     @error('account_new_password')
                                         <span class="invalid-feedback" role="alert">
@@ -45,8 +45,13 @@
 
                             <div class="col-12">
                                 <div class="form-label-group mt-3">
-                                    <input required placeholder="ยืนยันรหัสผ่านใหม่" id="account_new_password_confirmation" name="account_new_password_confirmation" type="password" value="" class="form-control">
+                                    <input required placeholder="ยืนยันรหัสผ่านใหม่" id="account_new_password_confirmation" name="account_new_password_confirmation" type="password" value="" class="form-control @error('account_new_password_confirmation') is-invalid @enderror">
                                     <label for="account_new_password_confirmation">ยืนยันรหัสผ่านใหม่</label>
+                                    @error('account_new_password_confirmation')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
 

@@ -24,7 +24,7 @@ class AccountController extends Controller
 
             return view('account.profile', ['user' => $res['user']]);
         }else{
-            return redirect('/login')->with('warning', 'กรุณาเข้าสู่ระบบ');
+            return redirect('/login');
         }
     }
 
@@ -33,7 +33,23 @@ class AccountController extends Controller
         if(session()->has('_t')){
             return view('account.change-password');
         }else{
-            return redirect('/login')->with('warning', 'กรุณาเข้าสู่ระบบ');
+            return redirect('/login');
+        }
+    }
+
+    public function banking()
+    {
+        if(session()->has('_t')){
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer '. session('_t'),
+                ])->get(RouteServiceProvider::API.'/user/user-banking');
+
+            $res = json_decode($response->getBody()->getContents(), true);
+
+            return view('account.banking', ['bank' => $res['bank'], 'b_lists' => $res['b_list'], 'status' => $res['status']]);
+        }else{
+            return redirect('/login');
         }
     }
 
@@ -74,7 +90,88 @@ class AccountController extends Controller
             'account_new_password_confirmation' => ['required', 'string', 'min:6', 'same:account_new_password'],
         ],
         [
-            'account_new_password.min' => 'รหัสผ่านจะต้องมีมากกว่า 6 ตัวอักษร'
+            'account_new_password.min' => 'รหัสผ่านจะต้องมีมากกว่า 6 ตัวอักษร',
+            'account_new_password_confirmation.same' => 'รหัสผ่านไม่ตรงกัน'
         ]);
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+            ])->post(RouteServiceProvider::API.'/user/change-password',[
+                'current_password' => $request->account_current_password,
+                'new_password' => $request->account_new_password,
+        ]);
+
+        $res = json_decode($response->getBody()->getContents(), true);
+
+        if($res['status'] == 200){
+            return redirect()->back()->with('success', 'แก้ไขรหัสผ่านเรียบร้อยแล้ว');
+        }
+
+        return redirect()->back()->with('error', $res['message']);
+    }
+
+    public function bankingUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'bank_name' => ['required'],
+            'bank_account_name' => ['required', 'string'],
+            'bank_account_number' => ['required', 'numeric'],
+        ],
+        [
+            'bank_name.required' => 'กรุณาเลือกธนาคาร',
+            'bank_account_name.required' => 'กรุณาระบุชื่อบัญชี',
+            'bank_account_number.required' => 'กรุณาระบุเลขบัญชี',
+            'bank_account_number.numeric' => 'เลขบัญชีจะต้องเป็นตัวเลขเท่านั้น'
+        ]);
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+            ])->post(RouteServiceProvider::API.'/user/user-banking',[
+                'bank_name' => $request->bank_name,
+                'bank_account_name' => $request->bank_account_name,
+                'bank_account_number' => $request->bank_account_number,
+        ]);
+
+        $res = json_decode($response->getBody()->getContents(), true);
+
+        if($res['status'] == 200) {
+            return redirect()->back()->with('success', 'บันทึกบัญชีธนาคารเรียบร้อยแล้ว');
+        }
+
+        return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
+    }
+
+    public function bankingEdit(Request $request)
+    {
+        $this->validate($request, [
+            'bank_name' => ['required'],
+            'bank_account_name' => ['required', 'string'],
+            'bank_account_number' => ['required', 'numeric'],
+        ],
+        [
+            'bank_name.required' => 'กรุณาเลือกธนาคาร',
+            'bank_account_name.required' => 'กรุณาระบุชื่อบัญชี',
+            'bank_account_number.required' => 'กรุณาระบุเลขบัญชี',
+            'bank_account_number.numeric' => 'เลขบัญชีจะต้องเป็นตัวเลขเท่านั้น'
+        ]);
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+            ])->post(RouteServiceProvider::API.'/user/user-banking-edit',[
+                'bank_name' => $request->bank_name,
+                'bank_account_name' => $request->bank_account_name,
+                'bank_account_number' => $request->bank_account_number,
+        ]);
+
+        $res = json_decode($response->getBody()->getContents(), true);
+
+        if($res['status'] == 200) {
+            return redirect()->back()->with('success', 'แก้ไขข้อมูลบัญชีธนาคารเรียบร้อยแล้ว');
+        }
+
+        return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
     }
 }
