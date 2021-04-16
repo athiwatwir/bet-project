@@ -1,10 +1,6 @@
 <div class="text-nowrap"><!-- change with .scrollable-horizontal to horizontally scroll, if -only- no dropdown is present -->
     <div class="d-flex justify-content-between">
-        <div class="d-inline-block float-start">
-            <a class="navbar-brand" href="#">
-                <img src="{{ asset('img/logo/logo-w.png') }}" width="110" height="50" alt="...">
-            </a>
-        </div>
+        @include('layouts.header.logo')
         <div class="d-inline-block float-end pt--5">
             <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
                 @if(session()->has('_t'))
