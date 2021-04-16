@@ -51,6 +51,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                <span class="fi fi-eye field-icon showpwd" onClick="showPwd('password', this)"></span>
                             </div>
                         </div>
 
@@ -59,6 +60,7 @@
 
                             <div class="col-md-6">
                                 <input placeholder="Confirm Password" id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="password_confirmation" onfocusout="checkPassword()">
+                                <span class="fi fi-eye field-icon showpwd" onClick="showPwd('password-confirm', this)"></span>
                             </div>
                         </div>
 

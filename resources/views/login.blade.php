@@ -58,6 +58,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                <span class="fi fi-eye field-icon showpwd" onClick="showPwd('password', this)"></span>
                             </div>
                         </div>
 

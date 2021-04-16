@@ -43,6 +43,8 @@
     <div id="wrapper">
         @include('layouts/header.mainheader')
 
+        @include('slide')
+
         <section class="bg-bet pt--10">
             <div class="container z-index-1">
                 @include('flash-message')

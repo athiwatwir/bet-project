@@ -28,6 +28,7 @@
                                 <div class="form-label-group mt-3">
                                     <input required placeholder="รหัสผ่านเดิม" id="account_current_password" name="account_current_password" type="password" value="" class="form-control">
                                     <label for="account_current_password">รหัสผ่านเดิม</label>
+                                    <span class="fi fi-eye field-icon showpwd" onClick="showPwd('account_current_password', this)"></span>
                                 </div>
                             </div>
 
@@ -40,6 +41,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    <span class="fi fi-eye field-icon showpwd" onClick="showPwd('account_new_password', this)"></span>
                                 </div>
                             </div>
 
@@ -52,6 +54,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    <span class="fi fi-eye field-icon showpwd" onClick="showPwd('account_new_password_confirmation', this)"></span>
                                 </div>
                             </div>
 

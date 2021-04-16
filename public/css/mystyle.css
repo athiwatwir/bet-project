@@ -49,3 +49,12 @@
     bottom:20%;
     left:1%;
 }
+
+.field-icon {
+    float: right;
+    margin-right: 10px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+}
