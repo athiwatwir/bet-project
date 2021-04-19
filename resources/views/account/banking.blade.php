@@ -20,7 +20,7 @@
                 <!-- /portlet : header -->
 
                 <!-- portlet : body -->
-                <div class="portlet-body pt-0 pl-4" style="border-left: 12px solid #dd0000; border-radius: 0 0 0 4px;">
+                <div class="portlet-body pt-0 pl-4 border-left-style">
 
                     <div class="row gutters-sm d-flex align-items-center">
                         <form novalidate class="bs-validate d-block mb-5 w-100" method="post" action="@if($status == 404) /account/banking @elseif($status == 200) /account/banking-edit @endif" enctype="multipart/form-data">
@@ -30,8 +30,12 @@
                                     <select required id="bank_name" name="bank_name" class="form-control @error('bank_name') is-invalid @enderror">
                                         <option value="" selected disabled>-- เลือกธนาคาร --</option>
                                         @foreach($b_lists as $list)
-                                            @if($list['name'] == $bank['bank_name'])
-                                                <option value="{{ $list['name'] }}" selected>{{ $list['name'] }}</option>
+                                            @if(isset($bank['bank_name']))
+                                                @if($list['name'] == $bank['bank_name'])
+                                                    <option value="{{ $list['name'] }}" selected>{{ $list['name'] }}</option>
+                                                @else
+                                                    <option value="{{ $list['name'] }}">{{ $list['name'] }}</option>
+                                                @endif
                                             @else
                                                 <option value="{{ $list['name'] }}">{{ $list['name'] }}</option>
                                             @endif

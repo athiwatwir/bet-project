@@ -20,7 +20,7 @@
                 <!-- /portlet : header -->
 
                 <!-- portlet : body -->
-                <div class="portlet-body pt-0 pl-4" style="border-left: 12px solid #dd0000; border-radius: 0 0 0 4px;">
+                <div class="portlet-body pt-0 pl-4 border-left-style">
                     <div class="row gutters-sm d-flex align-items-center">
                         <form novalidate class="bs-validate d-block mb-5 w-100" method="post" action="/account/change-password" enctype="multipart/form-data">
                         @csrf

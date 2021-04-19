@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\WalletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,13 @@ Route::prefix('account')->group(function () {
     Route::get('/', [AccountController::class, 'index']);
     Route::get('/change-password', [AccountController::class, 'changePassword']);
     Route::get('/banking', [AccountController::class, 'banking']);
+    Route::get('/wallets', [WalletController::class, 'index']);
 
     Route::post('/update', [AccountController::class, 'personalUpdate']);
     Route::post('/change-password', [AccountController::class, 'passwordUpdate']);
     Route::post('/banking', [AccountController::class, 'bankingUpdate']);
     Route::post('/banking-edit', [AccountController::class, 'bankingEdit']);
+    Route::post('/create-wallet', [WalletController::class, 'createWallet']);
+    Route::post('/edit-wallet', [WalletController::class, 'editWallet']);
+    
 });

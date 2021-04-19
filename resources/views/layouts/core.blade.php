@@ -54,6 +54,7 @@
         @include('layouts/footer/mainfooter')
 
     </div>
+    @yield('modal')
 
     <script src="{{ asset('assets/js/core.js') }}"></script>
 </body>

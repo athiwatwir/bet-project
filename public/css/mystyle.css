@@ -58,3 +58,16 @@
     z-index: 2;
     cursor: pointer;
 }
+
+.border-left-style {
+    border-left: 12px solid #dd0000;
+    border-radius: 0 0 0 4px;
+}
+
+.border-bottom-style {
+    border-bottom: 8px solid #dd0000;
+}
+
+.btn-vv-sm {
+    padding: 0 10px;
+}
