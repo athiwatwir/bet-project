@@ -60,10 +60,10 @@ class WalletController extends Controller
     {
         if($request->wallet_option == 1) {
             $this->validate($request, [
-                'add_amount' => ['required'],
+                'add_amount_wallet' => ['required'],
             ],
             [
-                'add_amount.required' => 'กรุณาเลือกระบุจำนวนเงิน',
+                'add_amount_wallet.required' => 'กรุณาเลือกระบุจำนวนเงิน',
             ]);
 
             $response = Http::withHeaders([
@@ -71,7 +71,7 @@ class WalletController extends Controller
                 'Authorization' => 'Bearer '. session('_t'),
                 ])->post(RouteServiceProvider::API.'/user/add-wallet',[
                     'id' => $request->wallet_id,
-                    'amount' => $request->add_amount,
+                    'amount' => $request->add_amount_wallet,
             ]);
     
             $res = json_decode($response->getBody()->getContents(), true);
@@ -87,11 +87,11 @@ class WalletController extends Controller
         }else if($request->wallet_option == 2) {
             $this->validate($request, [
                 'to_wallet' => ['required'],
-                'change_amount' => ['required']
+                'change_amount_wallet' => ['required']
             ],
             [
                 'to_wallet.required' => 'กรุณาเลือกกระเป๋าเงิน',
-                'change_amount.required' => 'กรุณาระบุจำนวนเงิน',
+                'change_amount_wallet.required' => 'กรุณาระบุจำนวนเงิน',
             ]);
 
             $response = Http::withHeaders([
@@ -100,11 +100,10 @@ class WalletController extends Controller
                 ])->post(RouteServiceProvider::API.'/user/transfer-wallet',[
                     'id' => $request->wallet_id,
                     'to' => $request->to_wallet,
-                    'amount' => $request->change_amount,
+                    'amount' => $request->change_amount_wallet,
             ]);
     
             $res = json_decode($response->getBody()->getContents(), true);
-    
             if($res['status'] == 200) {
                 return redirect()->back()->with('success', 'ย้ายเงินไปยังกระเป๋าเกมส์อื่นเรียบร้อยแล้ว');
             }else if($res['status'] == 301) {
@@ -113,5 +112,21 @@ class WalletController extends Controller
     
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
         }
+    }
+
+    public function deleteWallet(Request $request)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+            ])->get(RouteServiceProvider::API.'/user/delete-wallet/'.$request->id);
+
+        $res = json_decode($response->getBody()->getContents(), true);
+
+        if($res['status'] == 200) {
+            return redirect()->back()->with('success', 'ลบกระเป๋าเงินเกมออกเรียบร้อยแล้ว');
+        }
+
+        return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่...');
     }
 }

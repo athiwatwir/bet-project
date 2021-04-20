@@ -25,21 +25,29 @@
                     <div class="row gutters-sm d-flex align-items-center">
                         <div class="col-md-12 card">
                             <div class="card-body">
-                                <h4>กระเป๋าเงินหลัก</h4>
-                                <p><strong>จำนวนเงินคงเหลือ : <span class="text-success">{{ $wallet['amount'] }}</span> {{ $wallet['currency'] }}</strong></p>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>กระเป๋าเงินหลัก</h4>
+                                        <p><strong>จำนวนเงินคงเหลือ : <span class="text-success">{{ $wallet['amount'] }}</span> {{ $wallet['currency'] }}</strong></p>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <button type="button" class="btn btn-primary btn-sm btn-block btn-shadow">เติมเงิน</button>
+                                        <button type="button" class="btn btn-success btn-sm btn-block ml-0 btn-shadow">ถอนเงิน</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12 mt-3 text-right">
-                            <button type="button" class="btn btn-primary btn-sm rounded" data-toggle="modal" data-target="#createWalletModal">
-                                <i class="fi fi-plus"></i> เพิ่มกระเป๋าเงิน
+                            <button type="button" class="btn btn-primary btn-sm btn-shadow" data-toggle="modal" data-target="#createWalletModal">
+                                <i class="fi fi-plus"></i> เพิ่มกระเป๋าเงินเกม
                             </button>
                         </div>
                         <hr class="bg-secondary my-3"/>
                         <div class="col-md-12">
                             <div class="row mt-3 p-2 rounded bg-light">
-                                @foreach($wallets as $is_wallet)
-                                    <div class="col-md-6 mt-3">
-                                        <div class="card">
+                                @foreach($wallets as $key => $is_wallet)
+                                    <div id="card_id_{{ $key }}" class="col-md-6 mt-3">
+                                        <div class="card" style="background-color: #f6f2ff;">
                                             <div class="card-body p-3">
                                                 <h5>กระเป๋าเงินเกม : {{ $is_wallet['game_id'] }}</h5>
                                                 <p><strong>จำนวนเงิน : <span class="text-success">{{ $is_wallet['amount'] }}</span> {{ $is_wallet['currency'] }}</strong></p>
@@ -49,9 +57,23 @@
                                                     >
                                                         <i class="fi fi-pencil mr-0"></i>
                                                     </button>
-                                                    <button class="btn btn-danger btn-sm btn-vv-sm rounded" title="ลบกระเป๋าเงินเกม{{ $is_wallet['game_id'] }}" data-toggle="modal" data-target="#deleteWalletModal">
+                                                    <a	href="#!" 
+                                                        class="js-ajax-confirm btn btn-danger btn-sm btn-vv-sm rounded" 
+                                                        data-href="/account/delete-wallet/{{ $is_wallet['id'] }}"
+                                                        data-ajax-confirm-body="<center><h4 class='mb-2'>ยืนยันการลบกระเป๋าเกม : {{ $is_wallet['game_id'] }}  ? </h4>
+                                                                                จำนวนยอดเงินที่มี (จำนวน : <span class='text-success'>{{ $is_wallet['amount'] }}</span> {{ $is_wallet['currency'] }}) จะถูกโอนกลับไปยังกระเป๋าหลักอัตโนมัติ...</center>" 
+
+                                                        data-ajax-confirm-method="GET" 
+
+                                                        data-ajax-confirm-btn-yes-class="btn-sm btn-danger" 
+                                                        data-ajax-confirm-btn-yes-text="ลบกระเป๋า" 
+                                                        data-ajax-confirm-btn-yes-icon="fi fi-check" 
+
+                                                        data-ajax-confirm-btn-no-class="btn-sm btn-light" 
+                                                        data-ajax-confirm-btn-no-text="ยกเลิก" 
+                                                        data-ajax-confirm-btn-no-icon="fi fi-close">
                                                         <i class="fi fi-thrash mr-0"></i>
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,10 +172,10 @@
                     <!-- เติมเงินเข้ากระเป๋าเกม -->
                     <div id="add_amount" style="display: none;">
                         <div class="form-label-group row mt-3">
-                            <label for="add_amount" class="col-md-3 col-form-label text-md-right">{{ __('จำนวนเงิน') }}</label>
+                            <label for="add_amount_wallet" class="col-md-3 col-form-label text-md-right">{{ __('จำนวนเงิน') }}</label>
 
                             <div class="col-md-8">
-                                <input placeholder="0" id="add_amount" type="number" class="form-control" name="add_amount" value="{{ old('add_amount') }}" autocomplete="add_amount">
+                                <input placeholder="0" id="add_amount_wallet" type="number" class="form-control" name="add_amount_wallet" value="{{ old('add_amount') }}" autocomplete="add_amount">
                                 <small class="text-dark"><strong>ยอดเงินจากกระเป๋าหลัก :</strong> <span class="text-danger">{{ number_format($wallet['amount']) }}</span> {{ $wallet['currency'] }}</small>
                             </div>
                         </div>
@@ -175,9 +197,9 @@
                         </div>
 
                         <div class="form-label-group row mt-3">
-                            <label for="change_amount" class="col-md-3 col-form-label text-md-right">{{ __('จำนวนเงิน') }}</label>
+                            <label for="change_amount_wallet" class="col-md-3 col-form-label text-md-right">{{ __('จำนวนเงิน') }}</label>
                             <div class="col-md-8">
-                                <input placeholder="0" id="change_amount" type="number" class="form-control" name="change_amount" value="{{ old('change_amount') }}" autocomplete="change_amount">
+                                <input placeholder="0" id="change_amount_wallet" type="number" class="form-control" name="change_amount_wallet" value="{{ old('change_amount') }}" autocomplete="change_amount">
                                 <small class="text-dark"><strong>ยอดเงินที่ใช้ได้ :</strong> <span id="wallet_amount" class="text-danger"></span> {{ $wallet['currency'] }}</small>
                             </div>
                         </div>
@@ -194,26 +216,3 @@
     </div>
 </div>
 @endsection
-
-<script>
-    function editWallet(id, game, amount) {
-        document.getElementById('is_amount').innerHTML = game
-        document.getElementById('wallet_id').value = id
-        document.getElementById('wallet_amount').innerHTML = amount
-    }
-
-    function editWalletSelectedOption(status) {
-        let optionSelect = status ? document.getElementById('wallet_option').value : 0
-        if(optionSelect == 1) {
-            document.getElementById('add_amount').style.display = "block"
-            document.getElementById('change_amount').style.display = "none"
-        }else if(optionSelect == 2){
-            document.getElementById('add_amount').style.display = "none"
-            document.getElementById('change_amount').style.display = "block"
-        }else{
-            document.getElementById('add_amount').style.display = "none"
-            document.getElementById('change_amount').style.display = "none"
-            document.getElementById('wallet_option').value = ''
-        }
-    }
-</script>

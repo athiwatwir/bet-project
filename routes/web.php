@@ -33,6 +33,7 @@ Route::prefix('account')->group(function () {
     Route::get('/change-password', [AccountController::class, 'changePassword']);
     Route::get('/banking', [AccountController::class, 'banking']);
     Route::get('/wallets', [WalletController::class, 'index']);
+    Route::get('/delete-wallet/{id}', [WalletController::class, 'deleteWallet']);
 
     Route::post('/update', [AccountController::class, 'personalUpdate']);
     Route::post('/change-password', [AccountController::class, 'passwordUpdate']);

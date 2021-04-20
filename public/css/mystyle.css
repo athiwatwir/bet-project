@@ -71,3 +71,7 @@
 .btn-vv-sm {
     padding: 0 10px;
 }
+
+.btn-shadow {
+    box-shadow: 2px 2px 4px #aaa;
+}
