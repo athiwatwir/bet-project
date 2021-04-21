@@ -31,7 +31,7 @@
                                         <p><strong>จำนวนเงินคงเหลือ : <span class="text-success">{{ $wallet['amount'] }}</span> {{ $wallet['currency'] }}</strong></p>
                                     </div>
                                     <div class="col-md-4 text-center">
-                                        <button type="button" class="btn btn-primary btn-sm btn-block btn-shadow">เติมเงิน</button>
+                                        <button type="button" class="btn btn-primary btn-sm btn-block btn-shadow">ฝากเงิน</button>
                                         <button type="button" class="btn btn-success btn-sm btn-block ml-0 btn-shadow">ถอนเงิน</button>
                                     </div>
                                 </div>

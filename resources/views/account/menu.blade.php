@@ -26,4 +26,7 @@
     ul.none-style li a{
         color: #333;
     }
+    .dropdown-menu a.dropdown-item {
+        padding: 5px 40px 5px 25px;
+    }
 </style>

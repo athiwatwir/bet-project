@@ -12,14 +12,23 @@
                             </span>
                         </a>
 
-                        <div aria-labelledby="dropdownAccountOptions" class="prefix-link-icon prefix-icon-dot dropdown-menu dropdown-menu-clean dropdown-menu-invert dropdown-click-ignore dropdown-menu-dark p-0 mt--18 fs--15">
+                        <div aria-labelledby="dropdownAccountOptions" class="prefix-link-icon prefix-icon-dot dropdown-menu dropdown-menu-clean dropdown-menu-invert dropdown-click-ignore dropdown-menu-dark p-0 mt--18 fs--15 custom-profile">
                             <div class="dropdown-header">
                                 <i class="fi fi-user-male float-start"></i>
                                 สวัสดี {{ session('name') }}
                             </div>
                             <div class="dropdown-divider"></div>
-                            <a href="{{ url('/account/') }}" title="Account Settings" class="dropdown-item text-truncate font-weight-light">
-                                Account Settings
+                            <a href="{{ url('/account/') }}" title="รายละเอียดผู้ใช้งาน" class="dropdown-item text-truncate font-weight-light">
+                                รายละเอียดผู้ใช้งาน
+                            </a>
+                            <a href="{{ url('/account/banking') }}" title="จัดการบัญชีธนาคาร" class="dropdown-item text-truncate font-weight-light">
+                                จัดการบัญชีธนาคาร
+                            </a>
+                            <a href="{{ url('/account/wallets') }}" title="จัดการกระเป๋าเงิน" class="dropdown-item text-truncate font-weight-light">
+                                จัดการกระเป๋าเงิน
+                            </a>
+                            <a href="{{ url('/account/change-password') }}" title="แก้ไขรหัสผ่าน" class="dropdown-item text-truncate font-weight-light">
+                                แก้ไขรหัสผ่าน
                             </a>
                             <div class="dropdown-divider mb-0"></div>
                             <a href="{{ url('/logout') }}" title="Log Out" class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore">

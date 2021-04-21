@@ -75,3 +75,7 @@
 .btn-shadow {
     box-shadow: 2px 2px 4px #aaa;
 }
+
+.custom-profile {
+    min-width: 200px;
+}
