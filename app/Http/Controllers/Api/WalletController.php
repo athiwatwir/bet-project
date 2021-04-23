@@ -21,7 +21,9 @@ class WalletController extends Controller
 
             $res = json_decode($response->getBody()->getContents(), true);
 
-            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $res['wallets'],'status' => $res['status']]);
+            $default_wallet_history = $this->defaultWalletHistories();
+
+            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $res['wallets'], 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'status' => $res['status']]);
         }else{
             return redirect('/login');
         }
@@ -128,5 +130,79 @@ class WalletController extends Controller
         }
 
         return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่...');
+    }
+
+    public function depositWallet(Request $request)
+    {
+        $request->validate([
+            'payment_slip' => 'required|mimes:jpg,png,jpeg|max:1024',
+        ]);
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+        ])->attach(
+            'attachment', file_get_contents($request->payment_slip), 'slip.jpg'
+        )->post(RouteServiceProvider::API.'/user/deposit-wallet',[
+            'c_bank_account_id' => $request->payment_bank,
+            'amount' => $request->payment_amount,
+            'slip' => $request->payment_slip
+        ]);
+
+        $res = json_decode($response->getBody()->getContents(), true);
+
+        if($res['status'] == 200) {
+            return redirect()->back()->with('success', 'แจ้งโอนเงินเรียบร้อยแล้ว เมื่อตรวจสอบเรียบร้อยแล้วระบบจะเพิ่มเงินเข้ากระเป๋าหลักของคุณ');
+        }
+
+        return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+    }
+
+    public function withdrawWallet(Request $request)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+        ])->post(RouteServiceProvider::API.'/user/withdraw-wallet',[
+            'user_bank_id' => $request->user_bank,
+            'amount' => $request->payment_amount,
+        ]);
+
+        $res = json_decode($response->getBody()->getContents(), true);
+
+        if($res['status'] == 200) {
+            return redirect()->back()->with('success', 'แจ้งถอนเงินเรียบร้อยแล้ว เมื่อตรวจสอบเรียบร้อยแล้วระบบจะโอนเงินไปยังบัญชีของคุณ');
+        }else if($res['status'] == 301) {
+            return redirect()->back()->with('warning', 'เงินในกระเป๋าหลักไม่เพียงพอต่อการถอน...');
+        }
+
+        return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+    }
+
+    private function historiesWallet()
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+            ])->get(RouteServiceProvider::API.'/user/histories-wallet');
+
+        $res = json_decode($response->getBody()->getContents(), true);
+
+        return $res['histories'];
+    }
+
+    private function defaultWalletHistories()
+    {
+        $histories = $this->historiesWallet();
+        $default_wallet_history = [];
+        foreach($histories as $history) {
+            if($history['type'] !== 'ย้าย') {
+                array_push($default_wallet_history, $history);
+            }else if($history['type'] == 'ย้าย' && $history['from_default'] == 'Y' || $history['to_default'] == 'Y') {
+                array_push($default_wallet_history, $history);
+            }
+        }
+
+        return $default_wallet_history;
     }
 }

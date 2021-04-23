@@ -41,5 +41,7 @@ Route::prefix('account')->group(function () {
     Route::post('/banking-edit', [AccountController::class, 'bankingEdit']);
     Route::post('/create-wallet', [WalletController::class, 'createWallet']);
     Route::post('/edit-wallet', [WalletController::class, 'editWallet']);
+    Route::post('/deposit-wallet', [WalletController::class, 'depositWallet']);
+    Route::post('/withdraw-wallet', [WalletController::class, 'withdrawWallet']);
     
 });
