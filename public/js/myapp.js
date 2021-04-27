@@ -37,3 +37,7 @@ function editWalletSelectedOption(status) {
         document.getElementById('change_amount_wallet').required = false
     }
 }
+
+function subWalletHistory(id) {
+  console.log(id)
+}

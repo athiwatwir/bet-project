@@ -89,6 +89,11 @@
 
                                                 <td class="hidden-lg-down text-center">
                                                     <div class="flex text-right">
+                                                        <a href="/account/sub-wallet/{{ $is_wallet['id'] }}" class="btn btn-primary btn-sm btn-vv-sm rounded" title="ประวัติการทำรายการเกม{{ $is_wallet['game_id'] }}" 
+                                                                data-toggle="modal" data-target="#subHistoriesWalletModal" onClick="subWalletHistory({{$is_wallet['id']}})"
+                                                        >
+                                                            <i class="fi fi-task-list mr-0"></i>
+                                                        </a>
                                                         <button class="btn btn-success btn-sm btn-vv-sm rounded" title="แก้ไขกระเป๋าเงินเกม{{ $is_wallet['game_id'] }}" 
                                                                 data-toggle="modal" data-target="#editWalletModal" onClick="editWallet({{ $is_wallet['id'] }}, {{ $is_wallet['game_id'] }}, {{ $is_wallet['amount'] }})"
                                                         >
@@ -145,4 +150,6 @@
     @include('account.wallet_modals.withdraw_wallet_modal')
 
     @include('account.wallet_modals.histories_wallet_modal')
+
+    @include('account.wallet_modals.sub_histories_wallet_modal')
 @endsection

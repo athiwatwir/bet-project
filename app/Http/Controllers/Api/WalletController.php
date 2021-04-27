@@ -21,9 +21,11 @@ class WalletController extends Controller
 
             $res = json_decode($response->getBody()->getContents(), true);
 
-            $default_wallet_history = $this->defaultWalletHistories();
+            $histories = $this->historiesWallet();
+            $default_wallet_history = $this->defaultWalletHistories($histories);
+            $sub_wallet = $this->subWalletHistories($res['wallets'], $histories);
 
-            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $res['wallets'], 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'status' => $res['status']]);
+            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'sub_history' => $histories, 'status' => $res['status']]);
         }else{
             return redirect('/login');
         }
@@ -191,9 +193,8 @@ class WalletController extends Controller
         return $res['histories'];
     }
 
-    private function defaultWalletHistories()
+    private function defaultWalletHistories($histories)
     {
-        $histories = $this->historiesWallet();
         $default_wallet_history = [];
         foreach($histories as $history) {
             if($history['type'] !== 'ย้าย') {
@@ -204,5 +205,25 @@ class WalletController extends Controller
         }
 
         return $default_wallet_history;
+    }
+
+    public function subWalletHistories($wallets, $histories)
+    {
+        // Log::debug($histories);
+        if(isset($histories)){
+            $is_wallet = [];
+            foreach($wallets as $wallet) {
+                $a_wallet = $wallet;
+                $a_wallet['trans'] = [];
+                foreach($histories as $history) {
+                    if($history['type'] == 'ย้าย' && $history['from_wallet_id'] == $wallet['id'] || $history['type'] == 'ย้าย' && $history['to_wallet_id'] == $wallet['id']) {
+                        array_push($a_wallet['trans'], $history);
+                    }
+                }
+                array_push($is_wallet, $a_wallet);
+            }
+            
+            return $is_wallet;
+        }
     }
 }
