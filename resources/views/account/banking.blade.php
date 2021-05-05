@@ -30,14 +30,14 @@
                                     <select required id="bank_name" name="bank_name" class="form-control @error('bank_name') is-invalid @enderror">
                                         <option value="" selected disabled>-- เลือกธนาคาร --</option>
                                         @foreach($b_lists as $list)
-                                            @if(isset($bank['bank_name']))
-                                                @if($list['name'] == $bank['bank_name'])
-                                                    <option value="{{ $list['name'] }}" selected>{{ $list['name'] }}</option>
+                                            @if(isset($bank['bank_id']))
+                                                @if($list['id'] == $bank['bank_id'])
+                                                    <option value="{{ $list['id'] }}" selected>{{ $list['name'] }} @if($list['name_en'] != '')- {{ $list['name_en'] }} @endif</option>
                                                 @else
-                                                    <option value="{{ $list['name'] }}">{{ $list['name'] }}</option>
+                                                    <option value="{{ $list['id'] }}">{{ $list['name'] }} @if($list['name_en'] != '')- {{ $list['name_en'] }} @endif</option>
                                                 @endif
                                             @else
-                                                <option value="{{ $list['name'] }}">{{ $list['name'] }}</option>
+                                                <option value="{{ $list['id'] }}">{{ $list['name'] }} @if($list['name_en'] != '')- {{ $list['name_en'] }} @endif</option>
                                             @endif
                                         @endforeach
                                     </select>

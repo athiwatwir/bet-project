@@ -46,6 +46,7 @@ class AccountController extends Controller
                 ])->get(RouteServiceProvider::API.'/user/user-banking');
 
             $res = json_decode($response->getBody()->getContents(), true);
+            Log::debug($res);
 
             return view('account.banking', ['bank' => $res['bank'], 'b_lists' => $res['b_list'], 'status' => $res['status']]);
         }else{

@@ -31,7 +31,7 @@
 
                         <tbody id="item_list">
 
-                            @foreach ($default_histories['data'] as $key => $history)
+                            @foreach ($default_histories as $key => $history)
 
                                 <tr id="message_id_{{ $key }}" class="text-dark">
                                     <td>

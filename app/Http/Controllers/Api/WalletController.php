@@ -23,7 +23,7 @@ class WalletController extends Controller
 
             $histories = $this->historiesWallet();
             $default_wallet_history = $this->defaultWalletHistories($histories);
-            $sub_wallet = $this->subWalletHistories($res['wallets'], $histories['data']);
+            $sub_wallet = $this->subWalletHistories($res['wallets'], $histories);
             // Log::debug($default_wallet_history);
 
             return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'status' => $res['status']]);
@@ -190,7 +190,7 @@ class WalletController extends Controller
             ])->get(RouteServiceProvider::API.'/user/histories-wallet');
 
         $res = json_decode($response->getBody()->getContents(), true);
-        // Log::debug($res['histories']);
+        Log::debug($res);
 
         return $res['histories'];
     }
@@ -198,16 +198,16 @@ class WalletController extends Controller
     private function defaultWalletHistories($histories)
     {
         $default_wallet_history = [];
-        foreach($histories['data'] as $history) {
+        foreach($histories as $history) {
             if($history['type'] !== 'ย้าย') {
                 array_push($default_wallet_history, $history);
             }else if($history['type'] == 'ย้าย' && $history['from_default'] == 'Y' || $history['to_default'] == 'Y') {
                 array_push($default_wallet_history, $history);
             }
         }
-        array_replace($histories['data'], $default_wallet_history);
+        // array_replace($histories, $default_wallet_history);
 
-        return $histories;
+        return $default_wallet_history;
     }
 
     public function subWalletHistories($wallets, $histories)
