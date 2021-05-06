@@ -50,11 +50,14 @@ class LoginController extends Controller
         ])->get(RouteServiceProvider::API.'/logout');
         $res = json_decode($response->getBody()->getContents(), true);
 
-        if($res['status'] == 200){
-            session()->forget(['_t', 'name']);
-            return redirect()->back()->with('success', 'ออกจากระบบเรียบร้อยแล้ว...');
-        }else{
-            return redirect()->back()->with('error', 'เกิดข้อผิดพลาด...กรุณาลองใหม่อีกครั้ง');
-        }
+        session()->forget(['_t', 'name']);
+        return redirect()->back()->with('success', 'ออกจากระบบเรียบร้อยแล้ว...');
+
+        // if($res['status'] == 200){
+        //     session()->forget(['_t', 'name']);
+        //     return redirect()->back()->with('success', 'ออกจากระบบเรียบร้อยแล้ว...');
+        // }else{
+        //     return redirect()->back()->with('error', 'เกิดข้อผิดพลาด...กรุณาลองใหม่อีกครั้ง');
+        // }
     }
 }

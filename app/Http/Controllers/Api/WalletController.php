@@ -190,7 +190,7 @@ class WalletController extends Controller
             ])->get(RouteServiceProvider::API.'/user/histories-wallet');
 
         $res = json_decode($response->getBody()->getContents(), true);
-        Log::debug($res);
+        // Log::debug($res);
 
         return $res['histories'];
     }
