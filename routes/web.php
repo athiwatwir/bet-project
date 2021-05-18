@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\WalletController;
+use App\Http\Controllers\Api\GamesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +19,7 @@ use App\Http\Controllers\Api\WalletController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'register']);
@@ -44,5 +44,8 @@ Route::prefix('account')->group(function () {
     Route::post('/edit-wallet', [WalletController::class, 'editWallet']);
     Route::post('/deposit-wallet', [WalletController::class, 'depositWallet']);
     Route::post('/withdraw-wallet', [WalletController::class, 'withdrawWallet']);
-    
+});
+
+Route::prefix('games')->group(function () {
+    Route::get('view/{name}/{id}', [GamesController::class, 'view'])->name('viewgame');
 });

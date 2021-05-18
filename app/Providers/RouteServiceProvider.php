@@ -21,6 +21,8 @@ class RouteServiceProvider extends ServiceProvider
 
     public const API = 'http://127.0.0.1:8000/api/v1';
 
+    public const STORAGE = 'http://127.0.0.1:8000';
+
     /**
      * The controller namespace for the application.
      *

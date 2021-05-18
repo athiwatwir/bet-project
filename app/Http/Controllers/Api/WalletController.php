@@ -197,9 +197,10 @@ class WalletController extends Controller
 
     private function defaultWalletHistories($histories)
     {
+        // Log::debug($histories);
         $default_wallet_history = [];
         foreach($histories as $history) {
-            if($history['type'] !== 'ย้าย') {
+            if($history['type'] == 'ฝาก' || $history['type'] == 'ถอน') {
                 array_push($default_wallet_history, $history);
             }else if($history['type'] == 'ย้าย' && $history['from_default'] == 'Y' || $history['to_default'] == 'Y') {
                 array_push($default_wallet_history, $history);
@@ -220,6 +221,8 @@ class WalletController extends Controller
                 $a_wallet['trans'] = [];
                 foreach($histories as $history) {
                     if($history['type'] == 'ย้าย' && $history['from_wallet_id'] == $wallet['id'] || $history['type'] == 'ย้าย' && $history['to_wallet_id'] == $wallet['id']) {
+                        array_push($a_wallet['trans'], $history);
+                    }else if($history['type'] == 'เพิ่ม' && $history['to_wallet_id'] == $wallet['id'] || $history['type'] == 'ลด' && $history['to_wallet_id'] == $wallet['id']) {
                         array_push($a_wallet['trans'], $history);
                     }
                 }

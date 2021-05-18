@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Providers\RouteServiceProvider;
+use App\Providers\RouteServiceProvider as Route;
 use Illuminate\Support\Facades\Http;
 
 use Illuminate\Support\Facades\Log;
@@ -26,7 +26,7 @@ class LoginController extends Controller
             'password.min' => 'รหัสผ่านจะต้องมีมากกว่า 6 ตัวอักษร'
         ]);
 
-        $response = Http::post(RouteServiceProvider::API.'/login',[
+        $response = Http::post(Route::API.'/login',[
             'username' => $request->username,
             'password' => $request->password,
         ]);
@@ -47,7 +47,7 @@ class LoginController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '. session('_t'),
-        ])->get(RouteServiceProvider::API.'/logout');
+        ])->get(Route::API.'/logout');
         $res = json_decode($response->getBody()->getContents(), true);
 
         session()->forget(['_t', 'name']);

@@ -44,7 +44,7 @@
                                     <option value="" disabled selected>-- เลือกกระเป๋า --</option>
                                     <option value="{{ $wallet['id'] }}">กระเป๋าหลัก</option>
                                 @foreach($wallets as $is_wallet)
-                                    <option value="{{ $is_wallet['id'] }}">กระเป๋าเกม : {{ $is_wallet['game_id'] }}</option>
+                                    <option value="{{ $is_wallet['id'] }}">กระเป๋าเกม : {{ $is_wallet['game_name'] }}</option>
                                 @endforeach
                                 </select>
                             </div>

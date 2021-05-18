@@ -72,7 +72,7 @@
                                                 </td>
                                                 <td>
                                                     <p class="mb-0 d-flex">
-                                                        {{ $is_wallet['game_id'] }}
+                                                        {{ $is_wallet['game_name'] }}
                                                     </p>
 
                                                     <!-- MOBILE ONLY -->
@@ -89,20 +89,20 @@
 
                                                 <td class="hidden-lg-down text-center">
                                                     <div class="flex text-right">
-                                                        <button class="btn btn-primary btn-sm btn-vv-sm rounded" title="ประวัติการทำรายการเกม{{ $is_wallet['game_id'] }}" 
+                                                        <button class="btn btn-primary btn-sm btn-vv-sm rounded" title="ประวัติการทำรายการเกม{{ $is_wallet['game_name'] }}" 
                                                                 data-toggle="modal" data-target="#subHistoriesWalletModal" onClick="subWalletHistory({{ json_encode($is_wallet['trans']) }}, {{ $is_wallet['id'] }})"
                                                         >
                                                             <i class="fi fi-task-list mr-0"></i>
                                                         </button>
-                                                        <button class="btn btn-success btn-sm btn-vv-sm rounded" title="แก้ไขกระเป๋าเงินเกม{{ $is_wallet['game_id'] }}" 
-                                                                data-toggle="modal" data-target="#editWalletModal" onClick="editWallet({{ $is_wallet['id'] }}, {{ $is_wallet['game_id'] }}, {{ $is_wallet['amount'] }})"
+                                                        <button class="btn btn-success btn-sm btn-vv-sm rounded" title="แก้ไขกระเป๋าเงินเกม{{ $is_wallet['game_name'] }}" 
+                                                                data-toggle="modal" data-target="#editWalletModal" onClick="editWallet({{ $is_wallet['id'] }}, {{ $is_wallet['game_name'] }}, {{ $is_wallet['amount'] }})"
                                                         >
                                                             <i class="fi fi-pencil mr-0"></i>
                                                         </button>
                                                         <a	href="#!" 
                                                             class="js-ajax-confirm btn btn-danger btn-sm btn-vv-sm rounded" 
                                                             data-href="/account/delete-wallet/{{ $is_wallet['id'] }}"
-                                                            data-ajax-confirm-body="<center><h4 class='mb-2'>ยืนยันการลบกระเป๋าเกม : {{ $is_wallet['game_id'] }}  ? </h4>
+                                                            data-ajax-confirm-body="<center><h4 class='mb-2'>ยืนยันการลบกระเป๋าเกม : {{ $is_wallet['game_name'] }}  ? </h4>
                                                                                     จำนวนยอดเงินที่มี (จำนวน : <span class='text-success'>{{ $is_wallet['amount'] }}</span> {{ $is_wallet['currency'] }}) จะถูกโอนกลับไปยังกระเป๋าหลักอัตโนมัติ...</center>" 
 
                                                             data-ajax-confirm-method="GET" 

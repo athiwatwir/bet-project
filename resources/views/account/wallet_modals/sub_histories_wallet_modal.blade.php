@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <div class="table-responsive">
 
-                    <table id="sub_wallet_history_table" class="table table-align-middle border-bottom mb-6">
+                    <table id="sub_wallet_history_table" class="table table-align-middle border-bottom mb-3">
 
                         <thead>
                             <tr class="text-muted fs--13 bg-light">

@@ -61,159 +61,33 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown dropdown-mega">
-                    <a href="#" id="mainNavShop" class="nav-link dropdown-toggle" 
-                        data-toggle="dropdown" 
-                        aria-haspopup="true" 
-                        aria-expanded="false">
-                        คาสิโน
-                    </a>
-                    <div aria-labelledby="mainNavShop" class="dropdown-menu dropdown-menu-hover bg-bet-05">
-                        <ul class="list-unstyled m-0 p-0">
-                            <li class="dropdown-item bg-transparent">
-                                <div class="row col-border-md">
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/casino/game-ag.png')}}" alt="">
-                                        </a>
+                @foreach($menugames as $group)
+                    <li class="nav-item dropdown dropdown-mega">
+                        <a href="#" id="mainNavShop" class="nav-link dropdown-toggle" 
+                            data-toggle="dropdown" 
+                            aria-haspopup="true" 
+                            aria-expanded="false">
+                            {{ $group['name'] }}
+                        </a>
+                        <div aria-labelledby="mainNavShop" class="dropdown-menu dropdown-menu-hover bg-bet-05">
+                            <ul class="list-unstyled m-0 p-0">
+                                <li class="dropdown-item bg-transparent">
+                                    <div class="row col-border-md">
+                                        @foreach($group['games'] as $key => $game)
+                                            <div class="col-4 col-md-2 my-2">
+                                                <a href="{{ route('viewgame', ['id' => Crypt::encrypt($game['id']), 'name' => $game['name']]) }}" target="_blank" class="transition-hover-zoom-img">
+                                                    <img class="w-100" src="{{ $game['logo'] }}" alt="">
+                                                </a>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/casino/game-dream.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/casino/game-ebet.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/casino/game-evolution.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/casino/game-mg.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/casino/game-micro.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    
-                                    
+                                    <!-- <hr/> -->
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endforeach
 
-                                </div>
-                                <hr/>
-                                <div class="row col-border-md">
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/casino/game-playtech.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/casino/game-sa.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/casino/game-sexy.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown dropdown-mega">
-                    <a href="#" id="menu-sport" class="nav-link dropdown-toggle" 
-                        data-toggle="dropdown" 
-                        aria-haspopup="true" 
-                        aria-expanded="false">
-                        กีฬา
-                    </a>
-                    <div aria-labelledby="menu-sport" class="dropdown-menu dropdown-menu-hover bg-bet-05">
-                        <ul class="list-unstyled m-0 p-0">
-                            <li class="dropdown-item bg-transparent">
-                                <div class="row col-border-md">
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/sport/sport-bet.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/sport/sport-cmd.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/sport/sport-m8bet.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/sport/sport-maxbet.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/sport/sport-sbobet.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/sport/sport-ufa.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown dropdown-mega">
-                    <a href="#" id="menu-esport" class="nav-link dropdown-toggle" 
-                        data-toggle="dropdown" 
-                        aria-haspopup="true" 
-                        aria-expanded="false">
-                        อีสปอร์ต
-                    </a>
-                    <div aria-labelledby="menu-esport" class="dropdown-menu dropdown-menu-hover bg-bet-05">
-                        <ul class="list-unstyled m-0 p-0">
-                            <li class="dropdown-item bg-transparent">
-                                <div class="row col-border-md">
-                                    <div class="col-4 col-md-2">
-                                        <a href="#" class="transition-hover-zoom-img">
-                                            <img class="w-100" src="{{url('img/menu/esport/esport.png')}}" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown dropdown-mega">
-                    <a href="#" id="menu-slot" class="nav-link dropdown-toggle" 
-                        data-toggle="dropdown" 
-                        aria-haspopup="true" 
-                        aria-expanded="false">
-                            สล๊อต
-                    </a>
-                    <div aria-labelledby="menu-slot" class="dropdown-menu dropdown-menu-hover bg-bet-05">
-                        <ul class="list-unstyled m-0 p-0">
-                            <li class="dropdown-item bg-transparent">
-                                <div class="row col-border-md">
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
 
                 <li class="nav-item dropdown">
                     <a href="#" id="mainNavHome" class="nav-link">

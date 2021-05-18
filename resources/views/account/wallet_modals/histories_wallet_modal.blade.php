@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">ประวัติการทำรายการ</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">ประวัติการทำรายการกระเป๋าเงินหลัก</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <div class="table-responsive">
 
-                    <table class="table table-align-middle border-bottom mb-6">
+                    <table class="table table-align-middle border-bottom mb-3">
 
                         <thead>
                             <tr class="text-muted fs--13 bg-light">
@@ -40,11 +40,16 @@
                                                         @if($history['type'] == 'ฝาก') badge-success 
                                                         @elseif($history['type'] == 'ถอน') badge-danger 
                                                         @elseif($history['type'] == 'ย้าย') badge-warning
+                                                        @elseif($history['type'] == 'เพิ่ม') badge-primary
+                                                        @elseif($history['type'] == 'ลด') badge-secondary
                                                         @endif 
                                                         font-weight-normal fs--16"
                                             >{{ $history['type'] }}
                                             </span>
                                         </p>
+                                        @if(isset($history['description']))
+                                            <small><small><span class="text-danger">**</span> {{ $history['description'] }}</small></small>
+                                        @endif
 
                                         <!-- MOBILE ONLY -->
                                         <div class="fs--13 d-block d-xl-none">
@@ -59,23 +64,11 @@
                                     </td>
 
                                     <td class="hidden-lg-down text-center" style="line-height: 16px;">
-                                        @if($history['type'] == 'ฝาก')
-                                            {{ $history['bank_name'] }}<br/>
-                                            <small>{{ $history['account_name'] }}</small><br/>
-                                            <small>{{ $history['account_number'] }}</small>
-                                        @elseif($history['type'] == 'ถอน')
-                                            {{ $history['user_bank_name'] }}<br/>
-                                            <small>{{ $history['bank_account_name'] }}</small><br/>
-                                            <small>{{ $history['bank_account_number'] }}</small>
-                                        @elseif($history['type'] == 'ย้าย')
+                                        @if(isset($history['by_admin']))
                                             <small>
-                                                @if($history['from_default'] == 'Y')
-                                                    กระเป๋าหลัก
-                                                @else
-                                                    กระเป๋าเกม : {{ $history['from_game'] }}
-                                                @endif
+                                                <strong>ผู้ดูแลระบบ</strong>
                                             </small><br/>
-                                            <small>-></small></br>
+                                            <small><i class="fi fi-arrow-down-full text-primary"></i></small></br>
                                             <small>
                                                 @if($history['to_default'] == 'Y')
                                                     กระเป๋าหลัก
@@ -83,6 +76,32 @@
                                                     กระเป๋าเกม : {{ $history['to_game'] }}
                                                 @endif
                                             </small>
+                                        @else
+                                            @if($history['type'] == 'ฝาก')
+                                                {{ $history['bank_name'] }}<br/>
+                                                <small>{{ $history['account_name'] }}</small><br/>
+                                                <small>{{ $history['account_number'] }}</small>
+                                            @elseif($history['type'] == 'ถอน')
+                                                {{ $history['user_bank_name'] }}<br/>
+                                                <small>{{ $history['bank_account_name'] }}</small><br/>
+                                                <small>{{ $history['bank_account_number'] }}</small>
+                                            @elseif($history['type'] == 'ย้าย')
+                                                <small>
+                                                    @if($history['from_default'] == 'Y')
+                                                        กระเป๋าหลัก
+                                                    @else
+                                                        กระเป๋าเกม : {{ $history['from_game'] }}
+                                                    @endif
+                                                </small><br/>
+                                                <small><i class="fi fi-arrow-down-full text-primary"></i></small></br>
+                                                <small>
+                                                    @if($history['to_default'] == 'Y')
+                                                        กระเป๋าหลัก
+                                                    @else
+                                                        กระเป๋าเกม : {{ $history['to_game'] }}
+                                                    @endif
+                                                </small>
+                                            @endif
                                         @endif
                                     </td>
 
@@ -90,6 +109,8 @@
                                         <strong class=" @if($history['type'] == 'ฝาก') text-success 
                                                     @elseif($history['type'] == 'ถอน') text-danger 
                                                     @elseif($history['type'] == 'ย้าย') text-warning
+                                                    @elseif($history['type'] == 'เพิ่ม') text-primary
+                                                    @elseif($history['type'] == 'ลด') text-secondary
                                                     @endif "
                                         >{{ number_format($history['amount']) }}
                                         </strong>

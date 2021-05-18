@@ -47,23 +47,46 @@ function subWalletHistory(data, id) {
     }
 
     for(i = 0; i < data.length; i++) {
-      let type = this.subWalletHistoryType(id, data[i].from_wallet_id, data[i].to_wallet_id)
-      let from = data[i].from_default == 'Y' ? 'กระเป๋าหลัก' : 'กระเป๋าเกม' + data[i].from_game
-      let to = data[i].to_default == 'Y' ? 'กระเป๋าหลัก' : 'กระเป๋าเกม' + data[i].to_game
+      let type = this.subWalletHistoryType(id, data[i].from_wallet_id, data[i].to_wallet_id, data[i].by_admin, data[i].type)
+      let type_badge = this.setTypeBadge(type)
+      let from = data[i].from_default == 'Y' ? 'กระเป๋าหลัก' : (data[i].by_admin == null) ? 'กระเป๋าเกม ' + data[i].from_game : 'ผู้ดูแลระบบ'
+      let to = data[i].to_default == 'Y' ? 'กระเป๋าหลัก' : 'กระเป๋าเกม ' + data[i].to_game
       let status = data[i].status == 'CO' ? 'ยืนยันแล้ว' : data[i].status == 'VO' ? 'ปฏิเสธแล้ว' : 'รอยืนยัน'
+      let description = data[i].description == null ? '' : '<span class="text-danger">**</span> ' + data[i].description
+      let from_admin = data[i].by_admin == null ? '<center><small class="badge badge-info font-weight-normal">' + from + '</small></center>' : '<center><small class="badge badge-primary font-weight-normal">' + from + '</small></center><center><small><small>' + description + '</small></small></center>'
+      let to_admin = data[i].by_admin == null ? '<center><small class="badge badge-warning font-weight-normal">' + to + '</small></center>' : '<center><small class="badge badge-secondary font-weight-normal">' + from + '</small></center><center><small><small>' + description + '</small></small></center>'
 
       let newRow = tbodyRef.insertRow(i)
-      newRow.insertCell(0).innerHTML = data[i].action_date
-      newRow.insertCell(1).innerHTML = '<center>' + type + '</center>'
-      newRow.insertCell(2).innerHTML = type == 'รับเข้า' ? '<center><small class="badge badge-info font-weight-normal">' + from + '</small></center>' : ''
-      newRow.insertCell(3).innerHTML = type == 'ส่งออก' ? '<center><small class="badge badge-warning font-weight-normal">' + to + '</small></center>' : ''
+      newRow.insertCell(0).innerHTML = this.dateToYMD(new Date(data[i].action_date))
+      newRow.insertCell(1).innerHTML = '<center>' + type_badge + '</center>'
+      newRow.insertCell(2).innerHTML = type == 'รับเข้า' || type == 'เพิ่ม' ? from_admin : ''
+      newRow.insertCell(3).innerHTML = type == 'ส่งออก' || type == 'ลด' ? to_admin : ''
       newRow.insertCell(4).innerHTML = '<center>' + data[i].amount + '</center>'
       newRow.insertCell(5).innerHTML = '<center><small class="badge badge-success font-weight-normal">' + status + '</small></center>'
     }
   }
 }
 
-function subWalletHistoryType(wallet_id, from_id, to_id) {
-  if(wallet_id == from_id) return 'ส่งออก'
-  if(wallet_id == to_id) return 'รับเข้า'
+function subWalletHistoryType(wallet_id, from_id, to_id, by_admin, type) {
+  if(by_admin == null) {
+    if(wallet_id == from_id) return 'ส่งออก'
+    if(wallet_id == to_id) return 'รับเข้า'
+  }else{
+    if(type == 'เพิ่ม') return 'เพิ่ม'
+    if(type == 'ลด') return 'ลด'
+  }
+}
+
+function setTypeBadge(type) {
+  if(type == 'รับเข้า') return '<span class="badge badge-info font-weight-normal fs--16">' + type + '</span>'
+  if(type == 'ส่งออก') return '<span class="badge badge-warning font-weight-normal fs--16">' + type + '</span>'
+  if(type == 'เพิ่ม') return '<span class="badge badge-primary font-weight-normal fs--16">' + type + '</span>'
+  if(type == 'ลด') return '<span class="badge badge-secondary font-weight-normal fs--16">' + type + '</span>'
+}
+
+function dateToYMD(date) {
+  var d = date.getDate()
+  var m = date.getMonth() + 1 //Month from 0 to 11
+  var y = date.getFullYear()
+  return '' + (d <= 9 ? '0' + d : d) + '-' + (m<=9 ? '0' + m : m) + '-' + y
 }
