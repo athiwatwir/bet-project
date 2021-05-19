@@ -25,8 +25,8 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', function ($view) {
-            $view->with('menugames', (new GamesController)->menuGame());
-        });
+        // View::composer('*', function ($view) {
+        //     $view->with('menugames', (new GamesController)->menuGame());
+        // });
     }
 }

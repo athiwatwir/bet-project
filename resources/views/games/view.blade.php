@@ -5,25 +5,7 @@
 @section('content')
 <div class="container pt-4 mt-4">
     <div class="row justify-content-center">
-            <div class="col-md-4 text-white">
-                <div class="card border-bottom-style">
-                    <div class="card-body">
-                        <div class="portlet-header pb-2 pt-0">
-                            <h4 class="d-block text-dark text-truncate font-weight-medium">
-                                เกมอื่นๆ
-                            </h4>
-                        </div>
-                        <ul class="none-style pl-4">
-                            <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="#!">Game</a></li>
-                            <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="#!">Game</a></li>
-                            <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="#!">Game</a></li>
-                            <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="#!">Game</a></li>
-                            <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="#!">Game</a>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        <div class="col-md-8">
+        <div class="col-md-12">
 
             <!-- portlet -->
             <div class="portlet">
@@ -31,7 +13,7 @@
                 <!-- portlet : header -->
                 <div class="portlet-header pb-2">
                     <h4 class="d-block text-dark text-truncate font-weight-medium">
-                        เล่นเกม
+                        เล่นเกม {{ $game }}
                     </h4>
                 </div>
                 <!-- /portlet : header -->
@@ -40,7 +22,17 @@
                 <div class="portlet-body pt-0 pl-4 pr-4 border-left-style">
 
                     <div class="row gutters-sm d-flex align-items-center">
-                        XXxxXX
+                        @if($status != 301)
+                            <div class="col-md-12 text-center">
+                                <p>url : {{ $play['url'] }}</p>
+                                <p>token : {{ $play['token'] }}</p>
+                            </div>
+                        @else
+                            <div class="col-md-12 text-center mt-4">
+                                <h5 class="text-primary">กรุณาเข้าสู่ระบบก่อนเล่นเกม</h5>
+                                <p><a href="{{ url('/login') }}">เข้าสู่ระบบ</a> -หรือ- <a href="{{ url('/register') }}">สมัครสมาชิก</a></p>
+                            </div>
+                        @endif
                     </div>
 
                 </div>
