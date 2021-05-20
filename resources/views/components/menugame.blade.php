@@ -9,7 +9,7 @@
         <div aria-labelledby="mainNavShop" class="dropdown-menu dropdown-menu-hover bg-bet-05">
             <ul class="list-unstyled m-0 p-0">
                 <li class="dropdown-item bg-transparent">
-                    <div class="row col-border-md">
+                    <div class="row col-border-md menugame">
                         @foreach($group['games'] as $key => $game)
                             <div class="col-4 col-md-2 my-2">
                                 <a href="{{ route('viewgame', ['id' => Crypt::encrypt($game['id']), 'name' => $game['name']]) }}" class="transition-hover-zoom-img">

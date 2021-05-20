@@ -79,3 +79,11 @@
 .custom-profile {
     min-width: 200px;
 }
+
+.row.col-border-md.menugame > div:nth-child(7),
+.row.col-border-md.menugame > div:nth-child(13),
+.row.col-border-md.menugame > div:nth-child(19),
+.row.col-border-md.menugame > div:nth-child(25),
+.row.col-border-md.menugame > div:nth-child(31) {
+    border-left: none;
+}
