@@ -26,7 +26,9 @@ class LoginController extends Controller
             'password.min' => 'รหัสผ่านจะต้องมีมากกว่า 6 ตัวอักษร'
         ]);
 
-        $response = Http::post(Route::API.'/login',[
+        $response = Http::withHeaders([
+            'Accept' => 'application/json'
+        ])->post(Route::API.'/login',[
             'username' => $request->username,
             'password' => $request->password,
         ]);
@@ -34,11 +36,15 @@ class LoginController extends Controller
         $res = json_decode($response->getBody()->getContents(), true);
         // Log::debug($res);
         // return redirect()->back();
-        if($res['status'] == 200){
-            session(['_t' => $res['token'], 'name' => $res['name']]);
-            return redirect()->back()->with('success', 'เข้าสู่ระบบแล้ว...');
+        if(isset($res['status'])) {
+            if($res['status'] == 200){
+                session(['_t' => $res['token'], 'name' => $res['name']]);
+                return redirect()->back()->with('success', 'เข้าสู่ระบบแล้ว...');
+            }else{
+                return redirect()->back()->with('error', $res['message']);
+            }
         }else{
-            return redirect()->back()->with('error', $res['message']);
+            return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
         }
     }
 

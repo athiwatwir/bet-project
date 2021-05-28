@@ -53,7 +53,7 @@
 
                 <!-- home -->
                 <li class="nav-item dropdown active">
-                    <a href="#" id="menu-home" class="nav-link">
+                    <a href="{{ url('/') }}" id="menu-home" class="nav-link">
                         <i class="fi fi-home"></i>
                     </a>
                 </li>

@@ -17,9 +17,13 @@
                         <div class="col-md-8">
                             <select required id="game" name="game" class="form-control @error('game') is-invalid @enderror">
                                 <option value="" selected disabled>-- เลือกเกม --</option>
-                                <option value="1">game 1</option>
-                                <option value="2">game 2</option>
-                                <option value="3">game 3</option>
+                                @foreach($games as $group)
+                                    <optgroup label="{{ $group['name'] }}">
+                                        @foreach($group['games'] as $game)
+                                            <option value="{{ $game['id'] }}">{{ $game['name'] }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
                             </select>
                             @error('game')
                                 <span class="invalid-feedback" role="alert">

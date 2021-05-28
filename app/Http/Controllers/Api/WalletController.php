@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Http;
 
 use Illuminate\Support\Facades\Log;
 
+use App\Http\Controllers\Api\GamesController as isGame;
+
 class WalletController extends Controller
 {
     public function index()
@@ -24,9 +26,11 @@ class WalletController extends Controller
             $histories = $this->historiesWallet();
             $default_wallet_history = $this->defaultWalletHistories($histories);
             $sub_wallet = $this->subWalletHistories($res['wallets'], $histories);
+            $games = (new isGame)->menuGame();
+            // Log::debug($games);
             // Log::debug($default_wallet_history);
 
-            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'status' => $res['status']]);
+            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'games' => $games, 'status' => $res['status']]);
         }else{
             return redirect('/login');
         }
@@ -211,7 +215,7 @@ class WalletController extends Controller
         return $default_wallet_history;
     }
 
-    public function subWalletHistories($wallets, $histories)
+    private function subWalletHistories($wallets, $histories)
     {
         // Log::debug($histories);
         if(isset($histories)){
