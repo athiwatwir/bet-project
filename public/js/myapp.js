@@ -11,10 +11,19 @@ function showPwd(id, el) { // show password
 
 
 // wallet.blade.php------------------------------------------------------
-function editWallet(id, game, amount) {
-    document.getElementById('is_amount').innerHTML = game
+function editWallet(id, game, name) {
     document.getElementById('wallet_id').value = id
-    document.getElementById('wallet_amount').innerHTML = amount
+    document.querySelector('#is_game_name').innerHTML = game
+    const res = this.getGameWallet(name)
+    res.then(balance => {
+      document.querySelector('#game_balance').innerHTML = balance.data
+      document.querySelector('#game_balance_2').innerHTML = balance.data
+    })
+}
+
+async function getGameWallet(name) {
+    const response = await fetch('https://88.playszone.com/api/v2/pgsoftgame/wallet/'+ name);
+    return response.json()
 }
 
 function editWalletSelectedOption(status) {
@@ -28,7 +37,7 @@ function editWalletSelectedOption(status) {
         document.getElementById('add_amount').style.display = "none"
         document.getElementById('change_amount').style.display = "block"
         document.getElementById('add_amount_wallet').required = false
-        document.getElementById('change_amount_wallet').required = true
+        document.getElementById('change_amount_wallet').required = false
     }else{
         document.getElementById('add_amount').style.display = "none"
         document.getElementById('change_amount').style.display = "none"
@@ -36,6 +45,27 @@ function editWalletSelectedOption(status) {
         document.getElementById('add_amount_wallet').required = false
         document.getElementById('change_amount_wallet').required = false
     }
+}
+
+function editWalletSelectedOptionV2(value) {
+  document.querySelector('#wallet_action').value = value
+  if(value == 'deposit') {
+      document.getElementById('add_amount').style.display = "block"
+      document.getElementById('change_amount').style.display = "none"
+      document.getElementById('add_amount_wallet').required = true
+      document.getElementById('change_amount_wallet').required = false
+  }else if(value == 'withdraw'){
+      document.getElementById('add_amount').style.display = "none"
+      document.getElementById('change_amount').style.display = "block"
+      document.getElementById('add_amount_wallet').required = false
+      document.getElementById('change_amount_wallet').required = true
+  }else{
+      document.getElementById('add_amount').style.display = "none"
+      document.getElementById('change_amount').style.display = "none"
+      document.getElementById('wallet_option').value = ''
+      document.getElementById('add_amount_wallet').required = false
+      document.getElementById('change_amount_wallet').required = false
+  }
 }
 
 function subWalletHistory(data, id) {
@@ -75,6 +105,18 @@ function subWalletHistoryType(wallet_id, from_id, to_id, by_admin, type) {
     if(type == 'เพิ่ม') return 'เพิ่ม'
     if(type == 'ลด') return 'ลด'
   }
+}
+
+function thePointer()
+{
+   const isapi = 'https://88.playszone.com'
+   return isapi
+}
+
+function theDestination()
+{
+  const ispath = 'pgsoftgame/wallet'
+  return ispath
 }
 
 function setTypeBadge(type) {

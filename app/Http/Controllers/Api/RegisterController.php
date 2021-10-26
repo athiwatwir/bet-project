@@ -49,10 +49,27 @@ class RegisterController extends Controller
 
         $res = json_decode($response->getBody()->getContents(),true);
         if($res['status'] == 200){
-            return redirect()->back()->with('success', 'ลงทะเบียนเรียบร้อยแล้ว');
+            $result = $this->withLogin($request->username, $request->password);
+            if($result['status'] == 200) {
+                session(['_t' => $result['token'], 'name' => $result['name']]);
+                return redirect('/')->with('success', 'ลงทะเบียนเรียบร้อยแล้ว');
+            }
+            // return redirect()->back()->with('success', 'ลงทะเบียนเรียบร้อยแล้ว');
         }else{
             return redirect()->back()->with('error', $res['message']);
         }
         // dd($response->getBody()->getContents());
+    }
+
+    private function withLogin($username, $password)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json'
+        ])->post(RouteServiceProvider::API.'/login',[
+            'username' => $username,
+            'password' => $password,
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

@@ -62,6 +62,12 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-10 text-right">
+                                <a href="#"><small>ลืมรหัสผ่าน</small></a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="form-group row mt-3">

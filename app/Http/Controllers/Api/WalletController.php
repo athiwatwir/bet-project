@@ -59,6 +59,8 @@ class WalletController extends Controller
             return redirect()->back()->with('success', 'เพิ่มกระเป๋าเงินเรียบร้อยแล้ว');
         }else if($res['status'] == 301) {
             return redirect()->back()->with('error', 'เงินในกระเป๋าหลักไม่เพียงพอ...กรุณาเพิ่มเงิน หรือ โยกย้ายมาจากเกมอื่น');
+        }else if($res['status'] == 404) {
+            return redirect()->back()->with('error', 'กระเป๋าเงินเกมส์ไม่อนุญาตให้ซ้ำกัน...กรุณาตรวจสอบ');
         }
 
         return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
@@ -67,7 +69,7 @@ class WalletController extends Controller
 
     public function editWallet(Request $request)
     {
-        if($request->wallet_option == 1) {
+        if($request->wallet_action == 'deposit') {
             $this->validate($request, [
                 'add_amount_wallet' => ['required'],
             ],
@@ -93,7 +95,33 @@ class WalletController extends Controller
     
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
             
-        }else if($request->wallet_option == 2) {
+        }else if($request->wallet_action == 'withdraw') {
+            $this->validate($request, [
+                'change_amount_wallet' => ['required']
+            ],
+            [
+                'change_amount_wallet.required' => 'กรุณาระบุจำนวนเงิน'
+            ]);
+
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer '. session('_t'),
+                ])->post(RouteServiceProvider::API.'/user/transfer-wallet',[
+                    'id' => $request->wallet_id,
+                    'to' => $request->to_wallet,
+                    'amount' => $request->change_amount_wallet,
+            ]);
+    
+            $res = json_decode($response->getBody()->getContents(), true);
+            if($res['status'] == 200) {
+                return redirect()->back()->with('success', 'ย้ายเงินไปยังกระเป๋าเกมส์อื่นเรียบร้อยแล้ว');
+            }else if($res['status'] == 301) {
+                return redirect()->back()->with('error', 'เงินในกระเป๋าเกมไม่ถูกต้อง...กรุณาตรวจสอบ');
+            }
+    
+            return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
+
+        }else if($request->wallet_action == 'transfer') {
             $this->validate($request, [
                 'to_wallet' => ['required'],
                 'change_amount_wallet' => ['required']
@@ -184,6 +212,11 @@ class WalletController extends Controller
         }
 
         return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+    }
+
+    public function getGameWallet(Request $request)
+    {
+        Log::debug('getGameWallet');
     }
 
     private function historiesWallet()

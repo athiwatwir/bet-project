@@ -89,14 +89,9 @@
                         <div class="form-group row g-0">
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('เบอร์ติดต่อ') }} <span class="text-danger">*</span></label>
 
-                            <div class="col-md-2">
-                                <select class="form-control" name="country_code" style="padding: 5px;">
-                                    <option value="+66"><img src="{{ asset('img/icon/thai_flag_64.png') }}" style="border-radius: 50%;"> 66</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <input placeholder="ตัวเลขเท่านั้น" id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
-
+                            <div class="col-md-6">
+                                <input placeholder="ตัวเลขเท่านั้น" id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" onKeyup="checkPhoneNumber()">
+                                <span id="phone-alert"></span>
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -193,6 +188,13 @@
             document.getElementById('password-notice').style.display = "flex"
         }else{
             document.getElementById('password-notice').style.display = "none"
+        }
+    }
+
+    function checkPhoneNumber() {
+        let is_phone = document.querySelector('#phone').value
+        if(is_phone.charAt(0) != 0) {
+            alert('หมายเลขโทรศัพท์ต้อขึ้นด้วยเลข 0')
         }
     }
 </script>

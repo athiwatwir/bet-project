@@ -46,7 +46,7 @@ class AccountController extends Controller
                 ])->get(RouteServiceProvider::API.'/user/user-banking');
 
             $res = json_decode($response->getBody()->getContents(), true);
-            Log::debug($res);
+            // Log::debug($res);
 
             return view('account.banking', ['bank' => $res['bank'], 'b_lists' => $res['b_list'], 'status' => $res['status']]);
         }else{
@@ -114,6 +114,7 @@ class AccountController extends Controller
 
     public function bankingUpdate(Request $request)
     {
+        // Log::debug($request);
         $this->validate($request, [
             'bank_name' => ['required'],
             'bank_account_name' => ['required', 'string'],

@@ -35,6 +35,7 @@ Route::prefix('account')->group(function () {
     Route::get('/wallets', [WalletController::class, 'index']);
     Route::get('/delete-wallet/{id}', [WalletController::class, 'deleteWallet']);
     Route::get('/sub-wallet/{id}', [WalletController::class, 'subWalletHistory']);
+    Route::get('/game-wallet', [WalletController::class, 'getGameWallet']);
 
     Route::post('/update', [AccountController::class, 'personalUpdate']);
     Route::post('/change-password', [AccountController::class, 'passwordUpdate']);
@@ -48,4 +49,6 @@ Route::prefix('account')->group(function () {
 
 Route::prefix('games')->group(function () {
     Route::get('view/{name}/{id}', [GamesController::class, 'view'])->name('viewgame');
+    Route::get('demo/{game}', [GamesController::class, 'playDemo'])->name('demo');
+    Route::get('login/{name}', [GamesController::class, 'loginToGame'])->name('logingame');
 });

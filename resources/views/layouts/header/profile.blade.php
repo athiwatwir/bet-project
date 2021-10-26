@@ -15,7 +15,7 @@
                         <div aria-labelledby="dropdownAccountOptions" class="prefix-link-icon prefix-icon-dot dropdown-menu dropdown-menu-clean dropdown-menu-invert dropdown-click-ignore dropdown-menu-dark p-0 mt--18 fs--15 custom-profile">
                             <div class="dropdown-header">
                                 <i class="fi fi-user-male float-start"></i>
-                                สวัสดี {{ session('name') }}
+                                สวัสดี {{ session('user') }}
                             </div>
                             <div class="dropdown-divider"></div>
                             <a href="{{ url('/account/') }}" title="รายละเอียดผู้ใช้งาน" class="dropdown-item text-truncate font-weight-light">

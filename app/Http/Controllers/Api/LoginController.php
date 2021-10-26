@@ -18,6 +18,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        // Log::debug($request);
         $this->validate($request, [
             'username' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:6'],
@@ -38,7 +39,7 @@ class LoginController extends Controller
         // return redirect()->back();
         if(isset($res['status'])) {
             if($res['status'] == 200){
-                session(['_t' => $res['token'], 'name' => $res['name']]);
+                session(['_t' => $res['token'], 'name' => $res['name'], 'user' => $res['user']]);
                 return redirect()->back()->with('success', 'เข้าสู่ระบบแล้ว...');
             }else{
                 return redirect()->back()->with('error', $res['message']);
@@ -46,6 +47,11 @@ class LoginController extends Controller
         }else{
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
         }
+    }
+
+    public function login2(Request $request)
+    {
+        Log::debug($request);
     }
 
     public function logout(Request $request)

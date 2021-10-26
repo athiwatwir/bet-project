@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use App\Http\Controllers\Api\GamesController;
+use Illuminate\Support\Facades\Cache;
 
 class Menugame extends Component
 {
@@ -15,7 +16,9 @@ class Menugame extends Component
      */
     public function __construct()
     {
-        $this->menugames = (new GamesController)->menuGame();
+        $this->menugames = Cache::remember('menugames', 86000, function () {
+            return (new GamesController)->menuGame();
+        });
     }
 
     /**

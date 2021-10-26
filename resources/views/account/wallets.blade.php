@@ -57,7 +57,7 @@
                                                     กระเป๋าเงินเกม
                                                 </span>
                                             </th>
-                                            <th class="hidden-lg-down text-center">จำนวนเงิน</th>
+                                            <!-- <th class="hidden-lg-down text-center">จำนวนเงิน</th> -->
                                             <th>&nbsp;</th>
                                         </tr>
                                     </thead>
@@ -83,22 +83,38 @@
                                                     <!-- /MOBILE ONLY -->
                                                 </td>
 
-                                                <td class="hidden-lg-down text-center">
+                                                <!-- <td class="hidden-lg-down text-center">
                                                     {{ number_format($is_wallet['amount']) }} {{ $is_wallet['currency'] }}
-                                                </td>
+                                                </td> -->
 
-                                                <td class="hidden-lg-down text-center">
+                                                <td class="text-center">
                                                     <div class="flex text-right">
-                                                        <button class="btn btn-primary btn-sm btn-vv-sm rounded" title="ประวัติการทำรายการเกม{{ $is_wallet['game_name'] }}" 
+                                                        <!-- <button class="btn btn-info btn-sm btn-vv-sm rounded" title="ฝากเงินเข้ากระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
+                                                                data-toggle="modal" data-target="#" onClick=""
+                                                        >
+                                                            <i class="fi fi-arrow-download mr-0"></i>
+                                                        </button>
+                                                        <button class="btn btn-warning btn-sm btn-vv-sm rounded" title="ถอนเงินออกกระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
+                                                                data-toggle="modal" data-target="#" onClick=""
+                                                        >
+                                                            <i class="fi fi-arrow-upload mr-0"></i>
+                                                        </button>
+                                                        <button class="btn btn-secondary btn-sm btn-vv-sm rounded" title="ย้ายเงินไปกระเป๋าอื่น" 
+                                                                data-toggle="modal" data-target="#" onClick=""
+                                                        >
+                                                            <i class="fi fi-arrow-right-3 mr-0"></i>
+                                                        </button> -->
+                                                        <button class="btn btn-primary btn-sm btn-vv-sm rounded" title="ประวัติการทำรายการเกม {{ $is_wallet['game_name'] }}" 
                                                                 data-toggle="modal" data-target="#subHistoriesWalletModal" onClick="subWalletHistory({{ json_encode($is_wallet['trans']) }}, {{ $is_wallet['id'] }})"
                                                         >
                                                             <i class="fi fi-task-list mr-0"></i>
                                                         </button>
-                                                        <button class="btn btn-success btn-sm btn-vv-sm rounded" title="แก้ไขกระเป๋าเงินเกม{{ $is_wallet['game_name'] }}" 
-                                                                data-toggle="modal" data-target="#editWalletModal" onClick="editWallet({{ $is_wallet['id'] }}, {{ $is_wallet['game_name'] }}, {{ $is_wallet['amount'] }})"
+                                                        <button class="btn btn-success btn-sm btn-vv-sm rounded" title="จัดการกระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
+                                                                data-toggle="modal" data-target="#editWalletModal" onClick="editWallet({{ $is_wallet['id'] }}, '{{ $is_wallet['game_name'] }}', '{{ session('user') }}')"
                                                         >
                                                             <i class="fi fi-pencil mr-0"></i>
                                                         </button>
+                                                        
                                                         <a	href="#!" 
                                                             class="js-ajax-confirm btn btn-danger btn-sm btn-vv-sm rounded" 
                                                             data-href="/account/delete-wallet/{{ $is_wallet['id'] }}"
