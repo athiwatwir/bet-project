@@ -64,7 +64,7 @@
 
                         <div class="row">
                             <div class="col-md-10 text-right">
-                                <a href="#"><small>ลืมรหัสผ่าน</small></a>
+                                <a href="{{ url('/forgot-password') }}"><small>ลืมรหัสผ่าน (Forgot Password)</small></a>
                             </div>
                         </div>
 

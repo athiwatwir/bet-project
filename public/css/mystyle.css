@@ -87,3 +87,8 @@
 .row.col-border-md.menugame > div:nth-child(31) {
     border-left: none;
 }
+
+.navbar-brand img {
+    max-width: 220px;
+    max-height: 100%;
+}

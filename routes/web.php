@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\WalletController;
 use App\Http\Controllers\Api\GamesController;
+use App\Http\Controllers\Api\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,12 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'index']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+Route::post('/confirm-otp', [ForgotPasswordController::class, 'confirmOtp']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
+// Route::get('/reset-password', [ForgotPasswordController::class, 'resetPassword1']);
 
 Route::prefix('account')->group(function () {
     Route::get('/', [AccountController::class, 'index']);

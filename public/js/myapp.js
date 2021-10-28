@@ -132,3 +132,40 @@ function dateToYMD(date) {
   var y = date.getFullYear()
   return '' + (d <= 9 ? '0' + d : d) + '-' + (m<=9 ? '0' + m : m) + '-' + y
 }
+
+function checkPasswordReset() {
+  let is_password = document.querySelector('#password').value
+  let is_confirmpassword = document.querySelector('#password-confirm').value
+  let passStage = false
+  let confirmStage = false
+  
+  if(is_password.length < 8) {
+      document.querySelector('#notice-message').innerHTML = 'รหัสผ่านต้องมีมากกว่า 8 ตัว'
+      document.querySelector('#password-notice').style.display = "flex"
+      passStage = false
+  }else{
+      document.querySelector('#notice-message').innerHTML = ''
+      document.querySelector('#password-notice').style.display = "none"
+      passStage = true
+  }
+
+  if(is_confirmpassword !== '') {
+      if(is_password !== is_confirmpassword) {
+          document.querySelector('#notice-message').innerHTML = 'รหัสผ่านไม่ตรงกัน กรุณาตรวจสอบ'
+          document.querySelector('#password-notice').style.display = "flex"
+          confirmStage = false
+      }else{
+          document.querySelector('#notice-message').innerHTML = ''
+          document.querySelector('#password-notice').style.display = "none"
+          confirmStage = true
+      }
+  }
+
+  if(passStage && confirmStage) {
+      document.querySelector('#disabled-btn').style.display = "none"
+      document.querySelector('#visibled-btn').style.display = "block"
+  }else{
+      document.querySelector('#disabled-btn').style.display = "block"
+      document.querySelector('#visibled-btn').style.display = "none"
+  }
+}
