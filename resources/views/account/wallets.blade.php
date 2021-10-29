@@ -57,7 +57,7 @@
                                                     กระเป๋าเงินเกม
                                                 </span>
                                             </th>
-                                            <!-- <th class="hidden-lg-down text-center">จำนวนเงิน</th> -->
+                                            <th class="hidden-lg-down text-center">จำนวนเงิน</th>
                                             <th>&nbsp;</th>
                                         </tr>
                                     </thead>
@@ -83,9 +83,9 @@
                                                     <!-- /MOBILE ONLY -->
                                                 </td>
 
-                                                <!-- <td class="hidden-lg-down text-center">
-                                                    {{ number_format($is_wallet['amount']) }} {{ $is_wallet['currency'] }}
-                                                </td> -->
+                                                <td class="hidden-lg-down text-center">
+                                                    {{ number_format($pgsoft_wallet, 1) }} <small>{{ $is_wallet['currency'] }}</small>
+                                                </td>
 
                                                 <td class="text-center">
                                                     <div class="flex text-right">

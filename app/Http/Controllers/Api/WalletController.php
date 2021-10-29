@@ -27,13 +27,23 @@ class WalletController extends Controller
             $default_wallet_history = $this->defaultWalletHistories($histories);
             $sub_wallet = $this->subWalletHistories($res['wallets'], $histories);
             $games = (new isGame)->menuGame();
+            $pgSoftWallet = $this->getPgsoftgameWallet(session('user'));
             // Log::debug($games);
             // Log::debug($default_wallet_history);
 
-            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'games' => $games, 'status' => $res['status']]);
+            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'games' => $games, 'status' => $res['status'], 'pgsoft_wallet' => $pgSoftWallet]);
         }else{
             return redirect('/login');
         }
+    }
+
+    private function getPgsoftgameWallet($username)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            ])->get('https://88.playszone.com/api/v2/pgsoftgame/wallet/'.$username);
+
+        return $response['data'];
     }
 
     public function createWallet(Request $request)
