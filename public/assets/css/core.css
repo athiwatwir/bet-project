@@ -470,9 +470,12 @@ pre {
   .container, .container-sm, .container-md, .container-lg {
     max-width: 960px; } }
 
-@media (min-width: 1200px) {
+@media (min-width: 1300px) {
   .container, .container-sm, .container-md, .container-lg, .container-xl {
     max-width: 1100px; } }
+@media (min-width: 1500px) {
+  .container, .container-sm, .container-md, .container-lg, .container-xl {
+    max-width: 1300px; } }
 
 .row {
   display: flex;
