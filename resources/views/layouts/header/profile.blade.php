@@ -5,17 +5,17 @@
             <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
                 @if(session()->has('_t'))
                     <li class="list-inline-item mx-1 dropdown">
-                        <a href="#" aria-label="Account Options" id="dropdownAccountOptions" class="btn btn-sm rounded-circle btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                        <a href="#" aria-label="Account Options" id="dropdownAccountOptions" class="btn btn-sm rounded-circle btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="right: 150px;">
                             <span class="group-icon">
                                 <i class="fi fi-user-male"></i>
                                 <i class="fi fi-close"></i>
                             </span>
+                            <span style="left: 45px;">สวัสดี {{ session('user') }}</span>
                         </a>
 
                         <div aria-labelledby="dropdownAccountOptions" class="prefix-link-icon prefix-icon-dot dropdown-menu dropdown-menu-clean dropdown-menu-invert dropdown-click-ignore dropdown-menu-dark p-0 mt--18 fs--15 custom-profile">
                             <div class="dropdown-header">
-                                <i class="fi fi-user-male float-start"></i>
-                                สวัสดี {{ session('user') }}
+                                เมนูสมาชิก
                             </div>
                             <div class="dropdown-divider"></div>
                             <a href="{{ url('/account/') }}" title="รายละเอียดผู้ใช้งาน" class="dropdown-item text-truncate font-weight-light">
@@ -27,15 +27,23 @@
                             <a href="{{ url('/account/wallets') }}" title="จัดการกระเป๋าเงิน" class="dropdown-item text-truncate font-weight-light">
                                 จัดการกระเป๋าเงิน
                             </a>
-                            <a href="{{ url('/account/change-password') }}" title="แก้ไขรหัสผ่าน" class="dropdown-item text-truncate font-weight-light">
+                            <a href="{{ url('/account/change-password') }}" title="แก้ไขรหัสผ่าน" class="dropdown-item text-truncate font-weight-light dropdown-footer">
                                 แก้ไขรหัสผ่าน
                             </a>
-                            <div class="dropdown-divider mb-0"></div>
+                            <!-- <div class="dropdown-divider mb-0"></div>
                             <a href="{{ url('/logout') }}" title="Log Out" class="prefix-icon-ignore dropdown-footer dropdown-custom-ignore">
                                 <i class="fi fi-power float-start"></i>
                                 Log Out
-                            </a>
+                            </a> -->
                         </div>
+                    </li>
+                    <li class="list-inline-item mx-1 dropdown">
+                        <a href="{{ url('/logout') }}" title="Log Out" class="pl-0 text-white prefix-icon-ignore dropdown-footer dropdown-custom-ignore"
+                            onclick="return confirm('ออกจากระบบ?');"
+                        >
+                            <i class="fi fi-power float-start"></i>
+                            ออกจากระบบ
+                        </a>
                     </li>
                 @else
                     @include('layouts.header.register')
