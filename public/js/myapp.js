@@ -69,6 +69,7 @@ function editWalletSelectedOptionV2(value) {
 }
 
 function subWalletHistory(data, id) {
+  console.log(data)
   if(data !== null) {
     let tbodyRef = document.getElementById('sub_wallet_history_table').getElementsByTagName('tbody')[0]
     
@@ -89,8 +90,8 @@ function subWalletHistory(data, id) {
       let newRow = tbodyRef.insertRow(i)
       newRow.insertCell(0).innerHTML = this.dateToYMD(new Date(data[i].action_date))
       newRow.insertCell(1).innerHTML = '<center>' + type_badge + '</center>'
-      newRow.insertCell(2).innerHTML = type == 'รับเข้า' || type == 'เพิ่ม' ? from_admin : ''
-      newRow.insertCell(3).innerHTML = type == 'ส่งออก' || type == 'ลด' ? to_admin : ''
+      newRow.insertCell(2).innerHTML = type == 'รับเข้า' || type == 'ADJUST' ? from_admin : ''
+      newRow.insertCell(3).innerHTML = type == 'ส่งออก' || type == 'ADJUST' ? to_admin : ''
       newRow.insertCell(4).innerHTML = '<center>' + data[i].amount + '</center>'
       newRow.insertCell(5).innerHTML = '<center><small class="badge badge-success font-weight-normal">' + status + '</small></center>'
     }
@@ -102,8 +103,7 @@ function subWalletHistoryType(wallet_id, from_id, to_id, by_admin, type) {
     if(wallet_id == from_id) return 'ส่งออก'
     if(wallet_id == to_id) return 'รับเข้า'
   }else{
-    if(type == 'เพิ่ม') return 'เพิ่ม'
-    if(type == 'ลด') return 'ลด'
+    if(type == 'ADJUST') return 'ADJUST'
   }
 }
 
@@ -122,8 +122,7 @@ function theDestination()
 function setTypeBadge(type) {
   if(type == 'รับเข้า') return '<span class="badge badge-info font-weight-normal fs--16">' + type + '</span>'
   if(type == 'ส่งออก') return '<span class="badge badge-warning font-weight-normal fs--16">' + type + '</span>'
-  if(type == 'เพิ่ม') return '<span class="badge badge-primary font-weight-normal fs--16">' + type + '</span>'
-  if(type == 'ลด') return '<span class="badge badge-secondary font-weight-normal fs--16">' + type + '</span>'
+  if(type == 'ADJUST') return '<span class="badge badge-primary font-weight-normal fs--16">' + type + '</span>'
 }
 
 function dateToYMD(date) {

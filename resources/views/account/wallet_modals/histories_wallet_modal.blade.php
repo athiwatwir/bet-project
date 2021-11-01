@@ -36,16 +36,15 @@
                                 <tr id="message_id_{{ $key }}" class="text-dark">
                                     <td>
                                         <p class="mb-0 d-flex">
-                                            <span class="badge 
-                                                        @if($history['type'] == 'ฝาก') badge-success 
-                                                        @elseif($history['type'] == 'ถอน') badge-danger 
-                                                        @elseif($history['type'] == 'ย้าย') badge-warning
-                                                        @elseif($history['type'] == 'เพิ่ม') badge-primary
-                                                        @elseif($history['type'] == 'ลด') badge-secondary
+                                            <small class="badge 
+                                                        @if($history['code'] == 'DEPOSIT') badge-success 
+                                                        @elseif($history['code'] == 'WITHDRAW') badge-danger 
+                                                        @elseif($history['code'] == 'TRANSFER') badge-warning
+                                                        @elseif($history['code'] == 'ADJUST') badge-primary
                                                         @endif 
-                                                        font-weight-normal fs--16"
-                                            >{{ $history['type'] }}
-                                            </span>
+                                                        font-weight-normal fs--12"
+                                            >{{ $history['code'] }}
+                                            </small>
                                         </p>
                                         @if(isset($history['description']))
                                             <small><small><span class="text-danger">**</span> {{ $history['description'] }}</small></small>
@@ -60,7 +59,7 @@
                                     </td>
 
                                     <td class="hidden-lg-down text-center">
-                                        {{ $history['action_date'] }}
+                                        <small>{{ $history['action_date'] }}</small>
                                     </td>
 
                                     <td class="hidden-lg-down text-center" style="line-height: 16px;">
@@ -77,15 +76,15 @@
                                                 @endif
                                             </small>
                                         @else
-                                            @if($history['type'] == 'ฝาก')
+                                            @if($history['code'] == 'DEPOSIT')
                                                 {{ $history['bank_name'] }}<br/>
                                                 <small>{{ $history['account_name'] }}</small><br/>
                                                 <small>{{ $history['account_number'] }}</small>
-                                            @elseif($history['type'] == 'ถอน')
+                                            @elseif($history['code'] == 'WITHDRAW')
                                                 {{ $history['user_bank_name'] }}<br/>
                                                 <small>{{ $history['bank_account_name'] }}</small><br/>
                                                 <small>{{ $history['bank_account_number'] }}</small>
-                                            @elseif($history['type'] == 'ย้าย')
+                                            @elseif($history['code'] == 'TRANSFER')
                                                 <small>
                                                     @if($history['from_default'] == 'Y')
                                                         กระเป๋าหลัก
@@ -106,11 +105,10 @@
                                     </td>
 
                                     <td class="hidden-lg-down text-center">
-                                        <strong class=" @if($history['type'] == 'ฝาก') text-success 
-                                                    @elseif($history['type'] == 'ถอน') text-danger 
-                                                    @elseif($history['type'] == 'ย้าย') text-warning
-                                                    @elseif($history['type'] == 'เพิ่ม') text-primary
-                                                    @elseif($history['type'] == 'ลด') text-secondary
+                                        <strong class=" @if($history['code'] == 'DEPOSIT') text-success 
+                                                    @elseif($history['code'] == 'WITHDRAW') text-danger 
+                                                    @elseif($history['code'] == 'TRANSFER') text-warning
+                                                    @elseif($history['code'] == 'ADJUST') text-primary
                                                     @endif "
                                         >{{ number_format($history['amount']) }}
                                         </strong>

@@ -30,6 +30,7 @@ class WalletController extends Controller
             $pgSoftWallet = $this->getPgsoftgameWallet(session('user'));
             // Log::debug($games);
             // Log::debug($default_wallet_history);
+            // Log::debug($sub_wallet);
 
             return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'games' => $games, 'status' => $res['status'], 'pgsoft_wallet' => $pgSoftWallet]);
         }else{
@@ -247,9 +248,9 @@ class WalletController extends Controller
         // Log::debug($histories);
         $default_wallet_history = [];
         foreach($histories as $history) {
-            if($history['type'] == 'ฝาก' || $history['type'] == 'ถอน') {
+            if($history['code'] == 'DEPOSIT' || $history['code'] == 'WITHDRAW') {
                 array_push($default_wallet_history, $history);
-            }else if($history['type'] == 'ย้าย' && $history['from_default'] == 'Y' || $history['to_default'] == 'Y') {
+            }else if($history['code'] == 'TRANSFER' && $history['from_default'] == 'Y' || $history['to_default'] == 'Y') {
                 array_push($default_wallet_history, $history);
             }
         }
@@ -267,9 +268,9 @@ class WalletController extends Controller
                 $a_wallet = $wallet;
                 $a_wallet['trans'] = [];
                 foreach($histories as $history) {
-                    if($history['type'] == 'ย้าย' && $history['from_wallet_id'] == $wallet['id'] || $history['type'] == 'ย้าย' && $history['to_wallet_id'] == $wallet['id']) {
+                    if($history['code'] == 'TRANSFER' && $history['from_wallet_id'] == $wallet['id'] || $history['code'] == 'TRANSFER' && $history['to_wallet_id'] == $wallet['id']) {
                         array_push($a_wallet['trans'], $history);
-                    }else if($history['type'] == 'เพิ่ม' && $history['to_wallet_id'] == $wallet['id'] || $history['type'] == 'ลด' && $history['to_wallet_id'] == $wallet['id']) {
+                    }else if($history['code'] == 'เพิ่ม' && $history['to_wallet_id'] == $wallet['id'] || $history['code'] == 'ลด' && $history['to_wallet_id'] == $wallet['id']) {
                         array_push($a_wallet['trans'], $history);
                     }
                 }
