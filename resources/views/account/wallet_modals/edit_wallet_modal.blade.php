@@ -5,7 +5,7 @@
             <form method="POST" action="{{ url('/account/edit-wallet') }}">
             @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">จัดการกระเป๋าเงินเกม <span id="is_game_name"></span></h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">กระเป๋าเงินเกม <span id="is_game_name"></span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -13,8 +13,17 @@
                 <div class="modal-body">
                     <div class="form-label-group row">
                         <div class="col-md-12 flex mb-3">
-                            <p class="mb-0">ยอดเงินคงเหลือ : <span id="game_balance" class="text-danger"></span> {{ $wallet['currency'] }} </p>
-                            <button type="button" class="btn btn-info btn-sm btn-vv-sm rounded" title="ฝากเงินเข้ากระเป๋าเงินเกม" 
+                            <!-- <p class="mb-0">ยอดเงินคงเหลือ : <span id="game_balance" class="text-danger"></span> {{ $wallet['currency'] }} </p> -->
+                                <p class="text-dark"><strong>โอนเงินออกกระเป๋า</strong></p>
+                                <div class="form-label-group row mt-3">
+                                    <label for="change_amount_wallet" class="col-md-3 col-form-label text-md-right">{{ __('จำนวนเงิน') }}</label>
+                                    <div class="col-md-8">
+                                        <input placeholder="0" id="change_amount_wallet" type="number" class="form-control" name="change_amount_wallet" value="{{ old('change_amount') }}" autocomplete="change_amount">
+                                        <small class="text-dark"><strong>ยอดเงินที่ถอนได้ :</strong> <span id="game_balance_2" class="text-danger"></span> {{ $wallet['currency'] }}</small>
+                                        <input type="hidden" name="to_wallet" value="{{ $wallet['id'] }}">
+                                    </div>
+                                </div>
+                            <!-- <button type="button" class="btn btn-info btn-sm btn-vv-sm rounded" title="ฝากเงินเข้ากระเป๋าเงินเกม" 
                                 data-toggle="modal" data-target="#" onClick="editWalletSelectedOptionV2('deposit')"
                             >
                                 <i class="fi fi-arrow-download mr-0"></i>
@@ -23,7 +32,7 @@
                                 data-toggle="modal" data-target="#" onClick="editWalletSelectedOptionV2('withdraw')"
                             >
                                 <i class="fi fi-arrow-upload mr-0"></i>
-                            </button>
+                            </button> -->
                             <!-- <button type="button" class="btn btn-secondary btn-sm btn-vv-sm rounded" title="ย้ายเงินไปกระเป๋าอื่น" 
                                 data-toggle="modal" data-target="#" onClick="editWalletSelectedOptionV2('transfer')"
                             >

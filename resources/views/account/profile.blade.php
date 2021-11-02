@@ -5,23 +5,19 @@
 @section('content')
 <div class="container pt-4 mt-4">
     <div class="row justify-content-center">
-        @include('account.menu')
-        <div class="col-md-8">
+        <!-- @include('account.menu') -->
+        <div class="col-md-12">
 
             <!-- portlet -->
             <div class="portlet">
 
                 <!-- portlet : header -->
-                <div class="portlet-header pb-2">
-                    <h4 class="d-block text-dark text-truncate font-weight-medium">
-                        รายละเอียดผู้ใช้งาน
-                    </h4>
-                </div>
+                @include('account.menu')
                 <!-- /portlet : header -->
 
                 <!-- portlet : body -->
                 <div class="portlet-body pt-0 pl-4 border-left-style">
-                    <div class="row gutters-sm d-flex align-items-center">
+                    <div class="row gutters-sm d-flex align-items-center" style="padding-top: 10px; border-top: 1px solid #333;">
                         <form novalidate class="bs-validate d-block mb-5 w-100" method="post" action="/account/update" enctype="multipart/form-data">
                         @csrf
                             <div class="col-12">

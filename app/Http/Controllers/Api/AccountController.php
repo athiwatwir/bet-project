@@ -22,7 +22,7 @@ class AccountController extends Controller
             $res = json_decode($response->getBody()->getContents(), true);
             // Log::debug($res['user']);
 
-            return view('account.profile', ['user' => $res['user']]);
+            return view('account.profile', ['user' => $res['user'], 'menu' => 'profile']);
         }else{
             return redirect('/login');
         }
@@ -31,7 +31,7 @@ class AccountController extends Controller
     public function changePassword()
     {
         if(session()->has('_t')){
-            return view('account.change-password');
+            return view('account.change-password', ['menu' => 'password']);
         }else{
             return redirect('/login');
         }
@@ -48,7 +48,7 @@ class AccountController extends Controller
             $res = json_decode($response->getBody()->getContents(), true);
             // Log::debug($res);
 
-            return view('account.banking', ['bank' => $res['bank'], 'b_lists' => $res['b_list'], 'status' => $res['status']]);
+            return view('account.banking', ['bank' => $res['bank'], 'b_lists' => $res['b_list'], 'status' => $res['status'], 'menu' => 'bank']);
         }else{
             return redirect('/login');
         }

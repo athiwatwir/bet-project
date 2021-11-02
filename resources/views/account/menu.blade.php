@@ -1,32 +1,12 @@
-<div class="col-md-4 text-white">
-    <div class="card border-bottom-style">
-        <div class="card-body">
-            <div class="portlet-header pb-2 pt-0">
-                <h4 class="d-block text-dark text-truncate font-weight-medium">
-                    เมนูสมาชิก
-                </h4>
-            </div>
-            <ul class="none-style pl-4">
-                <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="{{ url('/account/') }}">รายละเอียดผู้ใช้งาน</a></li>
-                <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="{{ url('/account/banking') }}">จัดการบัญชีธนาคาร</a></li>
-                <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="{{ url('/account/wallets') }}">จัดการกระเป๋าเงิน</a></li>
-                <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="{{ url('/account/change-password') }}">แก้ไขรหัสผ่าน</a></li>
-                <li><i class="fi fi-arrow-right-full fs--12"></i> <a href="{{ url('/logout') }}">ออกจากระบบ</a>
-            </ul>
-        </div>
-    </div>
+<div class="portlet-header d-flex pb-2">
+    <a href="{{ url('/account/wallets') }}" class="btn btn-sm @if($menu == 'wallet') btn-primary @else btn-outline-secondary btn-custom @endif">กระเป๋าเงิน</a>
+    <a href="{{ url('/account/') }}" class="btn btn-sm @if($menu == 'profile') btn-primary @else btn-outline-secondary btn-custom @endif">ข้อมูลส่วนตัว</a>
+    <a href="{{ url('/account/banking') }}" class="btn btn-sm @if($menu == 'bank') btn-primary @else btn-outline-secondary btn-custom @endif">บัญชีธนาคาร</a>
+    <a href="{{ url('/account/change-password') }}" class="btn btn-sm @if($menu == 'password') btn-primary @else btn-outline-secondary btn-custom @endif">แก้ไขรหัสผ่าน</a>
 </div>
 
 <style>
-    ul.none-style li {
-        list-style-type: none;
-        line-height: 28px;
-        color: #333;
-    }
-    ul.none-style li a{
-        color: #333;
-    }
-    .dropdown-menu a.dropdown-item {
-        padding: 5px 40px 5px 25px;
+    .btn-custom:hover {
+        background-color: rgb(55 125 255 / 70%);
     }
 </style>

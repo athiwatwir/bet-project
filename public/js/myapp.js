@@ -16,7 +16,7 @@ function editWallet(id, game, name) {
     document.querySelector('#is_game_name').innerHTML = game
     const res = this.getGameWallet(name)
     res.then(balance => {
-      document.querySelector('#game_balance').innerHTML = balance.data
+      // document.querySelector('#game_balance').innerHTML = balance.data
       document.querySelector('#game_balance_2').innerHTML = balance.data
     })
 }

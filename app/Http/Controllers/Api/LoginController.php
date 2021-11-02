@@ -40,7 +40,7 @@ class LoginController extends Controller
         if(isset($res['status'])) {
             if($res['status'] == 200){
                 session(['_t' => $res['token'], 'name' => $res['name'], 'user' => $res['user']]);
-                return redirect()->back()->with('success', 'เข้าสู่ระบบแล้ว...');
+                return redirect()->route('wallets')->with('success', 'เข้าสู่ระบบแล้ว...');
             }else{
                 return redirect()->back()->with('error', $res['message']);
             }

@@ -5,86 +5,59 @@
 @section('content')
 <div class="container pt-4 mt-4">
     <div class="row justify-content-center">
-        <!-- @include('account.menu') -->
-        <div class="col-md-12">
+        @include('account.menu')
+        <div class="col-md-8">
 
             <!-- portlet -->
             <div class="portlet">
 
                 <!-- portlet : header -->
-                @include('account.menu')
+                <div class="portlet-header pb-2">
+                    <h4 class="d-block text-dark text-truncate font-weight-medium">
+                        จัดการกระเป๋าเงิน
+                    </h4>
+                </div>
                 <!-- /portlet : header -->
 
                 <!-- portlet : body -->
-                <div class="portlet-body pt-0 pl-4 pr-4">
+                <div class="portlet-body pt-0 pl-4 pr-4 border-left-style">
 
-                    <div class="row" style="padding-top: 10px; border-top: 1px solid #333;">
-                        <div class="col-md-6">
-                            <div class="card" style="border-top: 7px solid #ff0000;">
-                                <div class="card-body card-body-wallet">
-                                    <div class="col-md-12 p-0">
-                                        <div class="row">
-                                            <div class="col-md-7">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-on-btn">
-                                                        <button type="button" class="btn btn-primary btn-sm btn-block btn-shadow btn-wallet" data-toggle="modal" data-target="#depositWalletModal" style="line-height: 13px;">ฝากเงิน<br/><small class="fs--10">(แจ้งโอนเงิน)</small></button>
-                                                        <button type="button" class="btn btn-success btn-sm btn-block ml-0 btn-shadow btn-wallet" data-toggle="modal" data-target="#withdrawWalletModal">ถอนเงิน</button>
-                                                    </div>
-                                                    <div class="col-md-6 col-on-btn">
-                                                        <button type="button" class="btn btn-warning btn-sm btn-block btn-shadow btn-wallet" data-toggle="modal" data-target="#transferToGameModal">โอนเข้าเกมส์</button>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <a href="#!" data-toggle="modal" data-target="#historiesWalletModal"><small><i class="fi fi-task-list"></i> ประวัติการทำรายการ</small></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5 text-right">
-                                                <h5 class="mb-1 h5-wallet"><strong>กระเป๋าเงินหลัก</strong></h5>
-                                                <h1 style="color: #ff0000;" class="wallet-money-size">฿{{ number_format($wallet['amount']) }}</h1>
-                                            </div>
-                                        </div>
+                    <div class="row gutters-sm d-flex align-items-center">
+                        <div class="col-md-12 card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>กระเป๋าเงินหลัก</h4>
+                                        <p class="mb-0"><strong>จำนวนเงินคงเหลือ : <span class="text-success">{{ number_format($wallet['amount']) }}</span> {{ $wallet['currency'] }}</strong></p>
+                                        <a href="#!" data-toggle="modal" data-target="#historiesWalletModal"><small><i class="fi fi-task-list"></i> ประวัติการทำรายการ</small></a>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <button type="button" class="btn btn-primary btn-sm btn-block btn-shadow" data-toggle="modal" data-target="#depositWalletModal" style="line-height: 13px;">ฝากเงิน<br/><small class="fs--10">(แจ้งโอนเงิน)</small></button>
+                                        <button type="button" class="btn btn-success btn-sm btn-block ml-0 btn-shadow" data-toggle="modal" data-target="#withdrawWalletModal">ถอนเงิน</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card" style="border-top: 7px solid #0008ff;">
-                                <div class="card-body text-right card-body-wallet">
-                                    <h5 class="mb-1 h5-wallet"><strong>กระเป๋าเงินเกมทั้งหมด</strong></h5>
-                                    <h1 style="color: #0008ff;" class="wallet-money-size">฿{{ number_format($pgsoft_wallet, 1) }}</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card" style="border-top: 7px solid #00cd06;">
-                                <div class="card-body text-right card-body-wallet">
-                                    <h5 class="mb-1 h5-wallet"><strong>รวมเงินทั้งหมด</strong></h5>
-                                    <h1 style="color: #00cd06;" class="wallet-money-size">฿{{ number_format($wallet_amount, 1) }}</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-12 mt-3 text-right">
+                        <div class="col-md-12 mt-3 text-right">
                             <button type="button" class="btn btn-primary btn-sm btn-shadow" data-toggle="modal" data-target="#createWalletModal">
                                 <i class="fi fi-plus"></i> เพิ่มกระเป๋าเงินเกม
                             </button>
-                        </div> -->
+                        </div>
 
-                        <div class="col-md-12 mt-5">
-                            <p class="text-dark fs--20 mb-0"><strong>กระเป๋าเงินแต่ละเกมส์</strong></p>
-                            <hr class="bg-dark my-1"/>
-                            <div class="table-responsive mt-1">
+                        <div class="col-md-12 mt-2">
+                            <div class="table-responsive">
 
                                 <table class="table table-align-middle border-bottom mb-6">
 
                                     <thead>
                                         <tr class="text-muted fs--13 bg-light">
-                                            <th class="hidden-lg-down text-center" style="width: 5%;">#</th>
-                                            <th style="width: 20%;">
+                                            <th class="hidden-lg-down text-center">#</th>
+                                            <th>
                                                 <span class="px-2 p-0-xs">
                                                     กระเป๋าเงินเกม
                                                 </span>
                                             </th>
-                                            <th class="hidden-lg-down text-center" style="width: 20%;">จำนวนเงิน</th>
+                                            <th class="hidden-lg-down text-center">จำนวนเงิน</th>
                                             <th>&nbsp;</th>
                                         </tr>
                                     </thead>
@@ -111,7 +84,7 @@
                                                 </td>
 
                                                 <td class="hidden-lg-down text-center">
-                                                    {{ number_format($pgsoft_wallet, 1) }} <small><small>{{ $is_wallet['currency'] }}</small></small>
+                                                    {{ number_format($pgsoft_wallet, 1) }} <small>{{ $is_wallet['currency'] }}</small>
                                                 </td>
 
                                                 <td class="text-center">
@@ -131,20 +104,18 @@
                                                         >
                                                             <i class="fi fi-arrow-right-3 mr-0"></i>
                                                         </button> -->
-                                                        <button class="btn btn-warning btn-sm rounded" title="จัดการกระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
-                                                                data-toggle="modal" data-target="#transferToWallet" onClick="editWallet({{ $is_wallet['id'] }}, '{{ $is_wallet['game_name'] }}', '{{ session('user') }}')"
-                                                                style="padding: 3px 30px;"
-                                                        >
-                                                            โอนออก
-                                                        </button>
-                                                        <button class="btn btn-secondary btn-sm rounded" title="ประวัติการทำรายการเกม {{ $is_wallet['game_name'] }}" 
+                                                        <button class="btn btn-primary btn-sm btn-vv-sm rounded" title="ประวัติการทำรายการเกม {{ $is_wallet['game_name'] }}" 
                                                                 data-toggle="modal" data-target="#subHistoriesWalletModal" onClick="subWalletHistory({{ json_encode($is_wallet['trans']) }}, {{ $is_wallet['id'] }})"
-                                                                style="padding: 3px 30px;"
                                                         >
-                                                            รายละเอียด
+                                                            <i class="fi fi-task-list mr-0"></i>
+                                                        </button>
+                                                        <button class="btn btn-success btn-sm btn-vv-sm rounded" title="จัดการกระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
+                                                                data-toggle="modal" data-target="#editWalletModal" onClick="editWallet({{ $is_wallet['id'] }}, '{{ $is_wallet['game_name'] }}', '{{ session('user') }}')"
+                                                        >
+                                                            <i class="fi fi-pencil mr-0"></i>
                                                         </button>
                                                         
-                                                        <!-- <a	href="#!" 
+                                                        <a	href="#!" 
                                                             class="js-ajax-confirm btn btn-danger btn-sm btn-vv-sm rounded" 
                                                             data-href="/account/delete-wallet/{{ $is_wallet['id'] }}"
                                                             data-ajax-confirm-body="<center><h4 class='mb-2'>ยืนยันการลบกระเป๋าเกม : {{ $is_wallet['game_name'] }}  ? </h4>
@@ -160,7 +131,7 @@
                                                             data-ajax-confirm-btn-no-text="ยกเลิก" 
                                                             data-ajax-confirm-btn-no-icon="fi fi-close">
                                                             <i class="fi fi-thrash mr-0"></i>
-                                                        </a> -->
+                                                        </a>
                                                     </div>
                                                 </td>
 
@@ -188,6 +159,8 @@
 @section('modal')
     @include('account.wallet_modals.create_wallet_modal')
 
+    @include('account.wallet_modals.edit_wallet_modal')
+
     @include('account.wallet_modals.deposit_wallet_modal')
 
     @include('account.wallet_modals.withdraw_wallet_modal')
@@ -195,8 +168,4 @@
     @include('account.wallet_modals.histories_wallet_modal')
 
     @include('account.wallet_modals.sub_histories_wallet_modal')
-
-    @include('account.wallet_modals.transfer_to_game')
-
-    @include('account.wallet_modals.transfer_to_wallet')
 @endsection

@@ -39,7 +39,7 @@ Route::prefix('account')->group(function () {
     Route::get('/', [AccountController::class, 'index']);
     Route::get('/change-password', [AccountController::class, 'changePassword']);
     Route::get('/banking', [AccountController::class, 'banking']);
-    Route::get('/wallets', [WalletController::class, 'index']);
+    Route::get('/wallets', [WalletController::class, 'index'])->name('wallets');
     Route::get('/delete-wallet/{id}', [WalletController::class, 'deleteWallet']);
     Route::get('/sub-wallet/{id}', [WalletController::class, 'subWalletHistory']);
     Route::get('/game-wallet', [WalletController::class, 'getGameWallet']);

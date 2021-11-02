@@ -92,3 +92,26 @@
     max-width: 220px;
     max-height: 100%;
 }
+
+.col-on-btn {
+    padding: 0 7px;
+}
+
+.card-body-wallet {
+    padding: 0.4rem 1rem;
+}
+
+.wallet-money-size {
+    font-size: 2.8rem;
+}
+
+.btn-wallet {
+    padding: 0.46rem 0.2rem;
+    font-size: 1.0625rem;
+    line-height: 1.2;
+    border-radius: 0.2rem;
+}
+
+.h5-wallet {
+    font-size: 1.1rem;
+}
