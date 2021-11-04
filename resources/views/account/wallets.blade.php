@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'จัดการบัญชีธนาคาร')
+@section('title', 'กระเป๋าเงิน')
 
 @section('content')
 <div class="container pt-4 mt-4">
@@ -17,7 +17,7 @@
 
                 <!-- portlet : body -->
                 <div class="portlet-body pt-0 pl-4 pr-4">
-
+                    <script>pgSoftWallet("{{ session('user') }}", "{{$wallet['amount']}}")</script>
                     <div class="row" style="padding-top: 10px; border-top: 1px solid #333;">
                         <div class="col-md-6">
                             <div class="card" style="border-top: 7px solid #ff0000;">
@@ -51,7 +51,7 @@
                             <div class="card" style="border-top: 7px solid #0008ff;">
                                 <div class="card-body text-right card-body-wallet">
                                     <h5 class="mb-1 h5-wallet"><strong>กระเป๋าเงินเกมทั้งหมด</strong></h5>
-                                    <h1 style="color: #0008ff;" class="wallet-money-size">฿{{ number_format($pgsoft_wallet, 1) }}</h1>
+                                    <h1 style="color: #0008ff;" class="wallet-money-size">฿<span id="realtime_amount_main"></span></h1>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                             <div class="card" style="border-top: 7px solid #00cd06;">
                                 <div class="card-body text-right card-body-wallet">
                                     <h5 class="mb-1 h5-wallet"><strong>รวมเงินทั้งหมด</strong></h5>
-                                    <h1 style="color: #00cd06;" class="wallet-money-size">฿{{ number_format($wallet_amount, 1) }}</h1>
+                                    <h1 style="color: #00cd06;" class="wallet-money-size">฿<span id="realtime_all_amount"></span></h1>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,8 @@
                                                 </td>
 
                                                 <td class="hidden-lg-down text-center">
-                                                    {{ number_format($pgsoft_wallet, 1) }} <small><small>{{ $is_wallet['currency'] }}</small></small>
+                                                    
+                                                    <span id="realtime_amount"></span> <small><small>{{ $is_wallet['currency'] }}</small></small>
                                                 </td>
 
                                                 <td class="text-center">

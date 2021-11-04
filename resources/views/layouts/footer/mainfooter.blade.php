@@ -93,7 +93,9 @@
             </div>
         </div>
     </div>
-
+    @if(session()->has('_t'))
+        <script>userlogs("{{ session('_t') }}")</script>
+    @endif
 </footer>
 <!-- /Footer -->
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -51,14 +52,29 @@ class RegisterController extends Controller
         if($res['status'] == 200){
             $result = $this->withLogin($request->username, $request->password);
             if($result['status'] == 200) {
-                session(['_t' => $result['token'], 'name' => $result['name']]);
-                return redirect('/')->with('success', 'ลงทะเบียนเรียบร้อยแล้ว');
+                session(['_t' => $result['token'], 'name' => $result['name'], 'user' => $request->username]);
+                $this->createGameAccount($request->username);
+                return redirect()->route('wallets')->with('success', 'ลงทะเบียนเรียบร้อยแล้ว');
             }
             // return redirect()->back()->with('success', 'ลงทะเบียนเรียบร้อยแล้ว');
         }else{
             return redirect()->back()->with('error', $res['message']);
         }
         // dd($response->getBody()->getContents());
+    }
+
+    private function createGameAccount($username)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+            ])->get(RouteServiceProvider::API.'/game/login/pgsoftgames');
+
+        // $res = json_decode($response->getBody()->getContents(), true);
+        // if(isset($response['data'])) {
+        //     $url = 'https://pg.playszone.com/'.$response['data'];
+        //     return redirect()->away($url);
+        // }
     }
 
     private function withLogin($username, $password)

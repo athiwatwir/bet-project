@@ -31,6 +31,7 @@ class WalletController extends Controller
             // Log::debug($games);
             // Log::debug($default_wallet_history);
             // Log::debug($sub_wallet);
+            // Log::debug($pgSoftWallet);
             $walletAmount = ($res['wallet']['amount'] + $pgSoftWallet);
 
             return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'games' => $games, 'status' => $res['status'], 'pgsoft_wallet' => $pgSoftWallet, 'wallet_amount' => $walletAmount, 'menu' => 'wallet']);

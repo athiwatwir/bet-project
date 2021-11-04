@@ -18,12 +18,44 @@ function editWallet(id, game, name) {
     res.then(balance => {
       // document.querySelector('#game_balance').innerHTML = balance.data
       document.querySelector('#game_balance_2').innerHTML = balance.data
+      this.setAmountDefault(balance.data)
     })
 }
 
-async function getGameWallet(name) {
-    const response = await fetch('https://88.playszone.com/api/v2/pgsoftgame/wallet/'+ name);
+async function getGameWallet(user) {
+    const response = await fetch('https://88.playszone.com/api/v2/pgsoftgame/wallet/'+ user);
     return response.json()
+}
+
+function setAmountDefault(user, amount) {
+  const res = this.getGameWallet(user)
+  res.then(balance => {
+    document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(balance.data)
+    document.querySelector('#realtime_amount').innerHTML = this.formatNumber(balance.data)
+    this.allAmount(balance.data, amount)
+  })
+}
+
+function pgSoftWallet(user, amount) {
+  this.setAmountDefault(user, amount)
+  setInterval(function () {
+    const res = this.getGameWallet(user)
+    res.then(balance => {
+      document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(balance.data)
+      document.querySelector('#realtime_amount').innerHTML = this.formatNumber(balance.data)
+      this.allAmount(balance.data, amount)
+    })
+  }, 5000);
+}
+
+function allAmount(game, wallet) {
+  let amount = parseFloat(wallet)
+  let allAmount = game + amount
+  document.querySelector('#realtime_all_amount').innerHTML = this.formatNumber(allAmount)
+}
+
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 function editWalletSelectedOption(status) {
@@ -167,4 +199,18 @@ function checkPasswordReset() {
       document.querySelector('#disabled-btn').style.display = "block"
       document.querySelector('#visibled-btn').style.display = "none"
   }
+}
+
+function userlogs(token) {
+  setInterval(function () {
+    fetch('http://127.0.0.1:8000/api/v1/logs/user-activities', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+ token,
+      },
+      method: "POST",
+      body: JSON.stringify({activity: window.location.pathname, url: window.location.href})
+    })
+  }, 10000)
 }

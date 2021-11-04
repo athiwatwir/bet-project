@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'จัดการข้อมูลส่วนตัว')
+@section('title', 'ข้อมูลส่วนตัว')
 
 @section('content')
 <div class="container pt-4 mt-4">

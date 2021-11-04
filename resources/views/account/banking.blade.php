@@ -1,6 +1,6 @@
 @extends('layouts.core')
 
-@section('title', 'จัดการบัญชีธนาคาร')
+@section('title', 'บัญชีธนาคาร')
 
 @section('content')
 <div class="container pt-4 mt-4">
