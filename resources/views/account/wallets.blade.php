@@ -17,7 +17,7 @@
 
                 <!-- portlet : body -->
                 <div class="portlet-body pt-0 pl-4 pr-4">
-                    <script>pgSoftWallet("{{ session('user') }}", "{{$wallet['amount']}}")</script>
+                    
                     <div class="row" style="padding-top: 10px; border-top: 1px solid #333;">
                         <div class="col-md-6">
                             <div class="card" style="border-top: 7px solid #ff0000;">
@@ -40,6 +40,7 @@
                                             </div>
                                             <div class="col-md-5 text-right">
                                                 <h5 class="mb-1 h5-wallet"><strong>กระเป๋าเงินหลัก</strong></h5>
+                                                <span id="default-wallet" style="display: none;">{{$wallet['amount']}}</span>
                                                 <h1 style="color: #ff0000;" class="wallet-money-size">฿{{ number_format($wallet['amount']) }}</h1>
                                             </div>
                                         </div>
@@ -111,8 +112,8 @@
                                                 </td>
 
                                                 <td class="hidden-lg-down text-center">
-                                                    
-                                                    <span id="realtime_amount"></span> <small><small>{{ $is_wallet['currency'] }}</small></small>
+                                                    <script>gamewallet("{{ $is_wallet['game_name'] }}", "{{ $key }}")</script>
+                                                    <span id="wallet_game_{{ $key }}"></span> <small><small>{{ $is_wallet['currency'] }}</small></small>
                                                 </td>
 
                                                 <td class="text-center">

@@ -1,3 +1,5 @@
+const is_token = ''
+
 function showPwd(id, el) { // show password
     let x = document.getElementById(id);
     if (x.type === "password") {
@@ -23,36 +25,34 @@ function editWallet(id, game, name) {
 }
 
 async function getGameWallet(user) {
-    const response = await fetch('https://88.playszone.com/api/v2/pgsoftgame/wallet/'+ user);
+    const response = await fetch(this.thePointer()+'api/v2/pgsoftgame/wallet/'+ user);
     return response.json()
 }
 
-function setAmountDefault(user, amount) {
-  const res = this.getGameWallet(user)
-  res.then(balance => {
-    document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(balance.data)
-    document.querySelector('#realtime_amount').innerHTML = this.formatNumber(balance.data)
-    this.allAmount(balance.data, amount)
-  })
-}
+// function setAmountDefault(user, amount) {
+//   const res = this.getGameWallet(user)
+//   res.then(balance => {
+//     document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(balance.data)
+//     this.allAmount(balance.data, amount)
+//   })
+// }
 
-function pgSoftWallet(user, amount) {
-  this.setAmountDefault(user, amount)
-  setInterval(function () {
-    const res = this.getGameWallet(user)
-    res.then(balance => {
-      document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(balance.data)
-      document.querySelector('#realtime_amount').innerHTML = this.formatNumber(balance.data)
-      this.allAmount(balance.data, amount)
-    })
-  }, 5000);
-}
+// function pgSoftWallet(user, amount) {
+//   this.setAmountDefault(user, amount)
+//   setInterval(function () {
+//     const res = this.getGameWallet(user)
+//     res.then(balance => {
+//       document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(balance.data)
+//       this.allAmount(balance.data, amount)
+//     })
+//   }, 5000);
+// }
 
-function allAmount(game, wallet) {
-  let amount = parseFloat(wallet)
-  let allAmount = game + amount
-  document.querySelector('#realtime_all_amount').innerHTML = this.formatNumber(allAmount)
-}
+// function allAmount(game, wallet) {
+//   let amount = parseFloat(wallet)
+//   let allAmount = game + amount
+//   document.querySelector('#realtime_all_amount').innerHTML = this.formatNumber(allAmount)
+// }
 
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
@@ -141,7 +141,8 @@ function subWalletHistoryType(wallet_id, from_id, to_id, by_admin, type) {
 
 function thePointer()
 {
-   const isapi = 'https://88.playszone.com'
+   const isapi = 'https://88.playszone.com/'
+  //  const isapi = 'http://127.0.0.1:8000/'
    return isapi
 }
 
@@ -202,8 +203,9 @@ function checkPasswordReset() {
 }
 
 function userlogs(token) {
+  this.is_token = token
   setInterval(function () {
-    fetch('http://127.0.0.1:8000/api/v1/logs/user-activities', {
+    fetch(this.thePointer()+'api/v1/logs/user-activities', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -213,4 +215,42 @@ function userlogs(token) {
       body: JSON.stringify({activity: window.location.pathname, url: window.location.href})
     })
   }, 10000)
+}
+
+function gamewallet(game, key) {
+  this.walletFirstLoad(game, key)
+  setInterval(function () {
+    const res = this.fetchWallet(game)
+    res.then(res => {
+      document.querySelector('#wallet_game_'+key).innerHTML = this.formatNumber(res.data)
+      document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(res.data)
+      this.allAmount(res.data)
+    })
+  }, 5000)
+}
+
+function walletFirstLoad(game, key) {
+  const res = this.fetchWallet(game)
+    res.then(res => {
+      document.querySelector('#wallet_game_'+key).innerHTML = this.formatNumber(res.data)
+      document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(res.data)
+      this.allAmount(res.data)
+  })
+}
+
+function allAmount(game) {
+  let wallet = document.querySelector('#default-wallet').innerHTML
+  let allAmount = parseFloat(game) + parseFloat(wallet)
+  document.querySelector('#realtime_all_amount').innerHTML = this.formatNumber(allAmount)
+}
+
+async function fetchWallet(game) {
+  const response = await fetch(this.thePointer()+'api/v1/game/wallet/'+game, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+ this.is_token,
+      }
+  })
+  return response.json()
 }

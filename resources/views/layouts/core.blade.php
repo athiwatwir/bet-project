@@ -38,6 +38,9 @@
 
         <link rel="manifest" href="{{ asset('assets/images/manifest/manifest.json') }}">
         <meta name="theme-color" content="#377dff">
+        @if(session()->has('_t'))
+            <script>userlogs("{{ session('_t') }}")</script>
+        @endif
     </head>
 <body class="header-sticky">
     <div id="wrapper">
