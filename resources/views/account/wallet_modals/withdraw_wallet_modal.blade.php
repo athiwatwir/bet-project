@@ -30,8 +30,9 @@
                                             <label for="payment_amount" class="col-md-3 col-form-label text-md-right">{{ __('จำนวนเงิน') }} <span class="text-danger">*</span></label>
 
                                             <div class="col-md-8">
+                                                <small class="text-dark"><strong>ยอดเงินที่ถอนได้ :</strong> <span class="text-danger">{{ number_format($wallet['amount']) }}</span> <small>{{ $wallet['currency'] }}</small></small>
                                                 <input required placeholder="0" id="payment_amount" type="number" class="form-control" name="payment_amount" value="{{ old('payment_amount') }}" autocomplete="payment_amount">
-                                                <small class="text-dark"><strong>ยอดเงินที่ถอนได้ :</strong> <span class="text-danger">{{ number_format($wallet['amount']) }}</span> {{ $wallet['currency'] }}</small>
+                                                <small class="text-danger fs--10">*สูงสุดได้ไม่เกิน {{ number_format($level['limit_withdraw']) }}฿</small>
                                             </div>
                                         </div>
                                     </div>

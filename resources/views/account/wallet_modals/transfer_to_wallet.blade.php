@@ -17,8 +17,9 @@
                             <div class="form-label-group row mt-3">
                                 <label for="change_amount_wallet" class="col-md-3 col-form-label text-md-right">{{ __('จำนวนเงิน') }}</label>
                                 <div class="col-md-8">
+                                    <small class="text-dark"><strong>ยอดเงินที่ถอนได้ :</strong> <span id="game_balance_2" class="text-danger"></span> <small>{{ $wallet['currency'] }}</small></small>
                                     <input placeholder="0" id="change_amount_wallet" type="number" class="form-control" name="change_amount_wallet" value="{{ old('change_amount') }}" autocomplete="change_amount">
-                                    <small class="text-dark"><strong>ยอดเงินที่ถอนได้ :</strong> <span id="game_balance_2" class="text-danger"></span> {{ $wallet['currency'] }}</small>
+                                    <small class="text-danger fs--10">*สูงสุดได้ไม่เกิน {{ number_format($level['limit_transfer']) }} {{ $wallet['currency'] }}</small>
                                     <input type="hidden" name="to_wallet" value="{{ $wallet['id'] }}">
                                 </div>
                             </div>

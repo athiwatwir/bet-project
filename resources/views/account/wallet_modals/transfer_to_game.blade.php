@@ -28,8 +28,9 @@
                         <label for="amount" class="col-md-3 col-form-label text-md-right">{{ __('จำนวนเงิน') }}</label>
 
                         <div class="col-md-8">
+                            <small class="text-dark"><strong>ยอดเงินที่ใช้ได้ :</strong> <span class="text-danger">{{ number_format($wallet['amount']) }}</span> <small>{{ $wallet['currency'] }}</small></small>
                             <input placeholder="0" id="add_amount_wallet" type="number" class="form-control" name="add_amount_wallet" value="{{ old('amount') }}" autocomplete="amount">
-                            <small class="text-dark"><strong>ยอดเงินที่ใช้ได้ :</strong> <span class="text-danger">{{ number_format($wallet['amount']) }}</span> {{ $wallet['currency'] }}</small>
+                            <small class="text-danger fs--10">*สูงสุดได้ไม่เกิน {{ number_format($level['limit_transfer']) }}฿</small>
                         </div>
                     </div>
                     <input type="hidden" id="wallet_action" name="wallet_action" value="deposit">

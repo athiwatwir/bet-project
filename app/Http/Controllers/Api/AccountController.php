@@ -20,18 +20,30 @@ class AccountController extends Controller
             ])->get(RouteServiceProvider::API.'/user/view');
 
             $res = json_decode($response->getBody()->getContents(), true);
-            // Log::debug($res['user']);
+            $level = $this->loadUserLevel(session('_t'));
 
-            return view('account.profile', ['user' => $res['user'], 'menu' => 'profile']);
+            return view('account.profile', ['user' => $res['user'], 'level' => $level['level'], 'menu' => 'profile']);
         }else{
             return redirect('/login');
         }
     }
 
+    public function loadUserLevel($token)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. $token,
+        ])->get(RouteServiceProvider::API.'/user/level');
+
+        $res = json_decode($response->getBody()->getContents(), true);
+        return $res;
+    }
+
     public function changePassword()
     {
         if(session()->has('_t')){
-            return view('account.change-password', ['menu' => 'password']);
+            $level = $this->loadUserLevel(session('_t'));
+            return view('account.change-password', ['level' => $level['level'], 'menu' => 'password']);
         }else{
             return redirect('/login');
         }
@@ -46,9 +58,10 @@ class AccountController extends Controller
                 ])->get(RouteServiceProvider::API.'/user/user-banking');
 
             $res = json_decode($response->getBody()->getContents(), true);
+            $level = $this->loadUserLevel(session('_t'));
             // Log::debug($res);
 
-            return view('account.banking', ['bank' => $res['bank'], 'b_lists' => $res['b_list'], 'status' => $res['status'], 'menu' => 'bank']);
+            return view('account.banking', ['bank' => $res['bank'], 'b_lists' => $res['b_list'], 'status' => $res['status'], 'level' => $level['level'], 'menu' => 'bank']);
         }else{
             return redirect('/login');
         }

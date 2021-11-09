@@ -63,6 +63,7 @@
 
                                 <div class="col-md-8">
                                     <input required placeholder="0" id="payment_amount" type="number" class="form-control" name="payment_amount" value="{{ old('payment_amount') }}" autocomplete="payment_amount">
+                                    <small class="text-danger fs--10">*สูงสุดได้ไม่เกิน {{ number_format($level['limit_deposit']) }}฿</small>
                                 </div>
                             </div>
 

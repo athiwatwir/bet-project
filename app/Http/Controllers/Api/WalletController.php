@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 use App\Http\Controllers\Api\GamesController as isGame;
+use App\Http\Controllers\Api\AccountController as Account;
 
 class WalletController extends Controller
 {
@@ -28,13 +29,12 @@ class WalletController extends Controller
             $sub_wallet = $this->subWalletHistories($res['wallets'], $histories);
             $games = (new isGame)->menuGame();
             $pgSoftWallet = $this->getPgsoftgameWallet(session('user'));
-            // Log::debug($games);
-            // Log::debug($default_wallet_history);
-            // Log::debug($sub_wallet);
-            // Log::debug($pgSoftWallet);
+            $level = (new Account)->loadUserLevel(session('_t'));
+            // Log::debug($level);
+
             $walletAmount = ($res['wallet']['amount'] + $pgSoftWallet);
 
-            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'games' => $games, 'status' => $res['status'], 'pgsoft_wallet' => $pgSoftWallet, 'wallet_amount' => $walletAmount, 'menu' => 'wallet']);
+            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'games' => $games, 'status' => $res['status'], 'pgsoft_wallet' => $pgSoftWallet, 'wallet_amount' => $walletAmount, 'level' => $level['level'], 'menu' => 'wallet']);
         }else{
             return redirect('/login');
         }
@@ -104,6 +104,8 @@ class WalletController extends Controller
                 return redirect()->back()->with('success', 'เพิ่มเงินเข้ากระเป๋าเงินเรียบร้อยแล้ว');
             }else if($res['status'] == 301) {
                 return redirect()->back()->with('error', 'เงินในกระเป๋าหลักไม่เพียงพอ...กรุณาเพิ่มเงิน หรือ โยกย้ายมาจากเกมอื่น');
+            }else if($res['status'] == 400) {
+                return redirect()->back()->with('error', $res['message']);
             }
     
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
@@ -130,6 +132,8 @@ class WalletController extends Controller
                 return redirect()->back()->with('success', 'ย้ายเงินไปยังกระเป๋าเกมส์อื่นเรียบร้อยแล้ว');
             }else if($res['status'] == 301) {
                 return redirect()->back()->with('error', 'เงินในกระเป๋าเกมไม่ถูกต้อง...กรุณาตรวจสอบ');
+            }else if($res['status'] == 400) {
+                return redirect()->back()->with('error', $res['message']);
             }
     
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
@@ -158,6 +162,8 @@ class WalletController extends Controller
                 return redirect()->back()->with('success', 'ย้ายเงินไปยังกระเป๋าเกมส์อื่นเรียบร้อยแล้ว');
             }else if($res['status'] == 301) {
                 return redirect()->back()->with('error', 'เงินในกระเป๋าไม่เพียงพอ...กรุณาเพิ่มเงิน หรือ โยกย้ายมาจากกระเป๋าอื่น');
+            }else if($res['status'] == 400) {
+                return redirect()->back()->with('error', $res['message']);
             }
     
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
@@ -201,6 +207,8 @@ class WalletController extends Controller
 
         if($res['status'] == 200) {
             return redirect()->back()->with('success', 'แจ้งโอนเงินเรียบร้อยแล้ว เมื่อตรวจสอบเรียบร้อยแล้วระบบจะเพิ่มเงินเข้ากระเป๋าหลักของคุณ');
+        }else if($res['status'] == 400) {
+            return redirect()->back()->with('error', $res['message']);
         }
 
         return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
@@ -222,6 +230,8 @@ class WalletController extends Controller
             return redirect()->back()->with('success', 'แจ้งถอนเงินเรียบร้อยแล้ว เมื่อตรวจสอบเรียบร้อยแล้วระบบจะโอนเงินไปยังบัญชีของคุณ');
         }else if($res['status'] == 301) {
             return redirect()->back()->with('warning', 'เงินในกระเป๋าหลักไม่เพียงพอต่อการถอน...');
+        }else if($res['status'] == 400) {
+            return redirect()->back()->with('error', $res['message']);
         }
 
         return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
