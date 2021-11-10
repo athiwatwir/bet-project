@@ -19,29 +19,44 @@
                 <!-- /portlet : header -->
 
                 <!-- portlet : body -->
-                <div class="portlet-body pt-0 pl-4 pr-4 border-left-style">
-
-                    <div class="row gutters-sm d-flex align-items-center">
+                <div class="portlet-body pt-0 pl-4 pr-4 border-left-style mt-2">
+                    <div class="row gutters-sm d-flex align-items-center mb-5">
+                        <div class="col-md-6 card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="{{ asset('img/pg_logo.png') }}" class="w-100">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="fs--16 mb-0" style="text-indent: 40px;">ค่ายเกมสล๊อตที่ได้รับความนิยมสูงสุด กราฟฟิกสวยงาม เข้าใจง่าย และมีอัตราการแจกรางวัลสูง รวมทั้งมีเกมอัพเดทใหม่ๆให้เลือกเล่นอยู่มากมาย จึงเป็นที่นิยมกับนักเล่นสล็อตออนไลน์</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @if($status != 301)
-                            <!-- <div class="col-md-12 text-center">
-                                <p>url : {{ $play['url'] }}</p>
-                                <p>token : {{ $play['token'] }}</p>
-                            </div> -->
-                            <div class="col-md-12 text-center">
-                                <a class="btn btn-vv-sm btn-primary" href="{{ route('logingame', ['name' => $game]) }}" target="_blank">เข้าสู่เกม</a>
+                            <div class="col-md-6 text-center mb-4">
+                                <a href="{{ route('logingame', ['name' => $game]) }}" target="_blank"><img src="{{ asset('img/playgame_btn.png') }}" class="w-75"></a>
                             </div>
                         @else
-                            <div class="col-md-12 text-center mt-4">
-                                <h5 class="text-primary">กรุณาเข้าสู่ระบบก่อนเล่นเกม</h5>
-                                <p><a href="{{ url('/login') }}">เข้าสู่ระบบ</a> -หรือ- <a href="{{ url('/register') }}">สมัครสมาชิก</a></p>
+                            <div class="col-md-4 offset-1 text-center my-4">
+                                <div class="card bg-dark">
+                                    <div class="card-body">
+                                        <h5 class="text-white">กรุณาเข้าสู่ระบบก่อนเล่นเกม</h5>
+                                        <p class="mb-0 text-white">
+                                            <a href="{{ url('/login') }}" class="text-danger"><strong>เข้าสู่ระบบ</strong></a> 
+                                            -หรือ- 
+                                            <a href="{{ url('/register') }}" class="text-danger"><strong>สมัครสมาชิก</strong></a>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         @endif
                     </div>
 
                     @if($game == 'PG Softgame')
-                    <div class="row align-items-center mt-3">
-                        <div class="col-12 text-center">
-                            <h4>ทดลองเล่น</h4>
+                    <div class="row align-items-center mt-5 card">
+                        <div class="col-12 text-center card-body bg-light">
+                            <h4 class="text-dark">ทดลองเล่น {{$game}}</h4>
                             @include('games.demo')
                         </div>
                     </div>

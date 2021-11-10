@@ -1,5 +1,8 @@
-<div class="container-fluid pt-4 mt-4">
+<div class="container-fluid pt-2 mt-2">
     <div class="row justify-content-center">
+        <div class="col-md-12 mb-3 px-5">
+            <p>ทดลองเล่น PG slot พร้อมเครดิตฟรี ไม่มีค่าใช้จ่ายใดๆ เล่นฟรีไม่จำกัดจำนวนครั้ง เพื่อให้คุณได้ศึกษากติกาและค้นหาเกมส์ที่ใช่ มีเกมส์หลากหลายให้เลือกเล่นและอัพเดทเกมส์ใหม่ตลอด เล่นง่าย ไม่ต้องโหลด ไม่ต้องสมัครสมาชิกก็ทดลองเล่นได้</p>
+        </div>
         <div class="col-md-2">
             <a href="{{ route('demo', ['game' => 'buffalo-win']) }}" target="_blank">
                 <img src="{{url('img/game-demo/pgsoftgame/Buffalo-Win.jpg')}}" class="game-demo-thumb">
@@ -79,5 +82,7 @@
     .game-demo-thumb {
         width: 100%;
         border-radius: 5px;
+        box-shadow: 1px 1px 4px 2px #ddd;
+        margin-bottom: 5px;
     }
 </style>
