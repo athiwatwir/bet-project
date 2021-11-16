@@ -1,6 +1,6 @@
 <!-- Deposit Wallet Modal -->
 <div class="modal fade" id="depositWalletModal" tabindex="-1" role="dialog" aria-labelledby="depositWalletModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 650px;">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 850px;">
         <div class="modal-content">
             <form method="POST" action="{{ url('/account/deposit-wallet') }}" enctype="multipart/form-data">
             @csrf
@@ -46,15 +46,56 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-label-group row mt-3">
-                                <label for="payment_bank" class="col-md-3 col-form-label text-md-right">{{ __('ธนาคารที่โอน') }} <span class="text-danger">*</span></label>
+                                <label for="payment_bank" class="col-md-3 col-form-label text-md-right">{{ __('ธนาคารที่โอนเข้า') }} <span class="text-danger">*</span></label>
                                 
                                 <div class="col-md-8">
                                     <select required id="payment_bank" name="payment_bank" class="form-control">
-                                        <option value="" disabled selected>-- เลือกธนาคารที่โอนเงิน --</option>
+                                        <option value="" disabled selected>-- เลือกธนาคารที่โอนเงินเข้า --</option>
                                             @foreach($banks as $is_bank)
                                                 <option value="{{ $is_bank['id'] }}">ธ.{{ $is_bank['bank_name'] }} [{{ $is_bank['account_name'] }} : {{ $is_bank['account_number'] }}]</option>
                                             @endforeach
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="form-label-group row mt-3">
+                                <label for="payment_bank_from" class="col-md-3 col-form-label text-md-right">{{ __('โอนมาจากธนาคาร') }} <span class="text-danger">*</span></label>
+                                
+                                <div class="col-md-8">
+                                    <select required id="payment_bank_from" name="payment_bank_from" class="form-control">
+                                        <option value="" disabled selected>-- เลือกธนาคารที่โอนเงินมา --</option>
+                                            @foreach($banklists as $bank)
+                                                <option value="{{ $bank['id'] }}">{{ $bank['name'] }} @if(isset($bank['name_en'])) ({{ $bank['name_en'] }}) @endif</option>
+                                            @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-label-group row mt-3">
+                                <label for="payment_account_name" class="col-md-3 col-form-label text-md-right">{{ __('ชื่อบัญชีผู้โอน') }} <span class="text-danger">*</span></label>
+                                
+                                <div class="col-md-8">
+                                    <input required placeholder="ชื่อบัญชีผู้โอน" id="payment_account_name" type="text" class="form-control" name="payment_account_name" value="{{ old('payment_account_name') }}" autocomplete="payment_account_name">
+                                </div>
+                            </div>
+
+                            <div class="form-label-group row mt-3">
+                                <label for="payment_date" class="col-md-3 col-form-label text-md-right">{{ __('วันที่โอน') }} <span class="text-danger">*</span></label>
+                                <div class="col-md-3">
+                                    <input required id="payment_date" type="date" class="form-control" name="payment_date" value="{{ old('payment_date') }}" autocomplete="payment_date">
+                                </div>
+
+                                <label for="payment_time" class="col-md-2 col-form-label text-md-right">{{ __('เวลา') }} <span class="text-danger">*</span></label>
+                                <div class="col-md-3">
+                                    <input required id="payment_time" type="time" class="form-control" name="payment_time" value="{{ old('payment_time') }}" autocomplete="payment_time">
+                                </div>
+                            </div>
+
+                            <div class="form-label-group row mt-3">
+                                <label for="payment_account_number_deposit" class="col-md-3 col-form-label text-md-right">{{ __('เลขบัญชี 4 ตัวท้าย') }} <span class="text-danger">*</span></label>
+                                
+                                <div class="col-md-8">
+                                    <input required placeholder="ตัวเลขเท่านั้น" id="payment_account_number_deposit" type="number" class="form-control" name="payment_account_number" value="{{ old('payment_account_number') }}" autocomplete="payment_account_number">
                                 </div>
                             </div>
                         
@@ -85,4 +126,14 @@
             </form>
         </div>
     </div>
+    
+    <script>
+        let number_account = document.querySelector('#payment_account_number_deposit')
+        const maxLength = 4
+        number_account.addEventListener('keyup', () => {
+            if(number_account.value.length > maxLength) {
+                document.querySelector('#payment_account_number_deposit').value = number_account.value.slice(0, 4);
+            }
+        })
+    </script>
 </div>

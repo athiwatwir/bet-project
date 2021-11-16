@@ -30,14 +30,31 @@ class WalletController extends Controller
             $games = (new isGame)->menuGame();
             $pgSoftWallet = $this->getPgsoftgameWallet(session('user'));
             $level = (new Account)->loadUserLevel(session('_t'));
-            // Log::debug($level);
+            $banks = $this->getBankList();
+            // Log::debug($banks);
 
             $walletAmount = ($res['wallet']['amount'] + $pgSoftWallet);
 
-            return view('account.wallets', ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 'histories' => $histories, 'games' => $games, 'status' => $res['status'], 'pgsoft_wallet' => $pgSoftWallet, 'wallet_amount' => $walletAmount, 'level' => $level['level'], 'menu' => 'wallet']);
+            return view('account.wallets', 
+                        ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 
+                        'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 
+                        'histories' => $histories, 'games' => $games, 'status' => $res['status'], 
+                        'pgsoft_wallet' => $pgSoftWallet, 'wallet_amount' => $walletAmount, 
+                        'level' => $level['level'], 'menu' => 'wallet', 'banklists' => $banks['b_list']]);
         }else{
             return redirect('/login');
         }
+    }
+
+    private function getBankList()
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+            ])->get(RouteServiceProvider::API.'/user/user-banking');
+
+        $res = json_decode($response->getBody()->getContents(), true);
+        return $res;
     }
 
     private function getPgsoftgameWallet($username)
@@ -199,6 +216,11 @@ class WalletController extends Controller
             'attachment', file_get_contents($request->payment_slip), 'slip.jpg'
         )->post(RouteServiceProvider::API.'/user/deposit-wallet',[
             'c_bank_account_id' => $request->payment_bank,
+            'bank_id' => $request->payment_bank_from,
+            'account_name' => $request->payment_account_name,
+            'payment_date' => $request->payment_date,
+            'payment_time' => $request->payment_time,
+            'account_number' => $request->payment_account_number,
             'amount' => $request->payment_amount,
             'slip' => $request->payment_slip
         ]);
