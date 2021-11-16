@@ -81,11 +81,11 @@
 
                             <div class="form-label-group row mt-3">
                                 <label for="payment_date" class="col-md-3 col-form-label text-md-right">{{ __('วันที่โอน') }} <span class="text-danger">*</span></label>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <input required id="payment_date" type="date" class="form-control" name="payment_date" value="{{ old('payment_date') }}" autocomplete="payment_date">
                                 </div>
 
-                                <label for="payment_time" class="col-md-2 col-form-label text-md-right">{{ __('เวลา') }} <span class="text-danger">*</span></label>
+                                <label for="payment_time" class="col-md-1 col-form-label text-md-right px-2">{{ __('เวลา') }} <span class="text-danger">*</span></label>
                                 <div class="col-md-3">
                                     <input required id="payment_time" type="time" class="form-control" name="payment_time" value="{{ old('payment_time') }}" autocomplete="payment_time">
                                 </div>
