@@ -28,7 +28,7 @@
                                         <tbody>
                                             @foreach($banks as $key=>$bank)
                                             <tr>
-                                                <td class="text-center">{{ $key+1 }}</td>
+                                                <td class="text-center"><small>{{ $key+1 }}</small></td>
                                                 <td>{{ $bank['bank_name'] }}</td>
                                                 <td>{{ $bank['account_name'] }}</td>
                                                 <td class="text-center">{{ $bank['account_number'] }}</td>
@@ -52,7 +52,7 @@
                                     <select required id="payment_bank" name="payment_bank" class="form-control">
                                         <option value="" disabled selected>-- เลือกธนาคารที่โอนเงินเข้า --</option>
                                             @foreach($banks as $is_bank)
-                                                <option value="{{ $is_bank['id'] }}">ธ.{{ $is_bank['bank_name'] }} [{{ $is_bank['account_name'] }} : {{ $is_bank['account_number'] }}]</option>
+                                                <option value="{{ $is_bank['id'] }}">{{ $is_bank['bank_name'] }} [{{ $is_bank['account_name'] }} : {{ $is_bank['account_number'] }}]</option>
                                             @endforeach
                                     </select>
                                 </div>
