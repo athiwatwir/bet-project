@@ -7,9 +7,6 @@
     </div>
     <div class="d-flex">
         <p class="mt-2 mb-0 mr-3"><strong class="text-dark">เลเวล ::</strong> {{ $level['name'] }}</p>
-        <p class="mt-2 mb-0 mr-3"><strong class="text-dark">ฝากได้สูงสุด ::</strong> {{ number_format($level['limit_deposit']) }}฿</p>
-        <p class="mt-2 mb-0 mr-3"><strong class="text-dark">ถอนได้สูงสุด ::</strong> {{ number_format($level['limit_withdraw']) }}฿</p>
-        <p class="mt-2 mb-0 mr-3"><strong class="text-dark">โอนได้สูงสุด ::</strong> {{ number_format($level['limit_transfer']) }}฿</p>
     </div>
 </div>
 
