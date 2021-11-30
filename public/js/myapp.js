@@ -101,7 +101,6 @@ function editWalletSelectedOptionV2(value) {
 }
 
 function subWalletHistory(data, id) {
-  console.log(data)
   if(data !== null) {
     let tbodyRef = document.getElementById('sub_wallet_history_table').getElementsByTagName('tbody')[0]
     

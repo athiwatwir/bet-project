@@ -31,7 +31,8 @@ class WalletController extends Controller
             $pgSoftWallet = $this->getPgsoftgameWallet(session('user'));
             $level = (new Account)->loadUserLevel(session('_t'));
             $banks = $this->getBankList();
-            // Log::debug($banks);
+            $pgsoft_player_summary = $this->getPlayerSummary();
+            // Log::debug($pgsoft_player_summary);
 
             $walletAmount = ($res['wallet']['amount'] + $pgSoftWallet);
 
@@ -40,10 +41,22 @@ class WalletController extends Controller
                         'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 
                         'histories' => $histories, 'games' => $games, 'status' => $res['status'], 
                         'pgsoft_wallet' => $pgSoftWallet, 'wallet_amount' => $walletAmount, 
-                        'level' => $level['level'], 'menu' => 'wallet', 'banklists' => $banks['b_list']]);
+                        'level' => $level['level'], 'menu' => 'wallet', 'banklists' => $banks['b_list'],
+                        'pgsoft_player_summaries' => $pgsoft_player_summary['results']]);
         }else{
             return redirect('/login');
         }
+    }
+
+    private function getPlayerSummary()
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+        ])->get(RouteServiceProvider::API.'/game/pgsoft/player-summary');
+
+        $res = json_decode($response->getBody()->getContents(), true);
+        return $res;
     }
 
     private function getBankList()

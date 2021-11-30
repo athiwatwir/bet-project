@@ -135,15 +135,21 @@
                                                         </button> -->
                                                         <button class="btn btn-warning btn-sm rounded" title="จัดการกระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
                                                                 data-toggle="modal" data-target="#transferToWallet" onClick="editWallet({{ $is_wallet['id'] }}, '{{ $is_wallet['game_name'] }}', '{{ session('user') }}')"
-                                                                style="padding: 3px 30px;"
+                                                                style="padding: 3px 15px;"
                                                         >
-                                                            โอนออก
+                                                            <small>โอนออก</small>
                                                         </button>
                                                         <button class="btn btn-secondary btn-sm rounded" title="ประวัติการทำรายการเกม {{ $is_wallet['game_name'] }}" 
                                                                 data-toggle="modal" data-target="#subHistoriesWalletModal" onClick="subWalletHistory({{ json_encode($is_wallet['trans']) }}, {{ $is_wallet['id'] }})"
-                                                                style="padding: 3px 30px;"
+                                                                style="padding: 3px 15px;"
                                                         >
-                                                            รายละเอียด
+                                                            <small>ประวัติการทำรายการ</small>
+                                                        </button>
+                                                        <button class="btn btn-secondary btn-sm rounded" title="รายละเอียดการเล่นเกม {{ $is_wallet['game_name'] }}" 
+                                                                data-toggle="modal" data-target="#playerSummaryModal"
+                                                                style="padding: 3px 15px;"
+                                                        >
+                                                            <small>รายละเอียดการเล่น</small>
                                                         </button>
                                                         
                                                         <!-- <a	href="#!" 
@@ -185,6 +191,12 @@
         </div>
     </div>
 </div>
+
+<style>
+    .dt-buttons.btn-group.flex-wrap {
+        display: none;
+    }
+</style>
 @endsection
 
 @section('modal')
@@ -201,4 +213,6 @@
     @include('account.wallet_modals.transfer_to_game')
 
     @include('account.wallet_modals.transfer_to_wallet')
+
+    @include('account.wallet_modals.pgsoftPlayerSummary')
 @endsection

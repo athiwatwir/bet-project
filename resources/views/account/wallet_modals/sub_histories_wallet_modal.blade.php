@@ -18,7 +18,7 @@
                             <tr class="text-muted fs--13 bg-light">
                                 <th>
                                     <span class="px-2 p-0-xs">
-                                        วัน-เวลา
+                                        วันที่ดำเนินการ
                                     </span>
                                 </th>
                                 <th class="hidden-lg-down text-center">ประเภท</th>
