@@ -37,7 +37,7 @@
                             <div class="col-md-6 text-center mb-4">
                                 <a href="{{ route('logingame', ['name' => $game]) }}" target="_blank" title="เล่นเกม"><img src="{{ asset('img/playgame_btn.png') }}" class="w-75"></a>
                                 @if(!$has_wallet)
-                                    <p class="text-danger mt-2">คุณยังไม่มีประเป๋าเกม <a href="{{ route('wallets') }}"><u><strong>สร้างกระเป๋าเกม</strong></u></a>ก่อนเข้าเล่นเกม</p>
+                                    <p class="text-danger mt-2">คุณยังไม่มีกระเป๋าเกม <a href="{{ route('wallets') }}"><u><strong>สร้างกระเป๋าเกม</strong></u></a>ก่อนเข้าเล่นเกม</p>
                                 @endif
                             </div>
                         @else
