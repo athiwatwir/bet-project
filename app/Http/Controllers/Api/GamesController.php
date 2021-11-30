@@ -41,7 +41,7 @@ class GamesController extends Controller
             $res = json_decode($response->getBody()->getContents(), true);
             // Log::debug($res['_tk']);
     
-            return view('games.view', ['game' => $name, 'play' => $res['playgame'], 'status' => 200]);
+            return view('games.view', ['game' => $name, 'play' => $res['playgame'], 'has_wallet' => $res['is_wallet'], 'status' => 200]);
         }
 
         return view('games.view', ['game' => $name, 'status' => 301]);

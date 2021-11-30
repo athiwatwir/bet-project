@@ -71,7 +71,10 @@
                         </div> -->
 
                         <div class="col-md-12 mt-5">
-                            <p class="text-dark fs--20 mb-0"><strong>กระเป๋าเงินแต่ละเกมส์</strong></p>
+                            <p class="text-dark fs--20 mb-0 d-flex">
+                                <strong>กระเป๋าเงินแต่ละเกม</strong> 
+                                <button class="btn btn-vv-sm btn-primary ml-2" data-toggle="modal" data-target="#createWalletModal" title="เพิ่มกระเป๋าเงินเกม"><strong><i class="fi fi-plus"></i></strong></button>
+                            </p>
                             <hr class="bg-dark my-1"/>
                             <div class="table-responsive mt-1">
 
