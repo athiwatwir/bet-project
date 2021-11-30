@@ -56,6 +56,8 @@ class WalletController extends Controller
         ])->get(RouteServiceProvider::API.'/game/pgsoft/player-summary');
 
         $res = json_decode($response->getBody()->getContents(), true);
+        $hands = array_column($res['results'], 'hands');
+        array_multisort($hands, SORT_DESC, $res['results']);
         return $res;
     }
 
