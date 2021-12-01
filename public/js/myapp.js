@@ -225,7 +225,7 @@ function gamewallet(game, key) {
       document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(res.data)
       this.allAmount(res.data)
     })
-  }, 5000)
+  }, 30000)
 }
 
 function walletFirstLoad(game, key) {
