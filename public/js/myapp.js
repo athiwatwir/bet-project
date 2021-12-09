@@ -20,7 +20,7 @@ function editWallet(id, game, name) {
     res.then(balance => {
       // document.querySelector('#game_balance').innerHTML = balance.data
       document.querySelector('#game_balance_2').innerHTML = balance.data
-      this.setAmountDefault(balance.data)
+      // this.setAmountDefault(balance.data)
     })
 }
 

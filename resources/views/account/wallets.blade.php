@@ -136,8 +136,8 @@
                                                         >
                                                             <i class="fi fi-arrow-right-3 mr-0"></i>
                                                         </button> -->
-                                                        <button class="btn btn-warning btn-sm rounded" title="จัดการกระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
-                                                                data-toggle="modal" data-target="#transferToWallet" onClick="editWallet({{ $is_wallet['id'] }}, '{{ $is_wallet['game_name'] }}', '{{ session('user') }}')"
+                                                        <button class="btn btn-warning btn-sm rounded" title="โอนเงินออกจากกระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
+                                                                data-toggle="modal" data-target="#transferToWallet" onClick="editWallet('{{ $is_wallet['id'] }}', '{{ $is_wallet['game_name'] }}', '{{ session('user') }}')"
                                                                 style="padding: 3px 15px;"
                                                         >
                                                             <small>โอนออก</small>
