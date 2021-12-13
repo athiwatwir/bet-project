@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider as Route;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Crypt;
 
 use Illuminate\Support\Facades\Log;
 
@@ -40,6 +41,7 @@ class LoginController extends Controller
         if(isset($res['status'])) {
             if($res['status'] == 200){
                 session(['_t' => $res['token'], 'name' => $res['name'], 'user' => $res['user']]);
+                setcookie('_t', $res['token'], time()+(120*60));
                 return redirect()->route('wallets')->with('success', 'เข้าสู่ระบบแล้ว...');
             }else{
                 return redirect()->back()->with('error', $res['message']);
@@ -63,6 +65,7 @@ class LoginController extends Controller
         $res = json_decode($response->getBody()->getContents(), true);
 
         session()->forget(['_t', 'name']);
+        setcookie('_t', '', time()-3600, '/');
         return redirect()->back()->with('success', 'ออกจากระบบเรียบร้อยแล้ว...');
 
         // if($res['status'] == 200){
