@@ -80,16 +80,16 @@
                                 </form>
                             @elseif($status == 200)
                                 <div class="card bg-light my-4">
-                                    <div class="card-body">
+                                    <div class="card-body pb-1 pt-4">
                                         <h5>รายละเอียดบัญชีธนาคาร</h5>
                                         <div class="card">
-                                            <div class="card-body pb-0">
+                                            <div class="card-body">
                                                 <p><strong>ธนาคาร :</strong> {{ $bank['bank_name'] }} @if(isset($bank['bank_name_en']))<small>({{ $bank['bank_name_en'] }})</small>@endif</p>
                                                 <p><strong>ชื่อบัญชี :</strong> {{ $bank['bank_account_name'] }}</p>
-                                                <p><strong>เลขที่บัญชี :</strong> {{ $bank['bank_account_number'] }}</p>
-                                                <a href="#!"><small class="float-end">แจ้งเปลี่ยนบัญชีธนาคาร</small></a>
+                                                <p class="mb-0"><strong>เลขที่บัญชี :</strong> {{ $bank['bank_account_number'] }}</p>
                                             </div>
                                         </div>
+                                        <small class="float-end mt-3">หากต้องการแก้ไขบัญชีธนาคาร <a href="#!"><u>กรุณาแจ้งเจ้าหน้าที่</u></a></small>
                                     </div>
                                 </div>
                             @endif
