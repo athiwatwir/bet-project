@@ -143,7 +143,7 @@
                                                             <small>โอนออก</small>
                                                         </button>
                                                         <button class="btn btn-secondary btn-sm rounded" title="ประวัติการทำรายการเกม {{ $is_wallet['game_name'] }}" 
-                                                                data-toggle="modal" data-target="#subHistoriesWalletModal" onClick="subWalletHistory({{ json_encode($is_wallet['trans']) }}, {{ $is_wallet['id'] }})"
+                                                                data-toggle="modal" data-target="#subHistoriesWalletModal" onClick="subWalletHistory({{ json_encode($is_wallet['trans']) }}, '{{ $is_wallet['id'] }}')"
                                                                 style="padding: 3px 15px;"
                                                         >
                                                             <small>ประวัติการทำรายการ</small>
