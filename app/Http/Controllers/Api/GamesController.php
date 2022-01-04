@@ -40,14 +40,19 @@ class GamesController extends Controller
     
             $res = json_decode($response->getBody()->getContents(), true);
             // Log::debug($res['_tk']);
-    
-            return view('games.view', ['game' => $name, 'play' => $res['playgame'], 'has_wallet' => $res['is_wallet'], 'status' => 200]);
+
+            if($res['is_wallet']) {
+                $togame = $this->loginToGame('PG Softgame');
+                return redirect()->away($togame);
+            }else{
+                return view('games.view', ['game' => $name, 'play' => $res['playgame'], 'has_wallet' => $res['is_wallet'], 'status' => 200]);
+            }
         }
 
         return view('games.view', ['game' => $name, 'status' => 301]);
     }
 
-    public function loginToGame(Request $request, $name)
+    public function loginToGame($name)
     {
         if(session()->has('_t')){
             $table = $this->getTableName($name);
@@ -59,7 +64,8 @@ class GamesController extends Controller
             // $res = json_decode($response->getBody()->getContents(), true);
             if(isset($response['data'])) {
                 $url = 'https://pg.playszone.com/'.$response['data'];
-                return redirect()->away($url);
+                // return redirect()->away($url);
+                return $url;
             }
         }
     }
