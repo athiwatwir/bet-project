@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 
-use App\Http\Controllers\Api\GamesController as isGame;
+use App\Http\Controllers\Api\GamesController as Games;
 use App\Http\Controllers\Api\AccountController as Account;
 
 class WalletController extends Controller
@@ -27,21 +27,21 @@ class WalletController extends Controller
             $histories = $this->historiesWallet();
             $default_wallet_history = $this->defaultWalletHistories($histories);
             $sub_wallet = $this->subWalletHistories($res['wallets'], $histories);
-            $games = (new isGame)->menuGame();
-            $pgSoftWallet = $this->getPgsoftgameWallet(session('user'));
+            $games = (new Games)->menuGame();
             $level = (new Account)->loadUserLevel(session('_t'));
             $banks = $this->getBankList();
             $pgsoft_player_summary = $this->getPlayerSummary();
-            // Log::debug($pgsoft_player_summary);
+            // Log::debug($sub_wallet);
 
-            $walletAmount = ($res['wallet']['amount'] + $pgSoftWallet);
+            // $pgSoftWallet = $this->getPgsoftgameWallet(session('user'));
+            // $walletAmount = ($res['wallet']['amount'] + $pgSoftWallet);
 
             return view('account.wallets', 
                         ['wallet' => $res['wallet'], 'wallets' => $sub_wallet, 'banks' => $res['banks'], 
                         'user_bank' => $res['user_bank'], 'default_histories' => $default_wallet_history, 
                         'histories' => $histories, 'games' => $games, 'status' => $res['status'], 
-                        'pgsoft_wallet' => $pgSoftWallet, 'wallet_amount' => $walletAmount, 
-                        'level' => $level['level'], 'menu' => 'wallet', 'banklists' => $banks['b_list'],
+                        // 'wallet_amount' => $walletAmount, 
+                        'level' => $level['level'], 'menu' => 'wallet', 'banklists' => $banks['b_list'], 
                         'pgsoft_player_summaries' => $pgsoft_player_summary['results']]);
         }else{
             return redirect('/login');
@@ -76,25 +76,25 @@ class WalletController extends Controller
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            ])->get('https://88.playszone.com/api/v2/pgsoftgame/wallet/'.$username);
+            ])->get('http://127.0.0.1:8000/api/v2/pgsoftgame/wallet/'.$username);
+
+        // ->get('https://88.playszone.com/api/v2/pgsoftgame/wallet/'.$username);
 
         return $response['data'];
     }
 
     public function createWallet(Request $request)
     {
-        $this->validate($request, [
-            'game' => ['required'],
-        ],
-        [
-            'game.required' => 'กรุณาเลือกรายการเกม',
-        ]);
+        $ex = explode('__', $request->game);
+        $game_id = Crypt::decrypt($ex[0]);
+        $gamecode = Crypt::decrypt($ex[1]);
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '. session('_t'),
             ])->post(RouteServiceProvider::API.'/user/create-wallet',[
-                'game_id' => $request->game,
+                'api_game_id' => $game_id,
+                'game_code' => $gamecode,
                 'amount' => $request->amount,
         ]);
 
@@ -115,18 +115,17 @@ class WalletController extends Controller
     public function editWallet(Request $request)
     {
         if($request->wallet_action == 'deposit') {
-            $this->validate($request, [
-                'add_amount_wallet' => ['required'],
-            ],
-            [
-                'add_amount_wallet.required' => 'กรุณาเลือกระบุจำนวนเงิน',
-            ]);
+
+            $ex = explode('__', $request->wallet_id);
+            $wallet_id = Crypt::decrypt($ex[0]);
+            $gamecode = Crypt::decrypt($ex[1]);
 
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer '. session('_t'),
                 ])->post(RouteServiceProvider::API.'/user/add-wallet',[
-                    'id' => $request->wallet_id,
+                    'wallet_id' => $wallet_id,
+                    'gamecode' => $gamecode,
                     'amount' => $request->add_amount_wallet,
             ]);
     
@@ -143,19 +142,14 @@ class WalletController extends Controller
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
             
         }else if($request->wallet_action == 'withdraw') {
-            $this->validate($request, [
-                'change_amount_wallet' => ['required']
-            ],
-            [
-                'change_amount_wallet.required' => 'กรุณาระบุจำนวนเงิน'
-            ]);
 
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer '. session('_t'),
                 ])->post(RouteServiceProvider::API.'/user/transfer-wallet',[
-                    'id' => $request->wallet_id,
-                    'to' => $request->to_wallet,
+                    'id' => Crypt::decrypt($request->wallet_id),
+                    'gamecode' => Crypt::decrypt($request->gamecode),
+                    'to' => Crypt::decrypt($request->to_wallet),
                     'amount' => $request->change_amount_wallet,
             ]);
     

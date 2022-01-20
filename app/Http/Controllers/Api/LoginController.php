@@ -40,8 +40,9 @@ class LoginController extends Controller
         // return redirect()->back();
         if(isset($res['status'])) {
             if($res['status'] == 200){
+                // Log::debug($res['token']);
                 session(['_t' => $res['token'], 'name' => $res['name'], 'user' => $res['user']]);
-                setcookie('_t', $res['token'], time()+(120*60));
+                setcookie('_t', $res['token'], time() + (86400 * 30), '/');
                 return redirect()->route('wallets')->with('success', 'เข้าสู่ระบบแล้ว...');
             }else{
                 return redirect()->back()->with('error', $res['message']);
@@ -49,11 +50,6 @@ class LoginController extends Controller
         }else{
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
         }
-    }
-
-    public function login2(Request $request)
-    {
-        Log::debug($request);
     }
 
     public function logout(Request $request)

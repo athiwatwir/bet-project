@@ -28,11 +28,10 @@ class GamesController extends Controller
         
     }
 
-    public function view(Request $request, $name, $id)
+    public function view(Request $request, $name, $id, $gamecode)
     {
         // $this->demo($name);
         if(session()->has('_t')){
-            $table = $this->getTableName($name);
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer '. session('_t'),
@@ -42,7 +41,7 @@ class GamesController extends Controller
             // Log::debug($res['_tk']);
 
             if($res['is_wallet']) {
-                $togame = $this->loginToGame('PG Softgame');
+                $togame = $this->loginToGame($gamecode);
                 return redirect()->away($togame);
             }else{
                 return view('games.view', ['game' => $name, 'play' => $res['playgame'], 'has_wallet' => $res['is_wallet'], 'status' => 200]);
@@ -52,16 +51,14 @@ class GamesController extends Controller
         return view('games.view', ['game' => $name, 'status' => 301]);
     }
 
-    public function loginToGame($name)
+    public function loginToGame($gamecode)
     {
         if(session()->has('_t')){
-            $table = $this->getTableName($name);
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer '. session('_t'),
-                ])->get(RouteServiceProvider::API.'/game/login/'.$table);
+                ])->get(RouteServiceProvider::API_GAME.'/call/'.Crypt::decrypt($gamecode).'/login-to-game');
 
-            // $res = json_decode($response->getBody()->getContents(), true);
             if(isset($response['data'])) {
                 $url = 'https://pg.playszone.com/'.$response['data'];
                 // return redirect()->away($url);

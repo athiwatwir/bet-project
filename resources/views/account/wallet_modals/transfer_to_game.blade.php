@@ -18,7 +18,7 @@
                             <select required id="game" name="wallet_id" class="form-control">
                                 <option value="" selected disabled>-- เลือกเกม --</option>
                                 @foreach($wallets as $key => $is_wallet)
-                                    <option value="{{ $is_wallet['id'] }}">{{ $is_wallet['game_name'] }}</option>
+                                    <option value="{{ Crypt::encrypt($is_wallet['id']) }}__{{ Crypt::encrypt($is_wallet['gamecode']) }}">{{ $is_wallet['game_name'] }}</option>
                                 @endforeach
                             </select>
                         </div>

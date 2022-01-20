@@ -13,14 +13,13 @@ function showPwd(id, el) { // show password
 
 
 // wallet.blade.php------------------------------------------------------
-function editWallet(id, game, name) {
-    document.getElementById('wallet_id').value = id
+function editWallet(id, gamecode, game, name) {
+    document.querySelector('#wallet_id').value = id
+    document.querySelector('#gamecode').value = gamecode
     document.querySelector('#is_game_name').innerHTML = game
     const res = this.getGameWallet(name)
     res.then(balance => {
-      // document.querySelector('#game_balance').innerHTML = balance.data
       document.querySelector('#game_balance_2').innerHTML = balance.data
-      // this.setAmountDefault(balance.data)
     })
 }
 
@@ -140,8 +139,8 @@ function subWalletHistoryType(wallet_id, from_id, to_id, by_admin, type) {
 
 function thePointer()
 {
-   const isapi = 'https://88.playszone.com/'
-  //  const isapi = 'http://127.0.0.1:8000/'
+  //  const isapi = 'https://88.playszone.com/'
+   const isapi = 'http://127.0.0.1:8000/'
    return isapi
 }
 
@@ -255,17 +254,17 @@ async function fetchWallet(game) {
 }
 
 function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
+  let name = cname + "="
+  let decodedCookie = decodeURIComponent(document.cookie)
+  let ca = decodedCookie.split(';')
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i]
     while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+      c = c.substring(1)
     }
     if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
+      return c.substring(name.length, c.length)
     }
   }
-  return "";
+  return ""
 }

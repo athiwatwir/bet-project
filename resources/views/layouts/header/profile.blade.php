@@ -14,12 +14,18 @@
                         </a>
                     </li>
                     <li class="list-inline-item mx-1 dropdown">
-                        <a href="{{ url('/logout') }}" title="Log Out" class="text-white prefix-icon-ignore dropdown-footer dropdown-custom-ignore"
-                            onclick="return confirm('ออกจากระบบ?');"
-                            style="margin-bottom: 2px;"
+                        <a href="{{ url('/logout') }}"
+                            title="ออกจากระบบ"
+                            class="js-ajax-confirm text-white prefix-icon-ignore dropdown-footer dropdown-custom-ignore"
+                            data-ajax-confirm-btn-yes-class="btn-sm btn-secondary" 
+                            data-ajax-confirm-body="ออกจากระบบ?" 
+                            data-ajax-confirm-btn-yes-text="ออกจากระบบ" 
+                            data-ajax-confirm-btn-yes-icon="fi fi-check" 
+                            data-ajax-confirm-btn-no-text="ยกเลิก" 
+                            data-ajax-confirm-type="secondary"
                         >
                             <i class="fi fi-power float-start"></i>
-                            ออกจากระบบ
+                            {{ __('ออกจากระบบ') }}
                         </a>
                     </li>
                 @else

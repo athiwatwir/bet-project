@@ -55,7 +55,11 @@ Route::prefix('account')->group(function () {
 });
 
 Route::prefix('games')->group(function () {
-    Route::get('view/{name}/{id}', [GamesController::class, 'view'])->name('viewgame');
+    Route::get('view/{name}/{id}/{gamecode}', [GamesController::class, 'view'])->name('viewgame');
     Route::get('demo/{game}', [GamesController::class, 'playDemo'])->name('demo');
     Route::get('login/{name}', [GamesController::class, 'loginToGame'])->name('logingame');
+});
+
+Route::get('syst/cache-clear', function () {
+    Artisan::call('cache:clear');
 });

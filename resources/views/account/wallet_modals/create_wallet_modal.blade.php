@@ -20,7 +20,7 @@
                                 @foreach($games as $group)
                                     <optgroup label="{{ $group['name'] }}">
                                         @foreach($group['games'] as $game)
-                                            <option value="{{ $game['id'] }}">{{ $game['name'] }}</option>
+                                            <option value="{{ Crypt::encrypt($game['id']) }}__{{ Crypt::encrypt($game['gamecode']) }}">{{ $game['name'] }}</option>
                                         @endforeach
                                     </optgroup>
                                 @endforeach

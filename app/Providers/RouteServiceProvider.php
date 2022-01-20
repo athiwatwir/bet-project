@@ -23,6 +23,8 @@ class RouteServiceProvider extends ServiceProvider
 
     public const STORAGE = 'http://127.0.0.1:8000';
 
+    public const API_GAME = 'http://127.0.0.1:8000/api/games';
+
     /**
      * The controller namespace for the application.
      *
