@@ -12,7 +12,9 @@
                     <div class="row col-border-md menugame">
                         @foreach($group['games'] as $key => $game)
                             <div class="col-4 col-md-2 my-2">
-                                <a href="{{ route('viewgame', ['id' => Crypt::encrypt($game['id']), 'gamecode' => Crypt::encrypt($game['gamecode']), 'name' => $game['name']]) }}" class="transition-hover-zoom-img">
+                                <a href="{{ route('viewgame', ['id' => Crypt::encrypt($game['id']), 'gamecode' => Crypt::encrypt($game['gamecode']), 'name' => $game['name']]) }}" 
+                                    class="transition-hover-zoom-img" @if(session()->has('_t')) target="_blank" @endif
+                                >
                                     <img class="w-100" src="{{ $game['logo'] }}" alt="">
                                 </a>
                             </div>

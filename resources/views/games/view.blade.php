@@ -56,14 +56,12 @@
                         @endif
                     </div>
 
-                    @if($game == 'PG Softgame')
                     <div class="row align-items-center mt-5 card">
                         <div class="col-12 text-center card-body bg-light">
                             <h4 class="text-dark">ทดลองเล่น {{$game}}</h4>
                             @include('games.demo')
                         </div>
                     </div>
-                    @endif
 
                 </div>
                 <!-- /portlet : body -->

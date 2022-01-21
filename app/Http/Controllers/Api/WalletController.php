@@ -282,7 +282,6 @@ class WalletController extends Controller
 
         $res = json_decode($response->getBody()->getContents(), true);
         // Log::debug($res);
-
         return $res['histories'];
     }
 

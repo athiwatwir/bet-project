@@ -38,13 +38,13 @@ class GamesController extends Controller
                 ])->get(RouteServiceProvider::API.'/game/play/'.Crypt::decrypt($id));
     
             $res = json_decode($response->getBody()->getContents(), true);
-            // Log::debug($res['_tk']);
+            // Log::debug($res);
 
             if($res['is_wallet']) {
                 $togame = $this->loginToGame($gamecode);
                 return redirect()->away($togame);
             }else{
-                return view('games.view', ['game' => $name, 'play' => $res['playgame'], 'has_wallet' => $res['is_wallet'], 'status' => 200]);
+                return view('games.view', ['game' => $name, 'has_wallet' => $res['is_wallet'], 'status' => 200]);
             }
         }
 
@@ -60,8 +60,7 @@ class GamesController extends Controller
                 ])->get(RouteServiceProvider::API_GAME.'/call/'.Crypt::decrypt($gamecode).'/login-to-game');
 
             if(isset($response['data'])) {
-                $url = 'https://pg.playszone.com/'.$response['data'];
-                // return redirect()->away($url);
+                $url = $response['data'];
                 return $url;
             }
         }

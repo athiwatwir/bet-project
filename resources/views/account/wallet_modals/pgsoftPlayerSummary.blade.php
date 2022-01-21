@@ -50,9 +50,9 @@
                     <thead>
                         <tr class="text-muted fs--13">
                             <th>รายชื่อเกมที่เล่น</th>
-                            <th class="text-center">จำนวนการเล่น</th>
-                            <th class="text-center">จำนวนเงินเดิมพัน</th>
-                            <th class="text-center"><span class="text-success">ชนะ</span> / <span class="text-danger">แพ้</span></th>
+                            <th class="text-center">จำนวนการเล่น <small>(ครั้ง)</small></th>
+                            <th class="text-center">จำนวนเงินเดิมพัน <small>(THB)</small></th>
+                            <th class="text-center"><span class="text-success">ชนะ</span> / <span class="text-danger">แพ้</span> <small>(THB)</small></th>
                         </tr>
                     </thead>
 

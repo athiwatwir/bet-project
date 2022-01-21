@@ -151,9 +151,9 @@ function theDestination()
 }
 
 function setTypeBadge(type) {
-  if(type == 'รับเข้า') return '<span class="badge badge-info font-weight-normal fs--16">' + type + '</span>'
-  if(type == 'ส่งออก') return '<span class="badge badge-warning font-weight-normal fs--16">' + type + '</span>'
-  if(type == 'ADJUST') return '<span class="badge badge-primary font-weight-normal fs--16">' + type + '</span>'
+  if(type == 'รับเข้า') return '<span class="badge badge-info font-weight-normal fs--13">' + type + '</span>'
+  if(type == 'ส่งออก') return '<span class="badge badge-warning font-weight-normal fs--13">' + type + '</span>'
+  if(type == 'ADJUST') return '<span class="badge badge-primary font-weight-normal fs--13">' + type + '</span>'
 }
 
 function dateToYMD(date) {

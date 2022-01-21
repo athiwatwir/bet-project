@@ -116,6 +116,12 @@
 
                                                 <td class="text-center">
                                                     <div class="flex text-right">
+                                                        <a href="{{ route('viewgame', ['id' => Crypt::encrypt($is_wallet['api_game_id']), 'gamecode' => Crypt::encrypt($is_wallet['gamecode']), 'name' => $is_wallet['game_name']]) }}" 
+                                                            class="btn btn-danger btn-sm rounded" title="เล่นเกม" target="_blank" style="padding: 3px 15px;"
+                                                        >
+                                                            <i class="fi fi-play"></i><small>เล่นเกม</small>
+                                                        </a>
+
                                                         <button class="btn btn-warning btn-sm rounded" title="โอนเงินออกจากกระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
                                                                 data-toggle="modal" data-target="#transferToWallet" onClick="editWallet('{{ Crypt::encrypt($is_wallet['id']) }}', '{{ Crypt::encrypt($is_wallet['gamecode']) }}', '{{ $is_wallet['game_name'] }}', '{{ session('user') }}')"
                                                                 style="padding: 3px 15px;"
