@@ -17,19 +17,10 @@
                         <div class="col-md-8">
                             <select required id="game" name="game" class="form-control @error('game') is-invalid @enderror">
                                 <option value="" selected disabled>-- เลือกเกม --</option>
-                                @foreach($games as $group)
-                                    <optgroup label="{{ $group['name'] }}">
-                                        @foreach($group['games'] as $game)
-                                            <option value="{{ Crypt::encrypt($game['id']) }}__{{ Crypt::encrypt($game['gamecode']) }}">{{ $game['name'] }}</option>
-                                        @endforeach
-                                    </optgroup>
+                                @foreach($games as $game)
+                                    <option class="is-option" @if($game['isactive']) value="{{ Crypt::encrypt($game['id']) }}__{{ Crypt::encrypt($game['gamecode']) }}" @else value="" disabled @endif>{{ $game['name'] }} @if(!$game['isactive']) (เลเวลถูกจำกัดสิทธิ) @endif</option>
                                 @endforeach
                             </select>
-                            @error('game')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                         </div>
                     </div>
                     
@@ -50,3 +41,9 @@
         </div>
     </div>
 </div>
+
+<style>
+    option.is-option:disabled {
+        color: #ababab;
+    }
+</style>

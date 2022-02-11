@@ -27,7 +27,7 @@ class WalletController extends Controller
             $histories = $this->historiesWallet();
             $default_wallet_history = $this->defaultWalletHistories($histories);
             $sub_wallet = $this->subWalletHistories($res['wallets'], $histories);
-            $games = (new Games)->menuGame();
+            $games = $this->getUserLevelGames();
             $level = (new Account)->loadUserLevel(session('_t'));
             $banks = $this->getBankList();
             $pgsoft_player_summary = $this->getPlayerSummary();
@@ -46,6 +46,17 @@ class WalletController extends Controller
         }else{
             return redirect('/login');
         }
+    }
+
+    private function getUserLevelGames() {
+        $games = (new Games)->userLevelApiGame();
+        $active = [];
+        $unactive = [];
+        foreach($games as $game) {
+            $game['isactive'] ? array_push($active, $game) : array_push($unactive, $game);
+        }
+
+        return array_merge($active, $unactive);
     }
 
     private function getPlayerSummary()
@@ -86,29 +97,31 @@ class WalletController extends Controller
     public function createWallet(Request $request)
     {
         $ex = explode('__', $request->game);
-        $game_id = Crypt::decrypt($ex[0]);
-        $gamecode = Crypt::decrypt($ex[1]);
+        if(count($ex) > 1) {
+            $game_id = Crypt::decrypt($ex[0]);
+            $gamecode = Crypt::decrypt($ex[1]);
 
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer '. session('_t'),
-            ])->post(RouteServiceProvider::API.'/user/create-wallet',[
-                'api_game_id' => $game_id,
-                'game_code' => $gamecode,
-                'amount' => $request->amount,
-        ]);
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer '. session('_t'),
+                ])->post(RouteServiceProvider::API.'/user/create-wallet',[
+                    'api_game_id' => $game_id,
+                    'game_code' => $gamecode,
+                    'amount' => $request->amount,
+            ]);
 
-        $res = json_decode($response->getBody()->getContents(), true);
+            $res = json_decode($response->getBody()->getContents(), true);
 
-        if($res['status'] == 200) {
-            return redirect()->back()->with('success', 'เพิ่มกระเป๋าเงินเรียบร้อยแล้ว');
-        }else if($res['status'] == 301) {
-            return redirect()->back()->with('error', 'เงินในกระเป๋าหลักไม่เพียงพอ...กรุณาเพิ่มเงิน หรือ โยกย้ายมาจากเกมอื่น');
-        }else if($res['status'] == 404) {
-            return redirect()->back()->with('error', 'กระเป๋าเงินเกมส์ไม่อนุญาตให้ซ้ำกัน...กรุณาตรวจสอบ');
+            if($res['status'] == 200) {
+                return redirect()->back()->with('success', 'เพิ่มกระเป๋าเงินเรียบร้อยแล้ว');
+            }else if($res['status'] == 404) {
+                return redirect()->back()->with('error', $res['error']);
+            }
+
+            return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่...');
         }
 
-        return redirect()->back()->with('error', 'เกิดข้อผิดพลาด กรุณาลองใหม่');
+        return redirect()->back()->with('error', 'เกิดข้อผิดพลาดในการเลือกเกม...');
     }
 
 

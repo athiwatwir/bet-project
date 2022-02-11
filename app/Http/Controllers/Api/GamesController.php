@@ -25,7 +25,6 @@ class GamesController extends Controller
             }
             return $res['menugames'];
         }
-        
     }
 
     public function view(Request $request, $name, $id, $gamecode)
@@ -88,5 +87,20 @@ class GamesController extends Controller
     private function getTableName($game)
     {
         if($game == 'PG Softgame') return 'pgsoftgames';
+    }
+
+
+
+    // CALL FUNCTION ////////////////////////////////////////////////////////////////////
+    public function userLevelApiGame() {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+            ])->get(RouteServiceProvider::API.'/game/user-level');
+
+        $res = json_decode($response->getBody()->getContents(), true);
+        if(isset($res)) {
+            return $res['data'];
+        }
     }
 }

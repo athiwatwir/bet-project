@@ -40,7 +40,7 @@ class LoginController extends Controller
         // return redirect()->back();
         if(isset($res['status'])) {
             if($res['status'] == 200){
-                // Log::debug($res['token']);
+                Log::debug($res['token']);
                 session(['_t' => $res['token'], 'name' => $res['name'], 'user' => $res['user']]);
                 setcookie('_t', $res['token'], time() + (86400 * 30), '/');
                 return redirect()->route('wallets')->with('success', 'เข้าสู่ระบบแล้ว...');
