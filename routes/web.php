@@ -33,7 +33,8 @@ Route::get('/forgot-password', [ForgotPasswordController::class, 'index']);
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 Route::post('/confirm-otp', [ForgotPasswordController::class, 'confirmOtp']);
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
-// Route::get('/reset-password', [ForgotPasswordController::class, 'resetPassword1']);
+
+Route::get('/game-maintenance', function () { return view('games/game-maintenance'); })->name('game-maintenance');
 
 Route::prefix('account')->group(function () {
     Route::get('/', [AccountController::class, 'index']);
