@@ -42,7 +42,8 @@ class GamesController extends Controller
             if($res['is_wallet']) {
                 $togame = $this->loginToGame($gamecode);
                 if($togame != null) {
-                    return redirect()->away($togame);
+                    // return redirect()->away($togame);
+                    return view('games.play', ['play' => $togame]);
                 }else{
                     return redirect()->route('game-maintenance');
                 }

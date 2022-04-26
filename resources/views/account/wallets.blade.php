@@ -111,7 +111,7 @@
 
                                                 <td class="hidden-lg-down text-center">
                                                     <script>gamewallet("{{ $is_wallet['gamecode'] }}", "{{ $key }}")</script>
-                                                    <span id="wallet_game_{{ $key }}"></span> <small><small>{{ $is_wallet['currency'] }}</small></small>
+                                                    <span id="wallet_game_{{ $key }}" class="wallet_game_list"></span> <small><small>{{ $is_wallet['currency'] }}</small></small>
                                                 </td>
 
                                                 <td class="text-center">
@@ -134,12 +134,7 @@
                                                         >
                                                             <small>ประวัติการทำรายการ</small>
                                                         </button>
-                                                        <button class="btn btn-secondary btn-sm rounded" title="รายละเอียดการเล่นเกม {{ $is_wallet['game_name'] }}" 
-                                                                data-toggle="modal" data-target="#playerSummaryModal"
-                                                                style="padding: 3px 15px;"
-                                                        >
-                                                            <small>รายละเอียดการเล่น</small>
-                                                        </button>
+                                                        <x-player-summary :game-code="$is_wallet['gamecode']"></x-player-summary>
 
                                                     </div>
                                                 </td>
@@ -186,5 +181,7 @@
 
     @include('account.wallet_modals.transfer_to_wallet')
 
-    @include('account.wallet_modals.pgsoftPlayerSummary')
+    @include('account.wallet_modals.player_summary_pggame')
+
+    @include('account.wallet_modals.player_summary_wmgame')
 @endsection

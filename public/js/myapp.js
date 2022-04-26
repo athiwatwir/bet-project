@@ -139,8 +139,8 @@ function subWalletHistoryType(wallet_id, from_id, to_id, by_admin, type) {
 
 function thePointer()
 {
-  //  const isapi = 'https://88.playszone.com/'
-   const isapi = 'http://127.0.0.1:8000/'
+   const isapi = 'https://88.playszone.com/'
+  //  const isapi = 'http://127.0.0.1:8000/'
    return isapi
 }
 
@@ -215,15 +215,15 @@ function userlogs(token) {
   }, 10000)
 }
 
-function gamewallet(game, key) {
-  this.walletFirstLoad(game, key)
+async function gamewallet(game, key) {
+  await this.walletFirstLoad(game, key)
   setInterval(function () {
     const res = this.fetchWallet(game)
     res.then(res => {
       document.querySelector('#wallet_game_'+key).innerHTML = this.formatNumber(res.data)
-      document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(res.data)
-      this.allAmount(res.data)
     })
+    this.allWalletGameAmount()
+    this.allAmount()
   }, 30000)
 }
 
@@ -231,15 +231,25 @@ function walletFirstLoad(game, key) {
   const res = this.fetchWallet(game)
     res.then(res => {
       document.querySelector('#wallet_game_'+key).innerHTML = this.formatNumber(res.data)
-      document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber(res.data)
-      this.allAmount(res.data)
+      this.allWalletGameAmount()
+      this.allAmount()
   })
 }
 
-function allAmount(game) {
+function allWalletGameAmount() {
+  let walletGameList = document.querySelectorAll('.wallet_game_list')
+  let walletGameAmount = 0
+  for (let i = 0; i < walletGameList.length; i++) {
+      walletGameAmount+=parseFloat(walletGameList[i].innerHTML.replace(/\,/g,''))
+  }
+  document.querySelector('#realtime_amount_main').innerHTML = this.formatNumber((Math.round(walletGameAmount * 100) / 100).toFixed(2))
+}
+
+function allAmount() {
   let wallet = document.querySelector('#default-wallet').innerHTML
-  let allAmount = parseFloat(game) + parseFloat(wallet)
-  document.querySelector('#realtime_all_amount').innerHTML = this.formatNumber(allAmount)
+  let w_game = document.querySelector('#realtime_amount_main').innerHTML
+  let allAmount = parseFloat(w_game.replace(/\,/g,'')) + parseFloat(wallet)
+  document.querySelector('#realtime_all_amount').innerHTML = this.formatNumber((Math.round(allAmount * 100) / 100).toFixed(2))
 }
 
 async function fetchWallet(game) {

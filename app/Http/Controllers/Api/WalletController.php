@@ -23,6 +23,7 @@ class WalletController extends Controller
                 ])->get(RouteServiceProvider::API.'/user/wallets');
 
             $res = json_decode($response->getBody()->getContents(), true);
+            // Log::debug($res);
 
             $histories = $this->historiesWallet();
             $default_wallet_history = $this->defaultWalletHistories($histories);
@@ -30,7 +31,9 @@ class WalletController extends Controller
             $games = $this->getUserLevelGames();
             $level = (new Account)->loadUserLevel(session('_t'));
             $banks = $this->getBankList();
-            $pgsoft_player_summary = $this->getPlayerSummary();
+            $pgsoft_player_summary = $this->getPlayerSummary2('PGGAME');
+            $wmgame_player_summary = $this->getPlayerSummary2('WMGAME');
+            // $this->getPlayerSummary2($res['wallets']);
             // Log::debug($sub_wallet);
 
             // $pgSoftWallet = $this->getPgsoftgameWallet(session('user'));
@@ -42,7 +45,8 @@ class WalletController extends Controller
                         'histories' => $histories, 'games' => $games, 'status' => $res['status'], 
                         // 'wallet_amount' => $walletAmount, 
                         'level' => $level['level'], 'menu' => 'wallet', 'banklists' => $banks['b_list'], 
-                        'pgsoft_player_summaries' => $pgsoft_player_summary['results']]);
+                        'pgsoft_player_summaries' => $pgsoft_player_summary, 
+                        'wmgame_player_summaries' => $wmgame_player_summary]);
         }else{
             return redirect('/login');
         }
@@ -70,6 +74,17 @@ class WalletController extends Controller
         $hands = array_column($res['results'], 'hands');
         array_multisort($hands, SORT_DESC, $res['results']);
         return $res;
+    }
+
+    private function getPlayerSummary2($gamecode)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+        ])->get(RouteServiceProvider::API.'/game/player-summaries/'.$gamecode);
+
+        $res = json_decode($response->getBody()->getContents(), true);
+        return $res['results'];
     }
 
     private function getBankList()

@@ -1,9 +1,9 @@
-<!-- Withdraw Wallet Modal -->
-<div class="modal fade" id="playerSummaryModal" tabindex="-1" role="dialog" aria-labelledby="playerSummaryModal" aria-hidden="true">
+<!-- WMGAME Player Summary Modal -->
+<div class="modal fade" id="playerSummaryModal-WMGAME" tabindex="-1" role="dialog" aria-labelledby="playerSummaryModal-WMGAME" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">รายละเอียดการเล่น</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle-WMGAME">รายละเอียดการเล่น</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -57,7 +57,7 @@
                     </thead>
 
                     <tbody id="item_list">
-                        @foreach ($pgsoft_player_summaries as $key => $result)
+                        @foreach ($wmgame_player_summaries as $key => $result)
                             <tr>
                                 <td><strong class="text-dark">{{ $result['gameName'] }}</strong></td>
 

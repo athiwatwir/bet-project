@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>PG Game Demo</title>
+        <title>Playszone</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -15,8 +15,6 @@
 
         <!-- My Style -->
         <link href="{{ asset('css/blank-style.css') }}" rel="stylesheet">
-
-        <script defer src="https://public.pg-demo.com/sdk/main.min.js?__refer=public.pg-redirect.net&__sv=0"></script>
         
     </head>
     <body>
