@@ -13,19 +13,39 @@ function showPwd(id, el) { // show password
 
 
 // wallet.blade.php------------------------------------------------------
-function editWallet(id, gamecode, game, name) {
+function editWallet(id, gamecode, game, name, div) {
     document.querySelector('#wallet_id').value = id
     document.querySelector('#gamecode').value = gamecode
     document.querySelector('#is_game_name').innerHTML = game
-    const res = this.getGameWallet(name)
-    res.then(balance => {
-      document.querySelector('#game_balance_2').innerHTML = balance.data
-    })
+    document.querySelector('#game_balance_2').innerHTML = document.querySelector(`#${div}`).innerHTML
+    // const res = this.getGameWallet(gamecode)
+    // res.then(balance => {
+    //   document.querySelector('#game_balance_2').innerHTML = balance.data
+    // })
 }
 
-async function getGameWallet(user) {
-    const response = await fetch(this.thePointer()+'api/v2/pgsoftgame/wallet/'+ user);
-    return response.json()
+async function getGameWallet(gamecode) {
+  try {
+    const response = await fetch(this.thePointer()+'api/games/call/'+ gamecode +'/get-balance/', {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+ this.getCookie('_t'),
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`Error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result
+
+  }catch(err) {
+    console.log(err)
+  }
 }
 
 // function setAmountDefault(user, amount) {

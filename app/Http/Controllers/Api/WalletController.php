@@ -146,7 +146,7 @@ class WalletController extends Controller
 
             $ex = explode('__', $request->wallet_id);
             $wallet_id = Crypt::decrypt($ex[0]);
-            $gamecode = Crypt::decrypt($ex[1]);
+            $gamecode = $ex[1];
 
             $response = Http::withHeaders([
                 'Accept' => 'application/json',

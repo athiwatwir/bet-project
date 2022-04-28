@@ -29,7 +29,7 @@ class GamesController extends Controller
 
     public function view(Request $request, $name, $id, $gamecode)
     {
-        // $this->demo($name);
+        $maintenance = false;
         if(session()->has('_t')){
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
@@ -37,23 +37,24 @@ class GamesController extends Controller
                 ])->get(RouteServiceProvider::API.'/game/play/'.Crypt::decrypt($id));
     
             $res = json_decode($response->getBody()->getContents(), true);
-            // Log::debug($res);
-
-            if($res['is_wallet']) {
+            
+            if(!$res['maintenance']) {
                 $togame = $this->loginToGame($gamecode);
                 if($togame != null) {
                     // return redirect()->away($togame);
                     return view('games.play', ['play' => $togame]);
-                }else{
-                    return redirect()->route('game-maintenance');
                 }
-                
-            }else{
+
                 return view('games.view', ['game' => $name, 'has_wallet' => $res['is_wallet'], 'status' => 200]);
             }
+
+            $maintenance = true;
         }
 
-        return view('games.view', ['game' => $name, 'status' => 301]);
+        $response = Http::get(RouteServiceProvider::API.'/game/description/'.Crypt::decrypt($id));
+        $res = json_decode($response->getBody()->getContents(), true);
+
+        return view('games.view', ['maintenance' => $maintenance, 'game' => $name, 'logo' => RouteServiceProvider::STORAGE.'/logogames/'.$res['data']['logo'], 'description' => $res['data']['description'], 'status' => 301]);
     }
 
     public function loginToGame($gamecode)

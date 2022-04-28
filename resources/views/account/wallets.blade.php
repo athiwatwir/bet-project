@@ -123,7 +123,7 @@
                                                         </a>
 
                                                         <button class="btn btn-warning btn-sm rounded" title="โอนเงินออกจากกระเป๋าเงินเกม {{ $is_wallet['game_name'] }}" 
-                                                                data-toggle="modal" data-target="#transferToWallet" onClick="editWallet('{{ Crypt::encrypt($is_wallet['id']) }}', '{{ Crypt::encrypt($is_wallet['gamecode']) }}', '{{ $is_wallet['game_name'] }}', '{{ session('user') }}')"
+                                                                data-toggle="modal" data-target="#transferToWallet" onClick="editWallet('{{ Crypt::encrypt($is_wallet['id']) }}', '{{ $is_wallet['gamecode'] }}', '{{ $is_wallet['game_name'] }}', '{{ session('user') }}', 'wallet_game_{{ $key }}')"
                                                                 style="padding: 3px 15px;"
                                                         >
                                                             <small>โอนออก</small>

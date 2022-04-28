@@ -25,43 +25,57 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <img src="{{ asset('img/pg_logo.png') }}" class="w-100">
+                                        <img src="{{ $logo }}" class="w-100">
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="fs--16 mb-0" style="text-indent: 40px;">ค่ายเกมสล๊อตที่ได้รับความนิยมสูงสุด กราฟฟิกสวยงาม เข้าใจง่าย และมีอัตราการแจกรางวัลสูง รวมทั้งมีเกมอัพเดทใหม่ๆให้เลือกเล่นอยู่มากมาย จึงเป็นที่นิยมกับนักเล่นสล็อตออนไลน์</p>
+                                        <p class="fs--16 mb-0" style="text-indent: 40px;">{{ $description }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @if($status != 301)
-                            <div class="col-md-6 text-center mb-4">
-                                <a href="{{ route('logingame', ['name' => $game]) }}" target="_blank" title="เล่นเกม"><img src="{{ asset('img/playgame_btn.png') }}" class="w-75"></a>
-                                @if(!$has_wallet)
-                                    <p class="text-danger mt-2">คุณยังไม่มีกระเป๋าเกม <a href="{{ route('wallets') }}"><u><strong>สร้างกระเป๋าเกม</strong></u></a>ก่อนเข้าเล่นเกม</p>
-                                @endif
-                            </div>
-                        @else
+                        @if($maintenance)
                             <div class="col-md-4 offset-1 text-center my-4">
                                 <div class="card bg-dark">
                                     <div class="card-body">
-                                        <h5 class="text-white">กรุณาเข้าสู่ระบบก่อนเล่นเกม</h5>
+                                        <h5 class="text-danger">Maintenance</h5>
                                         <p class="mb-0 text-white">
-                                            <a href="{{ url('/login') }}" class="text-danger"><strong>เข้าสู่ระบบ</strong></a> 
-                                            -หรือ- 
-                                            <a href="{{ url('/register') }}" class="text-danger"><strong>สมัครสมาชิก</strong></a>
+                                            ขออภัย เกมอยู่ในช่วงปรับปรุงระบบ <br/>
+                                            จะพร้อมกลับให้บริการเร็วๆนี้...
                                         </p>
                                     </div>
                                 </div>
                             </div>
+                        @else
+                            @if($status != 301)
+                                <div class="col-md-6 text-center mb-4">
+                                    <a href="{{ route('logingame', ['name' => $game]) }}" target="_blank" title="เล่นเกม"><img src="{{ asset('img/playgame_btn.png') }}" class="w-75"></a>
+                                    @if(!$has_wallet)
+                                        <p class="text-danger mt-2">คุณยังไม่มีกระเป๋าเกม <a href="{{ route('wallets') }}"><u><strong>สร้างกระเป๋าเกม</strong></u></a>ก่อนเข้าเล่นเกม</p>
+                                    @endif
+                                </div>
+                            @else
+                                <div class="col-md-4 offset-1 text-center my-4">
+                                    <div class="card bg-dark">
+                                        <div class="card-body">
+                                            <h5 class="text-white">กรุณาเข้าสู่ระบบก่อนเล่นเกม</h5>
+                                            <p class="mb-0 text-white">
+                                                <a href="{{ url('/login') }}" class="text-danger"><strong>เข้าสู่ระบบ</strong></a> 
+                                                -หรือ- 
+                                                <a href="{{ url('/register') }}" class="text-danger"><strong>สมัครสมาชิก</strong></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         @endif
                     </div>
 
-                    <div class="row align-items-center mt-5 card">
+                    <!-- <div class="row align-items-center mt-5 card">
                         <div class="col-12 text-center card-body bg-light">
                             <h4 class="text-dark">ทดลองเล่น {{$game}}</h4>
                             @include('games.demo')
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
                 <!-- /portlet : body -->
