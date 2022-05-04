@@ -159,8 +159,8 @@ function subWalletHistoryType(wallet_id, from_id, to_id, by_admin, type) {
 
 function thePointer()
 {
-   const isapi = 'https://88.playszone.com/'
-  //  const isapi = 'http://127.0.0.1:8000/'
+  //  const isapi = 'https://88.playszone.com/'
+   const isapi = 'http://127.0.0.1:8000/'
    return isapi
 }
 

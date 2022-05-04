@@ -33,8 +33,16 @@ class WalletController extends Controller
             $banks = $this->getBankList();
             $pgsoft_player_summary = $this->getPlayerSummary2('PGGAME');
             $wmgame_player_summary = $this->getPlayerSummary2('WMGAME');
+            $maintenance = $this->transactionMaintenance();
+            $tran_main = '';
+            if(isset($maintenance)) {
+                if($maintenance['transaction'] == 'deposit') $tran_main = 'ระบบฝากเงิน';
+                if($maintenance['transaction'] == 'withdraw') $tran_main = 'ระบบถอนเงิน';
+                if($maintenance['transaction'] == 'deposit-withdraw') $tran_main = 'ระบบฝาก-ถอน';
+            }
+
             // $this->getPlayerSummary2($res['wallets']);
-            // Log::debug($sub_wallet);
+            // Log::debug($maintenance);
 
             // $pgSoftWallet = $this->getPgsoftgameWallet(session('user'));
             // $walletAmount = ($res['wallet']['amount'] + $pgSoftWallet);
@@ -46,10 +54,21 @@ class WalletController extends Controller
                         // 'wallet_amount' => $walletAmount, 
                         'level' => $level['level'], 'menu' => 'wallet', 'banklists' => $banks['b_list'], 
                         'pgsoft_player_summaries' => $pgsoft_player_summary, 
-                        'wmgame_player_summaries' => $wmgame_player_summary]);
+                        'wmgame_player_summaries' => $wmgame_player_summary,
+                        'mainten' => $maintenance, 'tran_main' => $tran_main]);
         }else{
             return redirect('/login');
         }
+    }
+
+    private function transactionMaintenance() {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. session('_t'),
+        ])->get(RouteServiceProvider::API.'/transaction-maintenance');
+
+        $res = json_decode($response->getBody()->getContents(), true);
+        return $res['data'];
     }
 
     private function getUserLevelGames() {

@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Api\MaintenanceController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::post('set/the/website/maintenance/down', [MaintenanceController::class, 'websiteMaintenanceDown']);
+Route::post('set/the/website/maintenance/up', [MaintenanceController::class, 'websiteMaintenanceUp']);

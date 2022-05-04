@@ -39,8 +39,10 @@
                                     <div class="card-body">
                                         <h5 class="text-danger">Maintenance</h5>
                                         <p class="mb-0 text-white">
-                                            ขออภัย เกมอยู่ในช่วงปรับปรุงระบบ <br/>
-                                            จะพร้อมกลับให้บริการเร็วๆนี้...
+                                            ขออภัย เกมอยู่ในช่วงปรับปรุงระบบ <br/><br/>
+                                            <strong>ตั้งแต่ :</strong> {{ date('d-m-Y', strtotime($mainten['startdate'])) }} เวลา {{ date('H:i', strtotime($mainten['startdate'])) }} น.<br/>
+                                            <strong>ถึง :</strong> {{ date('d-m-Y', strtotime($mainten['enddate'])) }} เวลา {{ date('H:i', strtotime($mainten['enddate'])) }} น.<br/><br/>
+                                            <strong>รายละเอียด :</strong> "{{ $mainten['description'] }}"
                                         </p>
                                     </div>
                                 </div>

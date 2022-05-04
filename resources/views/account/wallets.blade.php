@@ -7,7 +7,15 @@
     <div class="row justify-content-center">
         <!-- @include('account.menu') -->
         <div class="col-md-12">
-
+            <x-website-maintenance></x-website-maintenance>
+            @if(isset($mainten))
+                <div class="alert alert-danger align-items-center" role="alert">
+                    <strong>แจ้งเตือน : </strong> ขณะนี้ {{ $tran_main }} กำลังอยู่ในช่วงปรับปรุง ทำให้ไม่สามารถใช้งานได้ 
+                    ตั้งแต่ : <u>{{ date('d-m-Y', strtotime($mainten['startdate'])) }} เวลา {{ date('H:i', strtotime($mainten['startdate'])) }} น.</u>
+                    ถึง : <u>{{ date('d-m-Y', strtotime($mainten['enddate'])) }} เวลา {{ date('H:i', strtotime($mainten['enddate'])) }} น.</u><br/>
+                    รายละเอียด : "{{ $mainten['description'] }}"
+                </div>
+            @endif
             <!-- portlet -->
             <div class="portlet">
 
@@ -27,8 +35,16 @@
                                             <div class="col-md-7">
                                                 <div class="row">
                                                     <div class="col-md-6 col-on-btn">
-                                                        <button type="button" class="btn btn-primary btn-sm btn-block btn-shadow btn-wallet" data-toggle="modal" data-target="#depositWalletModal" style="line-height: 13px;">ฝากเงิน<br/><small class="fs--10">(แจ้งโอนเงิน)</small></button>
-                                                        <button type="button" class="btn btn-success btn-sm btn-block ml-0 btn-shadow btn-wallet" data-toggle="modal" data-target="#withdrawWalletModal">ถอนเงิน</button>
+                                                        @if(isset($mainten) && $mainten['transaction'] == 'deposit' || isset($mainten) && $mainten['transaction'] == 'deposit-withdraw')
+                                                            <button type="button" class="btn btn-secondary btn-sm btn-block btn-shadow btn-wallet" style="line-height: 13px;">ฝากเงิน<br/><small class="fs--10">(ปิดปรับปรุง)</small></button>
+                                                        @else
+                                                            <button type="button" class="btn btn-primary btn-sm btn-block btn-shadow btn-wallet" data-toggle="modal" data-target="#depositWalletModal" style="line-height: 13px;">ฝากเงิน<br/><small class="fs--10">(แจ้งโอนเงิน)</small></button>
+                                                        @endif
+                                                        @if(isset($mainten) && $mainten['transaction'] == 'withdraw' || isset($mainten) && $mainten['transaction'] == 'deposit-withdraw')
+                                                            <button type="button" class="btn btn-secondary btn-sm btn-block ml-0 btn-shadow btn-wallet" style="line-height: 13px;">ถอนเงิน<br/><small class="fs--10">(ปิดปรับปรุง)</small></button>
+                                                        @else
+                                                            <button type="button" class="btn btn-success btn-sm btn-block ml-0 btn-shadow btn-wallet" data-toggle="modal" data-target="#withdrawWalletModal">ถอนเงิน</button>
+                                                        @endif
                                                     </div>
                                                     <div class="col-md-6 col-on-btn">
                                                         <button type="button" class="btn btn-warning btn-sm btn-block btn-shadow btn-wallet" data-toggle="modal" data-target="#transferToGameModal">โอนเข้าเกมส์</button>

@@ -30,6 +30,7 @@ class GamesController extends Controller
     public function view(Request $request, $name, $id, $gamecode)
     {
         $maintenance = false;
+        $maintenanceDetail = '';
         if(session()->has('_t')){
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
@@ -47,14 +48,14 @@ class GamesController extends Controller
 
                 return view('games.view', ['game' => $name, 'has_wallet' => $res['is_wallet'], 'status' => 200]);
             }
-
+            $maintenanceDetail = $res;
             $maintenance = true;
         }
 
         $response = Http::get(RouteServiceProvider::API.'/game/description/'.Crypt::decrypt($id));
         $res = json_decode($response->getBody()->getContents(), true);
 
-        return view('games.view', ['maintenance' => $maintenance, 'game' => $name, 'logo' => RouteServiceProvider::STORAGE.'/logogames/'.$res['data']['logo'], 'description' => $res['data']['description'], 'status' => 301]);
+        return view('games.view', ['maintenance' => $maintenance, 'mainten' => $maintenanceDetail, 'game' => $name, 'logo' => RouteServiceProvider::STORAGE.'/logogames/'.$res['data']['logo'], 'description' => $res['data']['description'], 'status' => 301]);
     }
 
     public function loginToGame($gamecode)

@@ -44,17 +44,16 @@
         @include('layouts/header.mainheader')
 
         @include('slide')
-
+        
         <section class="bg-bet pt--10">
             <div class="container z-index-1">
+                <x-website-maintenance></x-website-maintenance>
                 @include('flash-message')
                 
                 @yield('content')
             </div>
         </section>
-
         @include('layouts/footer/mainfooter')
-
     </div>
 
     <script src="{{ asset('assets/js/core.js') }}"></script>
